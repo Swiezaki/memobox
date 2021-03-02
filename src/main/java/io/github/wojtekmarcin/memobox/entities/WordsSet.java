@@ -1,11 +1,18 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+<<<<<<< HEAD
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "wordsSets")
+=======
+import javax.persistence.*;
+
+@Table(name = "wordSets")
+@Entity
+>>>>>>> d66ba66... memoBox and wordsSet entity filed
 public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +20,13 @@ public class WordsSet {
     private String set_name;
     private long user_id;
     private long word_id;
+<<<<<<< HEAD
     private boolean visible_flag_id;
     private boolean edition_flag_id;
+=======
+    private Integer visible_flag_id;
+    private Integer edition_flag_id;
+>>>>>>> d66ba66... memoBox and wordsSet entity filed
 
     public WordsSet() {
     }
@@ -51,6 +63,7 @@ public class WordsSet {
         this.word_id = word_id;
     }
 
+<<<<<<< HEAD
     public boolean isVisible_flag_id() {
         return visible_flag_id;
     }
@@ -64,6 +77,21 @@ public class WordsSet {
     }
 
     public void setEdition_flag_id(boolean edition_flag_id) {
+=======
+    public Integer getVisible_flag_id() {
+        return visible_flag_id;
+    }
+
+    public void setVisible_flag_id(Integer visible_flag_id) {
+        this.visible_flag_id = visible_flag_id;
+    }
+
+    public Integer getEdition_flag_id() {
+        return edition_flag_id;
+    }
+
+    public void setEdition_flag_id(Integer edition_flag_id) {
+>>>>>>> d66ba66... memoBox and wordsSet entity filed
         this.edition_flag_id = edition_flag_id;
     }
 }
