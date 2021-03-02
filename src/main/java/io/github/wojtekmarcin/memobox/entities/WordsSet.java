@@ -10,6 +10,7 @@ public class WordsSet {
     private long wordSet_id;
     private String set_name;
     private long user_id;
+  
     @OneToOne
     @JoinColumn(name = "word_id")
     private Word word_id;
