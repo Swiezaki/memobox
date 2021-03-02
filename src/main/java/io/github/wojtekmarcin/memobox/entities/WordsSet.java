@@ -10,19 +10,13 @@ public class WordsSet {
     private long wordSet_id;
     private String set_name;
     private long user_id;
-    private long word_id;
+    @ManyToOne
+    @JoinColumn(name = "word_id")
+    private Word word_id;
     private Integer visible_flag_id;
     private Integer edition_flag_id;
 
     public WordsSet() {
-    }
-
-    public long getWordSet_id() {
-        return wordSet_id;
-    }
-
-    public void setWordSet_id(long wordSet_id) {
-        this.wordSet_id = wordSet_id;
     }
 
     public String getSet_name() {
@@ -41,11 +35,11 @@ public class WordsSet {
         this.user_id = user_id;
     }
 
-    public long getWord_id() {
+    public Word getWord_id() {
         return word_id;
     }
 
-    public void setWord_id(long word_id) {
+    public void setWord_id(Word word_id) {
         this.word_id = word_id;
     }
 
