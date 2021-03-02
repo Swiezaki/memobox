@@ -1,42 +1,22 @@
 package io.github.wojtekmarcin.memobox.entities;
 
-<<<<<<< HEAD
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Table(name = "wordsSets")
-=======
 import javax.persistence.*;
 
 @Table(name = "wordSets")
 @Entity
->>>>>>> d66ba66... memoBox and wordsSet entity filed
 public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSet_id;
     private String set_name;
     private long user_id;
-    private long word_id;
-<<<<<<< HEAD
+    @ManyToOne
+    @JoinColumn(name = "")
+    private Words word_id;
     private boolean visible_flag_id;
     private boolean edition_flag_id;
-=======
-    private Integer visible_flag_id;
-    private Integer edition_flag_id;
->>>>>>> d66ba66... memoBox and wordsSet entity filed
 
     public WordsSet() {
-    }
-
-    public long getWordSet_id() {
-        return wordSet_id;
-    }
-
-    public void setWordSet_id(long wordSet_id) {
-        this.wordSet_id = wordSet_id;
     }
 
     public String getSet_name() {
@@ -55,15 +35,14 @@ public class WordsSet {
         this.user_id = user_id;
     }
 
-    public long getWord_id() {
+    public Words getWord_id() {
         return word_id;
     }
 
-    public void setWord_id(long word_id) {
+    public void setWord_id(Words word_id) {
         this.word_id = word_id;
     }
 
-<<<<<<< HEAD
     public boolean isVisible_flag_id() {
         return visible_flag_id;
     }
@@ -77,21 +56,6 @@ public class WordsSet {
     }
 
     public void setEdition_flag_id(boolean edition_flag_id) {
-=======
-    public Integer getVisible_flag_id() {
-        return visible_flag_id;
-    }
-
-    public void setVisible_flag_id(Integer visible_flag_id) {
-        this.visible_flag_id = visible_flag_id;
-    }
-
-    public Integer getEdition_flag_id() {
-        return edition_flag_id;
-    }
-
-    public void setEdition_flag_id(Integer edition_flag_id) {
->>>>>>> d66ba66... memoBox and wordsSet entity filed
         this.edition_flag_id = edition_flag_id;
     }
 }
