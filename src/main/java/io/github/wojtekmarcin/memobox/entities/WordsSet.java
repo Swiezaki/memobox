@@ -11,12 +11,13 @@ public class WordsSet {
     private String set_name;
     private long user_id;
   
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "word_id")
     private Word word_id;
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
+    
     public WordsSet() {
     }
 
