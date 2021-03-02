@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinColumn(referencedColumnName = "word_id")
     private long word_id;
     private String word;
     private String word_translation;

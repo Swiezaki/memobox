@@ -10,11 +10,11 @@ public class WordsSet {
     private long wordSet_id;
     private String set_name;
     private long user_id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "word_id")
     private Word word_id;
-    private Integer visible_flag_id;
-    private Integer edition_flag_id;
+    private boolean visible_flag_id;
+    private boolean edition_flag_id;
 
     public WordsSet() {
     }
@@ -43,19 +43,19 @@ public class WordsSet {
         this.word_id = word_id;
     }
 
-    public Integer getVisible_flag_id() {
+    public boolean isVisible_flag_id() {
         return visible_flag_id;
     }
 
-    public void setVisible_flag_id(Integer visible_flag_id) {
+    public void setVisible_flag_id(boolean visible_flag_id) {
         this.visible_flag_id = visible_flag_id;
     }
 
-    public Integer getEdition_flag_id() {
+    public boolean isEdition_flag_id() {
         return edition_flag_id;
     }
 
-    public void setEdition_flag_id(Integer edition_flag_id) {
+    public void setEdition_flag_id(boolean edition_flag_id) {
         this.edition_flag_id = edition_flag_id;
     }
 }
