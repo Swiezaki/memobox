@@ -16,6 +16,7 @@ public class WordsSet {
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
+    
     public WordsSet() {
     }
 
