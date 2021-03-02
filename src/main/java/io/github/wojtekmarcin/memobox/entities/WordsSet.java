@@ -11,8 +11,8 @@ public class WordsSet {
     private String set_name;
     private long user_id;
     @ManyToOne
-    @JoinColumn(name = "")
-    private Words word_id;
+    @JoinColumn(name = "word_id")
+    private Word word_id;
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
@@ -35,11 +35,11 @@ public class WordsSet {
         this.user_id = user_id;
     }
 
-    public Words getWord_id() {
+    public Word getWord_id() {
         return word_id;
     }
 
-    public void setWord_id(Words word_id) {
+    public void setWord_id(Word word_id) {
         this.word_id = word_id;
     }
 

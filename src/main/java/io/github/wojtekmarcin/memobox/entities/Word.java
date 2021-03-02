@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "words")
-public class Words {
+public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long word_id;
@@ -14,7 +14,7 @@ public class Words {
     private Integer word_language_id;
     private Integer word_type_id;
 
-    public Words() {
+    public Word() {
     }
 
     public String getWord() {
