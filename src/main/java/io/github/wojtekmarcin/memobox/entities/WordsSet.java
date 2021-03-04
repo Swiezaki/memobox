@@ -12,7 +12,7 @@ public class WordsSet {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private long user_id;
+    private User user_id;
   
     @OneToOne
     @JoinColumn(name = "word_id")
@@ -32,11 +32,11 @@ public class WordsSet {
         this.set_name = set_name;
     }
 
-    public long getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(long user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 
