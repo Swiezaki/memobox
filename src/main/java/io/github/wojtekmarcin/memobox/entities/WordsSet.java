@@ -9,6 +9,9 @@ public class WordsSet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSet_id;
     private String set_name;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private long user_id;
   
     @OneToOne
