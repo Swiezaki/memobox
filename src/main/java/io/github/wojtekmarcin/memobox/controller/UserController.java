@@ -22,13 +22,22 @@ public class UserController {
 
     @GetMapping("/get/userId/{id}")
     ResponseEntity<User> readUserById(@PathVariable Integer id) {
+        if (!repository.existsById(id)) {
+            ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(repository.findUserByUser_id(id));
     }
 
-    @PutMapping("/add/users/{id}")
-    ResponseEntity<?> createUser(@PathVariable Integer id, @RequestBody User toUpdate) {
-        if (repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+    @PutMapping("/add/users")
+    ResponseEntity<?> createUser(@RequestBody User toUpdate) {
+        repository.save(toUpdate);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/edit/users/{id}")
+    ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {
+        if (!repository.existsById(id)) {
+            ResponseEntity.notFound().build();
         }
         toUpdate.setUser_id(id);
         repository.save(toUpdate);
