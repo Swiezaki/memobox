@@ -10,12 +10,11 @@ public class WordsSet {
     private long wordSet_id;
     private String set_name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user_id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "WORD_ID")
+    @OneToOne(mappedBy = "WORD_ID")
     private Word word_id;
 
     private boolean visible_flag_id;

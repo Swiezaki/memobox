@@ -9,7 +9,7 @@ public class MemoBox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBox_id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
