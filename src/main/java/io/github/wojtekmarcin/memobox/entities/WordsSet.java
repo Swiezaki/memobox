@@ -2,25 +2,25 @@ package io.github.wojtekmarcin.memobox.entities;
 
 import javax.persistence.*;
 
-@Table(name = "wordSets")
 @Entity
+@Table(name = "wordSets")
 public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSet_id;
     private String set_name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user_id;
-  
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "word_id")
     private Word word_id;
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
-    
+
     public WordsSet() {
     }
 

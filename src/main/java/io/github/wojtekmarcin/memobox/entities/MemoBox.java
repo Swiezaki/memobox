@@ -1,16 +1,18 @@
 package io.github.wojtekmarcin.memobox.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@Entity
 @Table(name = "memoBoxes")
 public class MemoBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBox_id;
-    private long user_id;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
     private long wordSet_id;
     private Integer word_id;
     private Integer word_slot;
@@ -26,12 +28,12 @@ public class MemoBox {
         this.memoBox_id = memoBox_id;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getWordSet_id() {
