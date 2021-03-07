@@ -5,11 +5,11 @@ import io.github.wojtekmarcin.memobox.entities.User;
 import java.util.List;
 
 public interface UserRepository {
-    List<User> findAllUsers();
-
-    boolean existsById(Integer id);
-
-    User findUserByUser_id(Integer userId);
-
-    User save(User entity);
+//    List<User> findAllUsers();
+//
+//    boolean existsById(long id);
+//
+//    User findUserByUserId(long id);
+//
+//    User save(User entity);
 }

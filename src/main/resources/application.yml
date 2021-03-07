@@ -3,11 +3,11 @@ spring:
     console:
       enabled: true
       path: /console
-#  datasource:
-#    url: jdbc:h2:file:C:\\Users\\marci\\Desktop\\Development\\todo-app\\todo-db
+  datasource:
+    url: jdbc:h2:mem:testdb
   jpa:
     hibernate:
       ddl-auto: create-drop
-task:
-  template:
-    allowMultipleTasks: false
+#task:
+#  template:
+#    allowMultipleTasks: false

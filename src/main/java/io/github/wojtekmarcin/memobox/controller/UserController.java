@@ -15,32 +15,35 @@ public class UserController {
         this.repository = repository;
     }
 
-    @GetMapping("/get/usersAll")
-    ResponseEntity<List<User>> readAllUsers() {
-        return (ResponseEntity<List<User>>) repository.findAllUsers();
-    }
-
-    @GetMapping("/get/userId/{id}")
-    ResponseEntity<User> readUserById(@PathVariable Integer id) {
-        if (!repository.existsById(id)) {
-            ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(repository.findUserByUser_id(id));
-    }
-
-    @PostMapping("/add/users")
-    ResponseEntity<?> createUser(@RequestBody User toUpdate) {
-        repository.save(toUpdate);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/edit/users/{id}")
-    ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {
-        if (!repository.existsById(id)) {
-            ResponseEntity.notFound().build();
-        }
-        toUpdate.setUser_id(id);
-        repository.save(toUpdate);
-        return ResponseEntity.noContent().build();
-    }
+//    @GetMapping("/get/usersAll")
+//    ResponseEntity<List<User>> readAllUsers() {
+//        if(repository.findAllUsers().isEmpty()){
+//            ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(repository.findAllUsers());
+//    }
+//
+//    @GetMapping("/get/userId/{id}")
+//    ResponseEntity<User> readUserById(@PathVariable Integer id) {
+//        if (!repository.existsById(id)) {
+//            ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(repository.findUserByUserId(id));
+//    }
+//
+//    @PostMapping("/add/users")
+//    ResponseEntity<?> createUser(@RequestBody User toUpdate) {
+//        repository.save(toUpdate);
+//        return ResponseEntity.noContent().build();
+//    }
+//
+//    @PutMapping("/edit/users/{id}")
+//    ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {
+//        if (!repository.existsById(id)) {
+//            ResponseEntity.notFound().build();
+//        }
+//        toUpdate.setUser_id(id);
+//        repository.save(toUpdate);
+//        return ResponseEntity.noContent().build();
+//    }
 }
