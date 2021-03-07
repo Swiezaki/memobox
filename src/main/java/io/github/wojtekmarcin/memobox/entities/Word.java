@@ -3,7 +3,7 @@ package io.github.wojtekmarcin.memobox.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "WORDS")
+@Table(name = "Words")
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,9 @@ public class Word {
     private Integer word_translation_id;
     private Integer word_language_id;
     private Integer word_type_id;
+
+    @OneToOne(mappedBy = "word_id")
+    private WordsSet wordsSet_word_id;
 
     public Word() {
     }

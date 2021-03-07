@@ -28,13 +28,13 @@ public class UserController {
         return ResponseEntity.ok(repository.findUserByUser_id(id));
     }
 
-    @PutMapping("/add/users")
+    @PostMapping("/add/users")
     ResponseEntity<?> createUser(@RequestBody User toUpdate) {
         repository.save(toUpdate);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/edit/users/{id}")
+    @PutMapping("/edit/users/{id}")
     ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
