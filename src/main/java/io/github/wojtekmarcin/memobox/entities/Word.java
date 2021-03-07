@@ -3,11 +3,10 @@ package io.github.wojtekmarcin.memobox.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "words")
+@Table(name = "WORDS")
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(referencedColumnName = "word_id")
     private long word_id;
     private String word;
     private String word_translation;
