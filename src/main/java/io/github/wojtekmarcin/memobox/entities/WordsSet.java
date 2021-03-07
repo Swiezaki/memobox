@@ -3,20 +3,21 @@ package io.github.wojtekmarcin.memobox.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "wordSets")
+@Table(name = "WORDS_SETS")
 public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSet_id;
     private String set_name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user_id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "word_id")
+    @JoinColumn(name = "WORD_ID")
     private Word word_id;
+
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
