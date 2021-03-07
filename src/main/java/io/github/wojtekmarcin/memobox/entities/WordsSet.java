@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "WORDS_SETS")
+@Table(name = "Words_Set")
 public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,15 +13,16 @@ public class WordsSet {
     private boolean visible_flag_id;
     private boolean edition_flag_id;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user_id;
 
-    @OneToOne(mappedBy = "WORD_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wordsSet_word_id")
     private Word word_id;
 
-    @ManyToMany(mappedBy = "MEMOBOX_ID")
-    private List<MemoBox> memoBox_id;
+    @ManyToMany(mappedBy = "wordSet_id")
+    private List<MemoBox> memoBox_set_id;
 
     public WordsSet() {
     }
@@ -74,11 +75,11 @@ public class WordsSet {
         this.word_id = word_id;
     }
 
-    public List<MemoBox> getMemoBox_id() {
-        return memoBox_id;
+    public List<MemoBox> getMemoBox_set_id() {
+        return memoBox_set_id;
     }
 
-    public void setMemoBox_id(List<MemoBox> memoBox_id) {
-        this.memoBox_id = memoBox_id;
+    public void setMemoBox_set_id(List<MemoBox> memoBox_set_id) {
+        this.memoBox_set_id = memoBox_set_id;
     }
 }

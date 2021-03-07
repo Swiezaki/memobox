@@ -4,10 +4,10 @@ spring:
       enabled: true
       path: /console
   datasource:
-    url: jdbc:h2:file:C:\\Users\\marci\\Desktop\\Development\\todo-app\\todo-db
+    url: jdbc:h2:mem:testdb
   jpa:
     hibernate:
-      ddl-auto: validate
-task:
-  template:
-    allowMultipleTasks: false
+      ddl-auto: create-drop
+#task:
+#  template:
+#    allowMultipleTasks: false

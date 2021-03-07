@@ -4,21 +4,27 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "memoBoxes")
+@Table(name = "Memoboxes")
 public class MemoBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBox_id;
-    private Integer word_id;
     private Integer word_slot;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user_id;
 
     @ManyToMany
-    @JoinColumn(name = "WORDSET_ID")
+    @JoinTable(
+            name = "memoBoxes_wordsSets",
+            joinColumns = @JoinColumn(name = "memoBox_set_id"),
+            inverseJoinColumns = @JoinColumn(name = "wordSet_id"))
     private List<WordsSet> wordSet_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "word_id")
+    private Word word_id;
 
     public MemoBox() {
     }
@@ -31,14 +37,6 @@ public class MemoBox {
         this.memoBox_id = memoBox_id;
     }
 
-    public Integer getWord_id() {
-        return word_id;
-    }
-
-    public void setWord_id(Integer word_id) {
-        this.word_id = word_id;
-    }
-
     public Integer getWord_slot() {
         return word_slot;
     }
@@ -47,12 +45,12 @@ public class MemoBox {
         this.word_slot = word_slot;
     }
 
-    public User getUser() {
-        return user;
+    public User getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(User user) {
+        this.user_id = user;
     }
 
     public List<WordsSet> getWordSet_id() {
@@ -61,5 +59,13 @@ public class MemoBox {
 
     public void setWordSet_id(List<WordsSet> wordSet_id) {
         this.wordSet_id = wordSet_id;
+    }
+
+    public Word getWord_id() {
+        return word_id;
+    }
+
+    public void setWord_id(Word word_id) {
+        this.word_id = word_id;
     }
 }

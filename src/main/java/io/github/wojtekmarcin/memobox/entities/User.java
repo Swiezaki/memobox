@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,10 +12,10 @@ public class User {
     private String login;
     private String password;
 
-    @OneToMany(mappedBy = "USER_ID")
+    @OneToMany(mappedBy = "user_id")
     private List<MemoBox> memoBox_id;
 
-    @OneToMany(mappedBy = "USER_ID")
+    @OneToMany(mappedBy = "user_id")
     private List<WordsSet> wordsSet_id;
 
     public User() {
