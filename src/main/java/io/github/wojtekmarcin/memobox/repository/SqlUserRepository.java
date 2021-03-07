@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    @RestResource(path = "user", rel = "user")
+interface SqlUserRepository extends JpaRepository<User, Long> {
     List<User> findUserByUser_id(@Param("id") Long userId);
 }
