@@ -11,8 +11,8 @@ import java.util.List;
 public class UserController {
     private final UserRepository repository;
 
-    public UserController(UserRepository userRepository) {
-        this.repository = userRepository;
+    public UserController(UserRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping("/get/usersAll")
