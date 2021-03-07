@@ -21,8 +21,7 @@ public class WordsSet {
     @JoinColumn(name = "wordsSet_word_id")
     private Word word_id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memobox_set_id")
+    @ManyToMany(mappedBy = "wordSet_id")
     private List<MemoBox> memoBox_set_id;
 
     public WordsSet() {

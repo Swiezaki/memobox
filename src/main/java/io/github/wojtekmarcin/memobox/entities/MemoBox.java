@@ -9,7 +9,6 @@ public class MemoBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBox_id;
-    private Integer word_id;
     private Integer word_slot;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -17,12 +16,15 @@ public class MemoBox {
     private User user_id;
 
     @ManyToMany
-    @JoinColumn(name = "wordSet_id")
+    @JoinTable(
+            name = "memoBoxes_wordsSets",
+            joinColumns = @JoinColumn(name = "memoBox_set_id"),
+            inverseJoinColumns = @JoinColumn(name = "wordSet_id"))
     private List<WordsSet> wordSet_id;
 
-    @ManyToMany
-    @JoinColumn(name = "memoBox_set_id")
-    private List<WordsSet> wordsSets_memoBox_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "word_id")
+    private Word word_id;
 
     public MemoBox() {
     }
@@ -33,14 +35,6 @@ public class MemoBox {
 
     public void setMemoBox_id(long memoBox_id) {
         this.memoBox_id = memoBox_id;
-    }
-
-    public Integer getWord_id() {
-        return word_id;
-    }
-
-    public void setWord_id(Integer word_id) {
-        this.word_id = word_id;
     }
 
     public Integer getWord_slot() {
@@ -67,11 +61,11 @@ public class MemoBox {
         this.wordSet_id = wordSet_id;
     }
 
-    public List<WordsSet> getWordsSets_memoBox_id() {
-        return wordsSets_memoBox_id;
+    public Word getWord_id() {
+        return word_id;
     }
 
-    public void setWordsSets_memoBox_id(List<WordsSet> wordsSets_memoBox_id) {
-        this.wordsSets_memoBox_id = wordsSets_memoBox_id;
+    public void setWord_id(Word word_id) {
+        this.word_id = word_id;
     }
 }
