@@ -8,7 +8,9 @@ import java.util.List;
 public interface UserRepository {
     List<User> findAllUsers();
 
-    List<User> findUserByUser_id(@Param("id") Integer userId);
+    boolean existsById(Integer id);
+
+    User findUserByUser_id(Integer userId);
 
     User save(User entity);
 }
