@@ -3,13 +3,14 @@ package io.github.wojtekmarcin.memobox.repository;
 import io.github.wojtekmarcin.memobox.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository {
-//    List<User> findAllUsers();
-//
-//    boolean existsById(long id);
-//
-//    User findUserByUserId(long id);
-//
-//    User save(User entity);
+    List<User> findAll();
+
+    boolean existsById(Long id);
+
+    List<User> findByUserId(Long id);
+
+    User save(User entity);
 }
