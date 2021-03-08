@@ -8,64 +8,64 @@ import java.util.List;
 public class MemoBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memoBox_id;
-    private Integer word_slot;
+    private long memoBoxId;
+    private Integer wordSlot;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user_id;
+    @JoinColumn(name = "userId")
+    private User userId;
 
     @ManyToMany
     @JoinTable(
-            name = "memoBoxes_wordsSets",
-            joinColumns = @JoinColumn(name = "memoBox_set_id"),
-            inverseJoinColumns = @JoinColumn(name = "wordSet_id"))
-    private List<WordsSet> wordSet_id;
+            name = "memoBoxesWordsSets",
+            joinColumns = @JoinColumn(name = "memoBoxSetId"),
+            inverseJoinColumns = @JoinColumn(name = "wordSetId"))
+    private List<WordsSet> wordSetId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "word_id")
-    private Word word_id;
+    @JoinColumn(name = "wordId")
+    private Word wordId;
 
     public MemoBox() {
     }
 
-    public long getMemoBox_id() {
-        return memoBox_id;
+    public long getMemoBoxId() {
+        return memoBoxId;
     }
 
-    public void setMemoBox_id(long memoBox_id) {
-        this.memoBox_id = memoBox_id;
+    public void setMemoBoxId(long memoBoxId) {
+        this.memoBoxId = memoBoxId;
     }
 
-    public Integer getWord_slot() {
-        return word_slot;
+    public Integer getWordSlot() {
+        return wordSlot;
     }
 
-    public void setWord_slot(Integer word_slot) {
-        this.word_slot = word_slot;
+    public void setWordSlot(Integer wordSlot) {
+        this.wordSlot = wordSlot;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser_id(User user) {
-        this.user_id = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public List<WordsSet> getWordSet_id() {
-        return wordSet_id;
+    public List<WordsSet> getWordSetId() {
+        return wordSetId;
     }
 
-    public void setWordSet_id(List<WordsSet> wordSet_id) {
-        this.wordSet_id = wordSet_id;
+    public void setWordSetId(List<WordsSet> wordSetId) {
+        this.wordSetId = wordSetId;
     }
 
-    public Word getWord_id() {
-        return word_id;
+    public Word getWordId() {
+        return wordId;
     }
 
-    public void setWord_id(Word word_id) {
-        this.word_id = word_id;
+    public void setWordId(Word wordId) {
+        this.wordId = wordId;
     }
 }
