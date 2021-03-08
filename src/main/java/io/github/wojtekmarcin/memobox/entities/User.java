@@ -12,11 +12,11 @@ public class User {
     private String login;
     private String password;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<MemoBox> memoBox_id;
+    @OneToMany(mappedBy = "userId")
+    private List<MemoBox> memoBoxId;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<WordsSet> wordsSet_id;
+    @OneToMany(mappedBy = "userId")
+    private List<WordsSet> wordsSetId;
 
     public User() {
     }
@@ -25,8 +25,8 @@ public class User {
         return userId;
     }
 
-    public void setUserId(long user_id) {
-        this.userId = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -45,19 +45,19 @@ public class User {
         this.password = password;
     }
 
-    public List<MemoBox> getMemoBox_id() {
-        return memoBox_id;
+    public List<MemoBox> getMemoBoxId() {
+        return memoBoxId;
     }
 
-    public void setMemoBox_id(List<MemoBox> memoBox_id) {
-        this.memoBox_id = memoBox_id;
+    public void setMemoBoxId(List<MemoBox> memoBoxId) {
+        this.memoBoxId = memoBoxId;
     }
 
-    public List<WordsSet> getWordsSet_id() {
-        return wordsSet_id;
+    public List<WordsSet> getWordsSetId() {
+        return wordsSetId;
     }
 
-    public void setWordsSet_id(List<WordsSet> wordsSet_id) {
-        this.wordsSet_id = wordsSet_id;
+    public void setWordsSetId(List<WordsSet> wordsSetId) {
+        this.wordsSetId = wordsSetId;
     }
 }

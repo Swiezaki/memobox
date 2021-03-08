@@ -7,25 +7,25 @@ import javax.persistence.*;
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long word_id;
+    private long wordId;
     private String word;
-    private String word_translation;
-    private Integer word_translation_id;
-    private Integer word_language_id;
-    private Integer word_type_id;
+    private String wordTranslation;
+    private Integer wordTranslationId;
+    private Integer wordLanguageId;
+    private Integer wordTypeId;
 
-    @OneToOne(mappedBy = "word_id")
-    private WordsSet wordsSet_word_id;
+    @OneToOne(mappedBy = "wordId")
+    private WordsSet wordsSetWordId;
 
     public Word() {
     }
 
-    public long getWord_id() {
-        return word_id;
+    public long getWordId() {
+        return wordId;
     }
 
-    public void setWord_id(long word_id) {
-        this.word_id = word_id;
+    public void setWordId(long word_id) {
+        this.wordId = word_id;
     }
 
     public String getWord() {
@@ -36,36 +36,36 @@ public class Word {
         this.word = word;
     }
 
-    public String getWord_translation() {
-        return word_translation;
+    public String getWordTranslation() {
+        return wordTranslation;
     }
 
-    public void setWord_translation(String word_translation) {
-        this.word_translation = word_translation;
+    public void setWordTranslation(String word_translation) {
+        this.wordTranslation = word_translation;
     }
 
 
-    public Integer getWord_translation_id() {
-        return word_translation_id;
+    public Integer getWordTranslationId() {
+        return wordTranslationId;
     }
 
-    public void setWord_translation_id(Integer word_translation_id) {
-        this.word_translation_id = word_translation_id;
+    public void setWordTranslationId(Integer word_translation_id) {
+        this.wordTranslationId = word_translation_id;
     }
 
-    public Integer getWord_language_id() {
-        return word_language_id;
+    public Integer getWordLanguageId() {
+        return wordLanguageId;
     }
 
-    public void setWord_language_id(Integer word_language_id) {
-        this.word_language_id = word_language_id;
+    public void setWordLanguageId(Integer word_language_id) {
+        this.wordLanguageId = word_language_id;
     }
 
-    public Integer getWord_type_id() {
-        return word_type_id;
+    public Integer getWordTypeId() {
+        return wordTypeId;
     }
 
-    public void setWord_type_id(Integer word_type_id) {
-        this.word_type_id = word_type_id;
+    public void setWordTypeId(Integer word_type_id) {
+        this.wordTypeId = word_type_id;
     }
 }
