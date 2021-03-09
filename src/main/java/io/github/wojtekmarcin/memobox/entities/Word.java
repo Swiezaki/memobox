@@ -14,7 +14,7 @@ public class Word {
     private Integer wordLanguageId;
     private Integer wordTypeId;
 
-    @OneToOne(mappedBy = "word")
+    @OneToOne(mappedBy = "wordId")
     private WordsSet wordsSetWordId;
 
     public Word() {
