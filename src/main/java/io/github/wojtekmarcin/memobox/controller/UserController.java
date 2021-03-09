@@ -15,14 +15,14 @@ public class UserController {
         this.repository = repository;
     }
 
-//    @GetMapping("/get/usersAll")
-//    ResponseEntity<List<User>> readAllUsers() {
-//        if(repository.findAllUsers().isEmpty()){
-//            ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(repository.findAllUsers());
-//    }
-//
+    @GetMapping("/get/usersAll")
+    ResponseEntity<List<User>> readAllUsers() {
+        if(repository.findAll().isEmpty()){
+            ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(repository.findAll());
+    }
+
 //    @GetMapping("/get/userId/{id}")
 //    ResponseEntity<User> readUserById(@PathVariable Integer id) {
 //        if (!repository.existsById(id)) {
@@ -31,11 +31,11 @@ public class UserController {
 //        return ResponseEntity.ok(repository.findUserByUserId(id));
 //    }
 //
-//    @PostMapping("/add/users")
-//    ResponseEntity<?> createUser(@RequestBody User toUpdate) {
-//        repository.save(toUpdate);
-//        return ResponseEntity.noContent().build();
-//    }
+    @PostMapping("/add/users")
+    ResponseEntity<?> createUser(@RequestBody User toUpdate) {
+        repository.save(toUpdate);
+        return ResponseEntity.noContent().build();
+    }
 //
 //    @PutMapping("/edit/users/{id}")
 //    ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {

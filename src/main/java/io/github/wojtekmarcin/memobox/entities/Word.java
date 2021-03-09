@@ -68,4 +68,12 @@ public class Word {
     public void setWordTypeId(Integer word_type_id) {
         this.wordTypeId = word_type_id;
     }
+
+    public WordsSet getWordsSetWordId() {
+        return wordsSetWordId;
+    }
+
+    public void setWordsSetWordId(WordsSet wordsSetWordId) {
+        this.wordsSetWordId = wordsSetWordId;
+    }
 }
