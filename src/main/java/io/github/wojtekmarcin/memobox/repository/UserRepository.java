@@ -10,7 +10,7 @@ public interface UserRepository {
 
     boolean existsById(Long id);
 
-    List<User> findByUserId(Long id);
+    User findUserByUserId(Long id);
 
     User save(User entity);
 }
