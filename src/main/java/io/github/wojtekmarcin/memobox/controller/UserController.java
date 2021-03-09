@@ -35,17 +35,25 @@ public class UserController {
     @PostMapping("/user/add")
     ResponseEntity<?> createUser(@RequestBody User toUpdate) {
         repository.save(toUpdate);
-//        return ResponseEntity.noContent().build();
-    return ResponseEntity.created(URI.create("/user/add")).build();
+    return ResponseEntity.created(URI.create("/user/add/" + toUpdate.getUserId())).build();
     }
-//
-//    @PutMapping("/edit/users/{id}")
-//    ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User toUpdate) {
-//        if (!repository.existsById(id)) {
-//            ResponseEntity.notFound().build();
-//        }
-//        toUpdate.setUser_id(id);
-//        repository.save(toUpdate);
-//        return ResponseEntity.noContent().build();
-//    }
+
+    @PutMapping("/user/edit/{id}")
+    ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User toUpdate) {
+        if (!repository.existsById(id)) {
+            ResponseEntity.notFound().build();
+        }
+        toUpdate.setUserId(id);
+        repository.save(toUpdate);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/user/delete/{id}")
+    ResponseEntity<?> deleteUser (@PathVariable Long id){
+        if(!repository.existsById(id)){
+            ResponseEntity.notFound().build();
+        }
+        repository.deleteUserByUserId(id);
+        return ResponseEntity.noContent().build();
+    }
 }
