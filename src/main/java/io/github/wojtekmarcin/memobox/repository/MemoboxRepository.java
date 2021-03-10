@@ -12,4 +12,6 @@ public interface MemoboxRepository {
     MemoBox findMemoBoxByMemoBoxId(Long id);
 
     void deleteByMemoBoxId(Long id);
+
+    MemoBox save(MemoBox entity);
 }
