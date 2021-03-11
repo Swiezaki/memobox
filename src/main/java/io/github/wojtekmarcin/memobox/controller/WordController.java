@@ -15,7 +15,7 @@ public class WordController {
         this.repository = repository;
     }
 
-    @GetMapping("/get/wordsAll")
+    @GetMapping("/word/getAll")
     ResponseEntity<List<Word>> findAll() {
         if (repository.findAll().isEmpty()) {
             ResponseEntity.notFound().build();
@@ -23,7 +23,7 @@ public class WordController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @PostMapping("/put/word")
+    @PostMapping("/word/add")
     ResponseEntity<?> createWord(@RequestBody Word toUpdate) {
         repository.save(toUpdate);
         return ResponseEntity.noContent().build();
