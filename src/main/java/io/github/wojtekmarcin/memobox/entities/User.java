@@ -12,6 +12,7 @@ public class User {
     private String login;
     private String password;
 
+    
     @OneToMany(mappedBy = "userId")
     private List<MemoBox> memoBoxId;
 
