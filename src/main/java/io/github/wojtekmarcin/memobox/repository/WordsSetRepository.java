@@ -10,7 +10,7 @@ public interface WordsSetRepository {
 
     boolean existsById(Long id);
 
-    MemoBox findMemoBoxByWordsSetId(Long id);
+    MemoBox findMemoBoxByWordSetId(Long id);
 
-    void deleteByWordsSetId(Long id);
+    void deleteByWordSetId(Long id);
 }
