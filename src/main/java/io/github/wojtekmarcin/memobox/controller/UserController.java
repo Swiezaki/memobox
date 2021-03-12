@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     private final UserRepository repository;
 
@@ -16,7 +17,7 @@ public class UserController {
         this.repository = repository;
     }
 
-    @GetMapping("/user/getAll")
+    @GetMapping("/getAll")
     ResponseEntity<List<User>> readAllUsers() {
         if(repository.findAll().isEmpty()){
             ResponseEntity.notFound().build();
@@ -24,7 +25,7 @@ public class UserController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @GetMapping("/user/getUserById/{id}")
+    @GetMapping("/getUserById/{id}")
     ResponseEntity<User> readUserById(@PathVariable Long id) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
@@ -32,13 +33,13 @@ public class UserController {
         return ResponseEntity.ok(repository.findUserByUserId(id));
     }
 
-    @PostMapping("/user/add")
+    @PostMapping("/add")
     ResponseEntity<?> createUser(@RequestBody User toUpdate) {
         repository.save(toUpdate);
     return ResponseEntity.created(URI.create("/user/add/" + toUpdate.getUserId())).build();
     }
 
-    @PutMapping("/user/edit/{id}")
+    @PutMapping("/edit/{id}")
     ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User toUpdate) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
@@ -48,7 +49,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/user/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteUser (@PathVariable Long id){
         if(!repository.existsById(id)){
             ResponseEntity.notFound().build();
