@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/word")
 public class WordController {
     private final WordRepository repository;
 
@@ -15,7 +16,7 @@ public class WordController {
         this.repository = repository;
     }
 
-    @GetMapping("/word/getAll")
+    @GetMapping("/getAll")
     ResponseEntity<List<Word>> findAll() {
         if (repository.findAll().isEmpty()) {
             ResponseEntity.notFound().build();
@@ -23,7 +24,7 @@ public class WordController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @PostMapping("/word/add")
+    @PostMapping("/add")
     ResponseEntity<?> createWord(@RequestBody Word toUpdate) {
         repository.save(toUpdate);
         return ResponseEntity.noContent().build();

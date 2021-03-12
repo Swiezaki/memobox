@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/memobox")
 public class MemoBoxController {
     private final MemoboxRepository repository;
 
@@ -16,7 +17,7 @@ public class MemoBoxController {
         this.repository = repository;
     }
 
-    @GetMapping("/memobox/getAll")
+    @GetMapping("/getAll")
     ResponseEntity<List<MemoBox>> readAllMemobox() {
         if (repository.findAll().isEmpty()) {
             ResponseEntity.notFound().build();
@@ -24,7 +25,7 @@ public class MemoBoxController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @GetMapping("/memobox/getMemoboxById/{id}")
+    @GetMapping("/getMemoboxById/{id}")
     ResponseEntity<MemoBox> readMemoboxById(@RequestBody Long id) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
@@ -32,13 +33,13 @@ public class MemoBoxController {
         return ResponseEntity.ok(repository.findMemoBoxByMemoBoxId(id));
     }
 
-    @PostMapping("/memobox/add")
+    @PostMapping("/add")
     ResponseEntity<?> createMemobox(@RequestBody MemoBox toUpdate) {
         repository.save(toUpdate);
         return ResponseEntity.created(URI.create("/memobox/add/" + toUpdate.getUserId())).build();
     }
 
-    @PutMapping("/memobox/edit/{id}")
+    @PutMapping("/edit/{id}")
     ResponseEntity<MemoBox> editMemoboxById(@PathVariable Long id, @RequestBody MemoBox toUpdate) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
@@ -48,7 +49,7 @@ public class MemoBoxController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/membox/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteMemobox(@PathVariable Long id) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
