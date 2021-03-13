@@ -26,6 +26,9 @@ public class MemoBox {
     @JoinColumn(name = "wordId")
     private Word wordId;
 
+    @Embedded
+    private Audit audit = new Audit();
+
     public MemoBox() {
     }
 

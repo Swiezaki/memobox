@@ -24,6 +24,9 @@ public class WordsSet {
     @ManyToMany(mappedBy = "wordSetId")
     private List<MemoBox> memoBoxSetId;
 
+    @Embedded
+    private Audit audit = new Audit();
+
     public WordsSet() {
     }
 

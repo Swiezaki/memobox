@@ -17,6 +17,9 @@ public class Word {
     @OneToOne(mappedBy = "wordId")
     private WordsSet wordsSetWordId;
 
+    @Embedded
+    private Audit audit = new Audit();
+
     public Word() {
     }
 
