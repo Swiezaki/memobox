@@ -1,12 +1,11 @@
 package io.github.wojtekmarcin.memobox.entities;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
-public class User extends Audit {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
@@ -18,6 +17,9 @@ public class User extends Audit {
 
     @OneToMany(mappedBy = "userId")
     private List<WordsSet> wordsSetId;
+
+    @Embedded
+    private Audit audit = new Audit();
 
     public User() {
     }

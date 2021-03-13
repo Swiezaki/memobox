@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Words")
-public class Word extends Audit{
+public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
@@ -16,6 +16,9 @@ public class Word extends Audit{
 
     @OneToOne(mappedBy = "wordId")
     private WordsSet wordsSetWordId;
+
+    @Embedded
+    private Audit audit = new Audit();
 
     public Word() {
     }

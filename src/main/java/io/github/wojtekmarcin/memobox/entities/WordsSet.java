@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "WordsSets")
-public class WordsSet extends Audit{
+public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSetId;
@@ -23,6 +23,9 @@ public class WordsSet extends Audit{
 
     @ManyToMany(mappedBy = "wordSetId")
     private List<MemoBox> memoBoxSetId;
+
+    @Embedded
+    private Audit audit = new Audit();
 
     public WordsSet() {
     }
