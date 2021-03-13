@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Words")
-public class Word {
+public class Word extends Audit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;

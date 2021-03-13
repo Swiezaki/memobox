@@ -6,16 +6,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class User extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
     private String login;
     private String password;
-    private LocalDate createdOn;
-    private LocalDate preMerge;
 
-    
     @OneToMany(mappedBy = "userId")
     private List<MemoBox> memoBoxId;
 
@@ -63,15 +60,5 @@ public class User {
 
     public void setWordsSetId(List<WordsSet> wordsSetId) {
         this.wordsSetId = wordsSetId;
-    }
-
-    @PrePersist
-    void prePersist(){
-        createdOn = LocalDate.now();
-    }
-
-    @PreUpdate
-    void preUpdate(){
-        preMerge = LocalDate.now();
     }
 }

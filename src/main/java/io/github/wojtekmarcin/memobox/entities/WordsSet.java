@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "WordsSets")
-public class WordsSet {
+public class WordsSet extends Audit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSetId;
