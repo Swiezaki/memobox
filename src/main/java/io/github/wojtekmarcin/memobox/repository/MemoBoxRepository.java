@@ -4,7 +4,7 @@ import io.github.wojtekmarcin.memobox.entities.MemoBox;
 
 import java.util.List;
 
-public interface MemoboxRepository {
+public interface MemoBoxRepository {
     List<MemoBox> findAll();
 
     boolean existsById(Long id);

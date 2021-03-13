@@ -1,7 +1,7 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.MemoBox;
-import io.github.wojtekmarcin.memobox.repository.MemoboxRepository;
+import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/memobox")
 public class MemoBoxController {
-    private final MemoboxRepository repository;
+    MemoBoxRepository repository;
 
-    public MemoBoxController(MemoboxRepository repository) {
+    public MemoBoxController(MemoBoxRepository repository) {
         this.repository = repository;
     }
 
@@ -57,5 +57,4 @@ public class MemoBoxController {
         repository.deleteByMemoBoxId(id);
         return ResponseEntity.noContent().build();
     }
-
 }
