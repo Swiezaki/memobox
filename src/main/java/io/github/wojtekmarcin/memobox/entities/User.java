@@ -1,6 +1,7 @@
 package io.github.wojtekmarcin.memobox.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -11,6 +12,8 @@ public class User {
     private long userId;
     private String login;
     private String password;
+    private LocalDate createdOn;
+    private LocalDate preMerge;
 
     
     @OneToMany(mappedBy = "userId")
@@ -60,5 +63,15 @@ public class User {
 
     public void setWordsSetId(List<WordsSet> wordsSetId) {
         this.wordsSetId = wordsSetId;
+    }
+
+    @PrePersist
+    void prePersist(){
+        createdOn = LocalDate.now();
+    }
+
+    @PreUpdate
+    void preUpdate(){
+        preMerge = LocalDate.now();
     }
 }

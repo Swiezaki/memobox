@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface SqlMemoboxRepository extends MemoboxRepository, JpaRepository<MemoBox, Long> {
+interface SqlMemoBoxRepository extends MemoBoxRepository, JpaRepository<MemoBox, Long> {
 }
