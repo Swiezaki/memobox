@@ -15,4 +15,6 @@ public interface UserRepository {
     void deleteUserByUserId(Long id);
 
     User save(User entity);
+
+    Optional<User> findById(Long id);
 }

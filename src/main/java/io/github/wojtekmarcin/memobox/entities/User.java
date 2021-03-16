@@ -1,15 +1,22 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "login")})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+    @NotNull
+    @Column(unique = true)
     private String login;
+    @NotNull
     private String password;
 
     @OneToMany(mappedBy = "userId")
@@ -28,7 +35,7 @@ public class User {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -62,5 +69,27 @@ public class User {
 
     public void setWordsSetId(List<WordsSet> wordsSetId) {
         this.wordsSetId = wordsSetId;
+    }
+
+    public void updateFrom(final User source) {
+        if (StringUtils.isNotBlank(source.getLogin())) {
+            login = source.getLogin();
+        }
+        if (StringUtils.isNotBlank(source.getPassword())) {
+            password = source.getPassword();
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(password);
     }
 }
