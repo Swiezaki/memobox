@@ -39,7 +39,7 @@ public class User {
         this.userId = userId;
     }
 
-    public String getLogin() {
+    public String   getLogin() {
         return login;
     }
 
