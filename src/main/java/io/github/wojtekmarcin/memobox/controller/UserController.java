@@ -51,20 +51,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-//        repository.findById(id)
-//                .ifPresent(user -> {
-//                    LOGGER.info("weszło do lambdy");
-//                    if (!user.equals(toUpdate)) {
-//                        user.updateFrom(toUpdate);
-//                        repository.save(user);
-//                        LOGGER.info("weszło do infa");
-//                    } else {
-//                        response = ResponseEntity.badRequest().build();
-//                    }
-//                });
         Optional<User> byId = repository.findById(id);
-        if (byId.isPresent()){
-            if (!byId.get().equals(toUpdate)){
+        if (byId.isPresent()) {
+            if (!byId.get().equals(toUpdate)) {
                 byId.get().updateFrom(toUpdate);
                 repository.save(byId.get());
                 return ResponseEntity.ok().build();
@@ -73,6 +62,7 @@ public class UserController {
                 return ResponseEntity.badRequest().build();
             }
         }
+
         return ResponseEntity.badRequest().build();
     }
 
