@@ -6,34 +6,25 @@
     <meta charset="UTF-8">
     <title>User</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
-</head>
-<main>
-    <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
-    <form action="#" method="post" th:action="@{/userView}" th:object="${users}">
-        <fieldset>
-            <legend>User</legend>
-            <label>Login
-                <input type="text" th:field="*{login}"/>
-            </label>
-            <label>Password
-                <input type="text" th:field="*{login}"/>
-            </label>
-            <fieldset>
-                <legend>User memoboxes</legend>
-                <fieldset th:each="step,stepStat :*{memoBoxId}">
-                    <legend th:text="|Memobox ${stepStat.index}|"></legend>
-                    <label>Memobox Id
-                        <input type="text" th:field="*{memoBoxId[__${stepStat.index}__].memoBoxId}"/>
-                    </label>
-                </fieldset>
-            </fieldset>
-        </fieldset>
-        <p>
-            <button type="submit">Add user</button>
-            <button type="reset">Reset</button>
-        </p>
-    </form>
-</main>
+</head>l
 <body>
+<main>
+    <!--/*@thymesVar id="users" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+    <dl th:each="user : ${users}"></dl>
+    <dt th:text="${user.login}">...</dt>
+    <dt th:text="${user.password}">...</dt>
+    <!--    <dd>
+            <ul>
+                &lt;!&ndash;/*@thymesVar id="memoBoxId" type="io.github.wojtekmarcin.memobox.entities.User"*/&ndash;&gt;
+                <li th:each="user : ${users}" th:text=""></li>
+            </ul>
+        </dd>-->
+    <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+    <p>
+        <button type="submit">Add user</button>
+        <button type="reset">Reset</button>
+    </p>
+</main>
+
 </body>
 </html>
