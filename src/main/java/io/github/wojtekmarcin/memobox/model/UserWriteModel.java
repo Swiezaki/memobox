@@ -1,8 +1,11 @@
-package io.github.wojtekmarcin.memobox.form;
+package io.github.wojtekmarcin.memobox.model;
 
-public class UserForm {
+public class UserWriteModel {
     private String login;
     private String password;
+
+    public UserWriteModel() {
+    }
 
     public String getLogin() {
         return login;
