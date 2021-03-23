@@ -7,33 +7,29 @@
     <title>User</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
 </head>
+l
+<body>
 <main>
     <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
-    <form action="#" method="post" th:action="@{/userView}" th:object="${users}">
-        <fieldset>
-            <legend>User</legend>
-            <label>Login
-                <input type="text" th:field="*{login}"/>
-            </label>
-            <label>Password
-                <input type="text" th:field="*{login}"/>
-            </label>
-            <fieldset>
-                <legend>User memoboxes</legend>
-                <fieldset th:each="step,stepStat :*{memoBoxId}">
-                    <legend th:text="|Memobox ${stepStat.index}|"></legend>
-                    <label>Memobox Id
-                        <input type="text" th:field="*{memoBoxId[__${stepStat.index}__].memoBoxId}"/>
-                    </label>
-                </fieldset>
-            </fieldset>
+    <form action="" method="get" th:action="@{/userView}" th:object="${user}">
+        <fieldset th:each="user,userStat : ${user}">
+            <legend th:text="|User *{userId}|"></legend>
+            <label>Login</label>
+            <td th:field="*{login}">
+                <label>Password</label>
+            <td th:field="*{password}">
         </fieldset>
+        <!--        <fieldset>-->
+        <!--            <legend>User Memoboxes</legend>-->
+        <!--            <label>MemoboxId</label>-->
+        <!--            <input type="text" th:field="*{login}">-->
+        <!--        </fieldset>-->
         <p>
             <button type="submit">Add user</button>
             <button type="reset">Reset</button>
         </p>
     </form>
 </main>
-<body>
+
 </body>
 </html>
