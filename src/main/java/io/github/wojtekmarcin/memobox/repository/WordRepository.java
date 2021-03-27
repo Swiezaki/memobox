@@ -4,7 +4,7 @@ import io.github.wojtekmarcin.memobox.entities.Word;
 
 import java.util.List;
 
-public interface SqlWordRepository {
+public interface WordRepository {
     List<Word> findAll();
 
     boolean existsById(Long id);

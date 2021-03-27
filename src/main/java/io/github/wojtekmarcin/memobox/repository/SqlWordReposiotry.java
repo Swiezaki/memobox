@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface SqlWordReposiotry extends SqlWordRepository, JpaRepository<Word, Long> {
+interface SqlWordReposiotry extends WordRepository, JpaRepository<Word, Long> {
 }
