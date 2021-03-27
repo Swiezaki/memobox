@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/wordView")
 public class WordViewController {
-    WordRepository repository;
+    private final WordRepository repository;
 
     public WordViewController(WordRepository repository) {
         this.repository = repository;
