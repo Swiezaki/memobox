@@ -16,7 +16,7 @@ public class WordViewController {
     }
 
     @GetMapping
-    public String showWordView(Model model) {
+    String showWordView(Model model) {
         model.addAttribute("words", repository.findAll());
         return "wordView";
     }
