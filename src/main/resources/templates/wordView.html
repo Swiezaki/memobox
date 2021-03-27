@@ -6,20 +6,23 @@
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
 </head>
 <body>
-<h1 th:text="ListofWords">/h1>
-<table>
-    <thead>
-    <tr>
-        <th>Word</th>
-        <th>Translation</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="word : ${words}">
-        <td th:text="${word.word}">1</td>
-        <td th:text="${word.wordTranslation}">2</td>
-    </th:block>
-    </tbody>
-</table>
+<main>
+    <fieldset>
+        <legend>Word</legend>
+        <fieldset>
+            <legend>Words Statistics</legend>
+            <p th:text=""></p>
+        </fieldset>
+        <fieldset th:each="word,wordStat : *{words}">
+            <legend th:field="|Word ${wordStat.index +1}|"></legend>
+            <label>Word
+                <p th:field="${word.word}"></p>
+            </label>
+            <label>Translation
+                <p th:field="${word.wordTranslation}"></p>
+            </label>
+        </fieldset>
+    </fieldset>
+</main>
 </body>
 </html>
