@@ -7,6 +7,10 @@ import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import java.util.List;
 
 public class UserReadModel {
+
+    public UserReadModel() {
+    }
+
     private long userId;
 
     private String login;
