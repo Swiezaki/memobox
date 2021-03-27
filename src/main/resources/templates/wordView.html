@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Word View</title>
-  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
+    <meta charset="UTF-8">
+    <title>Word View</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
 </head>
 <body>
+<h1 th:text="List of Words">List of words</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Word</th>
+        <th>Translation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="word : ${words}">
+        <td th:text="${word.word}">1</td>
+        <td th:text="${word.wordTranslation}">2</td>
+    </th:block>
+    </tbody>
+</table>
 
 </body>
 </html>

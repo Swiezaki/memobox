@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
 </head>
 <body>
-<!--/*@thymesVar id="users" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+<!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
 <h1 th:text="User">User</h1>
 
 <table>
@@ -17,10 +17,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.password}">1</td>
-        <td th:text="${user.login}">2</td>
-    </tr>
+    <th:block th:each="user : ${users}">
+        <td th:text="${user.login}">1</td>
+        <td th:text="${user.password}">2</td>
+    </th:block>
     </tbody>
 </table>
 </body>
