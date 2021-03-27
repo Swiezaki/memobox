@@ -16,8 +16,8 @@ public class UserViewController {
     }
 
     @GetMapping
-    String showUserView(Model model) {
-        model.addAttribute("userView", repository.findAll());
+    public String showUserView(Model model) {
+        model.addAttribute("users", repository.findAll());
         return "userView";
     }
 }
