@@ -1,7 +1,7 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.Word;
-import io.github.wojtekmarcin.memobox.repository.WordRepository;
+import io.github.wojtekmarcin.memobox.repository.SqlWordRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/word")
 public class WordController {
-    private final WordRepository repository;
+    private final SqlWordRepository repository;
 
-    public WordController(WordRepository repository) {
+    public WordController(SqlWordRepository repository) {
         this.repository = repository;
     }
 
