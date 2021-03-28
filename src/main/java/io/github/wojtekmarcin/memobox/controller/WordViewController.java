@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/wordView")
+@RequestMapping("/word")
 public class WordViewController {
     private final WordRepository repository;
 
@@ -15,9 +15,9 @@ public class WordViewController {
         this.repository = repository;
     }
 
-    @GetMapping
-    public String showWordView(Model model) {
+    @GetMapping("/view")
+    String showWordView(Model model) {
         model.addAttribute("words", repository.findAll());
-        return "wordView";
+        return "word/view";
     }
 }

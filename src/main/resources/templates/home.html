@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"-->
-<!--          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
     <meta charset="UTF-8">
     <title>Home Page</title>
-    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
 </head>
-<main>
-    <form action="#" method="post" th:action="@{/}">
-    <fieldset>
-        <legend>Memobox!</legend>
-        <label>Opis<input type="text"/></label>
-    </fieldset>
-    </form>
-</main>
 <body>
+<main>
+    <h1>Memobox!</h1>
+
+<fieldset>
+    <legend>User panel</legend>
+    <button><a th:href="@{'/word/view'}">Words</a></button>
+    <button><a th:href="@{'/memoboxes/view'}">Memoboxes</a></button>
+</fieldset>
+<fieldset>
+    <legend>Admin panel</legend>
+    <button><a th:href="@{'/user/view'}">Users</a></button>
+    <button><a th:href="@{'/word/view'}">Words</a></button>
+    <button><a th:href="@{'/memoboxes/view'}">Memoboxes</a></button>
+</fieldset>
+    <fieldset>
+        <img src="https://www.wykop.pl/cdn/c3201142/comment_1612536861opi9PSZM3cumGvdCoGh16w.jpg">
+    </fieldset>
+</main>
 </body>
 </html>

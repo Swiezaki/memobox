@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Word View</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+    <h1>Word</h1>
+    <fieldset>
+        <legend>Word</legend>
+        <fieldset>
+            <legend>Words Statistics</legend>
+            <table>
+                <thead>
+                <tr>
+                    <th>Words number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><p th:text="${words.size()}"></p></td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset th:each="word,wordStat : ${words}">
+            <legend th:text="|Word ${word.wordId}|"></legend>
+            <table>
+                <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Translation</th>
+                    <th>Word type</th>
+                    <th>Language</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><p th:text="${word.word}"></p></td>
+                    <td><p th:text="${word.wordTranslation}"></p></td>
+                    <td><p th:text="${word.wordTypeId}"></p></td>
+                    <td><p th:text="${word.wordLanguageId}"></p></td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </fieldset>
+</main>
+</body>
+</html>

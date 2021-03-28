@@ -1,14 +1,15 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeController {
     @GetMapping
-    String showHome(){
+    String showHome(Model model) {
         return "home";
     }
 }
