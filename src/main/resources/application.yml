@@ -8,12 +8,12 @@ spring:
     username: failmaster
     password: crd123!
   #    url: jdbc:h2:file:C:\\Users\\WojtekM\\Repozytorium\\test-db
-#    url: jdbc:h2:mem:testdb
+  #    url: jdbc:h2:mem:testdb
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-#task:
-#  template:
-#    allowMultipleTasks: false
+  #task:
+  #  template:
+  #    allowMultipleTasks: false

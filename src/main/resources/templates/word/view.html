@@ -25,8 +25,8 @@
                 </tbody>
             </table>
         </fieldset>
-        <fieldset th:each="word,wordStat : ${words}">
-            <legend th:text="|Word ${word.wordId}|"></legend>
+        <fieldset>
+            <legend>Words</legend>
             <table>
                 <thead>
                 <tr>
@@ -36,7 +36,7 @@
                     <th>Language</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody th:each="word,wordStat : ${words}">
                 <tr>
                     <td><p th:text="${word.word}"></p></td>
                     <td><p th:text="${word.wordTranslation}"></p></td>
