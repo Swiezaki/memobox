@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>UsersView</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <!--    <script type="text/javascript">
+            function hideDiv(elem) {
+                if(elem.value == "Mac")
+                    document.getElementById('hideDiv').style.display = "none";
+                else
+                    document.getElementById('hideDiv').style.display = 'block';
+            }
+        </script>-->
 </head>
 <body>
 <main>
@@ -13,6 +21,21 @@
         <legend>Options</legend>
         <button><a th:href="@{'/user/view'}">Create</a></button>
         <button><a th:href="@{'/user/view'}">Find</a></button>
+        <button><a th:href="@{'/user/view'}">View All Users</a></button>
+    </fieldset>
+    <fieldset>
+        <legend>Add user</legend>
+        <label>Login</label>
+        <input th:id="login" th:type="text" th:value="Login">
+        <label>Password</label>
+        <input th:id="password" th:type="text" th:value="Password">
+    </fieldset>
+    <fieldset>
+        <legend>Find user</legend>
+        <label>Login</label>
+        <input th:id="login" th:type="text" th:value="Login">
+        <label>UserId</label>
+        <input th:id="password" th:type="text" th:value="UserId">
     </fieldset>
     <fieldset>
         <legend>All users</legend>
