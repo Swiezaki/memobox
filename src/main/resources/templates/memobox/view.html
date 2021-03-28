@@ -2,29 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Word View</title>
+  <title>MemoboxView</title>
   <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
 </head>
 <body>
 <main>
   <h1>Memobox</h1>
-    <fieldset th:each="memobox,memoboxStat : ${momemoboxes}">
+    <fieldset th:each="memobox,memoboxStat : ${memoboxes}">
       <legend th:text="|Memobox ${memobox}|"></legend>
       <table>
         <thead>
         <tr>
-          <th>Word</th>
-          <th>Translation</th>
-          <th>Word type</th>
-          <th>Language</th>
+          <th>memoBoxId</th>
+          <th>wordSlot</th>
+          <th>memoBoxesWordsSets</th>
+          <th>wordId</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td><p th:text="${word.word}"></p></td>
-          <td><p th:text="${word.wordTranslation}"></p></td>
-          <td><p th:text="${word.wordTypeId}"></p></td>
-          <td><p th:text="${word.wordLanguageId}"></p></td>
+          <td><p th:text="${}"></p></td>
+          <td><p th:text="${}"></p></td>
+          <td><p th:text="${}"></p></td>
+          <td><p th:text="${}"></p></td>
         </tr>
         </tbody>
       </table>

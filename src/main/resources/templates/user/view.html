@@ -2,26 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>UsersView</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
 </head>
 <body>
-<!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
-<h1 th:text="User">User</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th>Login</th>
-        <th>Password</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="user : ${users}">
-        <td th:text="${user.login}"></td>
-        <td th:text="${user.password}"></td>
-    </th:block>
-    </tbody>
-</table>
+<main>
+    <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+    <h1 th:text="User">Users</h1>
+    <fieldset>
+        <legend>All users</legend>
+        <table>
+            <thead>
+            <tr>
+                <th>Login</th>
+                <th>UserId</th>
+                <th>Password</th>
+                <th>memoBoxId</th>
+                <th>wordsSetId</th>
+            </tr>
+            </thead>
+            <tbody th:each="user,userStat : ${users}">
+            <tr>
+                <td><p th:text="${user.login}"></p></td>
+                <td><p th:text="${user.userId}"></p></td>
+                <td><p th:text="${user.password}"></p></td>
+                <td><p th:text="${user.memoBoxId}"></p></td>
+                <td><p th:text="${user.wordsSetId}"></p></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</main>
 </body>
 </html>
