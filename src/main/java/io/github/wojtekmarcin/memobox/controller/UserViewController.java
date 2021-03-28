@@ -24,9 +24,4 @@ public class UserViewController {
         model.addAttribute("users", repository.findAll());
         return "userView";
     }
-
-    @ModelAttribute("users")
-    public List<User> showUserView() {
-        return repository.findAll();
-    }
 }
