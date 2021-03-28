@@ -10,6 +10,11 @@
     <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
     <h1 th:text="User">Users</h1>
     <fieldset>
+        <legend>Options</legend>
+        <button><a th:href="@{'/user/view'}">Create</a></button>
+        <button><a th:href="@{'/user/view'}">Find</a></button>
+    </fieldset>
+    <fieldset>
         <legend>All users</legend>
         <table>
             <thead>
