@@ -4,15 +4,44 @@
     <meta charset="UTF-8">
     <title>UsersView</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <!--    <script type="text/javascript">
+            function hideDiv(elem) {
+                if(elem.value == "Mac")
+                    document.getElementById('hideDiv').style.display = "none";
+                else
+                    document.getElementById('hideDiv').style.display = 'block';
+            }
+        </script>-->
 </head>
 <body>
 <main>
     <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
-    <h1 th:text="User">Users</h1>
+    <h1 th:text="Users">Users</h1>
     <fieldset>
         <legend>Options</legend>
-        <button><a th:href="@{'/user/view'}">Create</a></button>
-        <button><a th:href="@{'/user/view'}">Find</a></button>
+        <button>Create</button>
+        <button>Find</button>
+        <button>View all users</button>
+    </fieldset>
+<!--TODO-->
+<!--    <fieldset>
+        <form method="post" th:action="@{/user/addUser}" th:object="${userToUpdate}">
+            <legend>Add user</legend>
+            <label>Login</label>
+            <input type="text" th:field="*{login}"/>
+            <label>Password</label>
+            <input th:type="text" th:field="${user.password}">
+            <button type="submit">Create</button>
+            <button type="reset">Clear</button>
+        </form>
+    </fieldset>-->
+
+    <fieldset>
+        <legend>Find user</legend>
+        <label>Login</label>
+        <input th:id="login" th:type="text" th:value="Login">
+        <label>UserId</label>
+        <input th:id="password" th:type="text" th:value="UserId">
     </fieldset>
     <fieldset>
         <legend>All users</legend>
@@ -24,6 +53,8 @@
                 <th>Password</th>
                 <th>memoBoxId</th>
                 <th>wordsSetId</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody th:each="user,userStat : ${users}">

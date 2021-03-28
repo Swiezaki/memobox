@@ -7,45 +7,42 @@
 </head>
 <body>
 <main>
-    <h1>Word</h1>
+    <h1 th:text="Words">Words</h1>
     <fieldset>
-        <legend>Word</legend>
-        <fieldset>
-            <legend>Words Statistics</legend>
-            <table>
-                <thead>
-                <tr>
-                    <th>Words number</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><p th:text="${words.size()}"></p></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-        <fieldset>
-            <legend>Words</legend>
-            <table>
-                <thead>
-                <tr>
-                    <th>Word</th>
-                    <th>Translation</th>
-                    <th>Word type</th>
-                    <th>Language</th>
-                </tr>
-                </thead>
-                <tbody th:each="word,wordStat : ${words}">
-                <tr>
-                    <td><p th:text="${word.word}"></p></td>
-                    <td><p th:text="${word.wordTranslation}"></p></td>
-                    <td><p th:text="${word.wordTypeId}"></p></td>
-                    <td><p th:text="${word.wordLanguageId}"></p></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
+        <legend>Words Statistics</legend>
+        <table>
+            <thead>
+            <tr>
+                <th>Words number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><p th:text="${words.size()}"></p></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Words</legend>
+        <table>
+            <thead>
+            <tr>
+                <th>Word</th>
+                <th>Translation</th>
+                <th>Word type</th>
+                <th>Language</th>
+            </tr>
+            </thead>
+            <tbody th:each="word,wordStat : ${words}">
+            <tr>
+                <td><p th:text="${word.word}"></p></td>
+                <td><p th:text="${word.wordTranslation}"></p></td>
+                <td><p th:text="${word.wordTypeId}"></p></td>
+                <td><p th:text="${word.wordLanguageId}"></p></td>
+            </tr>
+            </tbody>
+        </table>
     </fieldset>
 </main>
 </body>
