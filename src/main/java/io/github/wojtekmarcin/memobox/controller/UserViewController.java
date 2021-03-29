@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/user")
 public class UserViewController {
+    public static final String USER_ADD = "user/add";
     public static final String USER_VIEW = "user/view";
-    public static final String REDIRECT_HOME = "redirect:/home";
 
     private final UserRepository repository;
 
@@ -28,20 +30,22 @@ public class UserViewController {
         return USER_VIEW;
     }
 
-/*TODO
-    @GetMapping("/addUser")
+    //TODO
+    @GetMapping("/view/addUser")
     String addUser(Model model) {
-        model.addAttribute("userToUpdate", new User());
-        return USER_VIEW;
-    }*/
-/*TODO
-    @PostMapping("/addUser")
-    String addUserFromModel(@ModelAttribute("userToUpdate") User userToUpdate, Model model, BindingResult result) {
+        model.addAttribute("userToAdd", new User());
+        return USER_ADD;
+    }
+
+    //TODO
+    @PostMapping("/view/addUser")
+    String addUserFromModel(@Valid @ModelAttribute("userToAdd") User user, Model model, BindingResult result) {
         if (result.hasErrors()) {
-            return REDIRECT_HOME;
+            model.addAttribute("message", "User has not been added");
+            return USER_ADD;
         }
-        repository.save(userToUpdate);
+        repository.save(user);
         model.addAttribute("message", "User has been added");
-        return USER_VIEW;
-    }*/
+        return USER_ADD;
+    }
 }

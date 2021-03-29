@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <title>UsersView</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
-    <!--    <script type="text/javascript">
-            function hideDiv(elem) {
-                if(elem.value == "Mac")
-                    document.getElementById('hideDiv').style.display = "none";
-                else
-                    document.getElementById('hideDiv').style.display = 'block';
-            }
-        </script>-->
 </head>
 <body>
 <main>
@@ -19,23 +11,8 @@
     <h1 th:text="Users">Users</h1>
     <fieldset>
         <legend>Options</legend>
-        <button>Create</button>
-        <button>Find</button>
-        <button>View all users</button>
+        <button><a th:href="@{'/user/view/addUser'}">Create new user</a></button>
     </fieldset>
-<!--TODO-->
-<!--    <fieldset>
-        <form method="post" th:action="@{/user/addUser}" th:object="${userToUpdate}">
-            <legend>Add user</legend>
-            <label>Login</label>
-            <input type="text" th:field="*{login}"/>
-            <label>Password</label>
-            <input th:type="text" th:field="${user.password}">
-            <button type="submit">Create</button>
-            <button type="reset">Clear</button>
-        </form>
-    </fieldset>-->
-
     <fieldset>
         <legend>Find user</legend>
         <label>Login</label>
