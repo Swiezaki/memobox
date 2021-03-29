@@ -5,10 +5,7 @@ import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,6 +14,7 @@ import javax.validation.Valid;
 public class UserViewController {
     public static final String USER_ADD = "user/add";
     public static final String USER_VIEW = "user/view";
+    public static final String USER_EDIT = "user/edit";
 
     private final UserRepository repository;
 
@@ -25,21 +23,19 @@ public class UserViewController {
     }
 
     @GetMapping("/view")
-    String showUserView(Model model) {
+    String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
         return USER_VIEW;
     }
 
-    //TODO
     @GetMapping("/view/addUser")
-    String addUser(Model model) {
+    String getUserViewPage(Model model) {
         model.addAttribute("userToAdd", new User());
         return USER_ADD;
     }
 
-    //TODO
     @PostMapping("/view/addUser")
-    String addUserFromModel(@Valid @ModelAttribute("userToAdd") User user, Model model, BindingResult result) {
+    String addUserEntity(@Valid @ModelAttribute("userToAdd") User user, Model model, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("message", "User has not been added");
             return USER_ADD;
@@ -47,5 +43,38 @@ public class UserViewController {
         repository.save(user);
         model.addAttribute("message", "User has been added");
         return USER_ADD;
+    }
+
+    @GetMapping("/editUser/{id}")
+    String getEditUserPage(@PathVariable long id, Model model) {
+        User userByUserId = repository.findUserByUserId(id);
+        User userFormSource = new User();
+        userFormSource.setLogin(userByUserId.getLogin());
+        userFormSource.setPassword(userByUserId.getPassword());
+        model.addAttribute("userFormSource", userFormSource);
+        return USER_EDIT;
+    }
+
+    //TODO
+    @PostMapping("/editUser/{id}")
+    String editUserEntity(@PathVariable("id") long id, @ModelAttribute("userToAdd") User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("message", "User has not been edited");
+            return USER_EDIT;
+        }
+        //repository.update
+        model.addAttribute("message", "User has been edited");
+        return USER_EDIT;
+    }
+
+    @GetMapping("/delete/{id}")
+    String deleteUserEntity(@PathVariable("id") long id, BindingResult result, Model model) {
+        if(result.hasErrors()){
+            model.addAttribute("message", "User has not been deleted");
+            return USER_VIEW;
+        }
+        repository.deleteUserByUserId(id);
+        model.addAttribute("message", "User has been deleted");
+        return USER_VIEW;
     }
 }

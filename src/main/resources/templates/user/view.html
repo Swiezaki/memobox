@@ -13,13 +13,14 @@
         <legend>Options</legend>
         <button><a th:href="@{'/user/view/addUser'}">Create new user</a></button>
     </fieldset>
+<!--TODO
     <fieldset>
         <legend>Find user</legend>
         <label>Login</label>
         <input th:id="login" th:type="text" th:value="Login">
         <label>UserId</label>
         <input th:id="password" th:type="text" th:value="UserId">
-    </fieldset>
+    </fieldset>-->
     <fieldset>
         <legend>All users</legend>
         <table>
@@ -41,6 +42,8 @@
                 <td><p th:text="${user.password}"></p></td>
                 <td><p th:text="${user.memoBoxId}"></p></td>
                 <td><p th:text="${user.wordsSetId}"></p></td>
+                <td><a th:href="@{'/user/edit/' + ${user.userId}}">Edit</a></td>
+                <td><a th:href="@{'/user/delete/' + ${user.userId}}">Delete</a></td>
             </tr>
             </tbody>
         </table>
