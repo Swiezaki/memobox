@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UserAdd</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+    <fieldset>
+        <legend>Add user</legend>
+        <form method="post" th:action="@{/user/view/addUser}" th:object="${userToAdd}">
+            <label>Login</label>
+            <input th:type="text" th:field="${userToAdd.login}"/>
+            <label>Password</label>
+            <input th:type="text" th:field="${userToAdd.password}">
+            <button type="submit">Create</button>
+            <button type="reset">Clear</button>
+            <button><a th:href="@{'/user/view'}">Back</a></button>
+        </form>
+    </fieldset>
+</main>
+</body>
+</html>

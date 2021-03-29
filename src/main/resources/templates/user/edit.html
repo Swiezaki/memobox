@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>UserEdit</title>
+  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+  <fieldset>
+    <legend th:text="|Edit user ${userFormSource.userId}|"> </legend>
+    <!--/*@thymesVar id="userFormSource" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+    <form method="post" th:action="@{'/user/editUser/' + ${userFormSource.userId}}" th:object="${userFormSource}">
+      <label>Login</label>
+      <input th:type="text" th:field="${userFormSource.login}"/>
+      <label>Password</label>
+      <input th:type="text" th:field="${userFormSource.password}">
+      <label>WordSetId</label>
+      <input th:type="text" th:field="${userFormSource.wordsSetId}">
+      <label>MemoBoxId</label>
+      <input th:type="text" th:field="${userFormSource.memoBoxId}">
+      <button type="submit">Edit</button>
+      <button type="reset">Clear</button>
+      <button><a th:href="@{'/user/view'}">Back</a></button>
+    </form>
+  </fieldset>
+</main>
+</body>
+</html>
