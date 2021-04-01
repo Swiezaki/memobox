@@ -36,11 +36,11 @@ public class User implements Serializable {
         return userId;
     }
 
-    void setUserId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String   getLogin() {
+    public String getLogin() {
         return login;
     }
 

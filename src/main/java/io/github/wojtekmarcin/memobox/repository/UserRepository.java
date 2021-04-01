@@ -1,10 +1,12 @@
 package io.github.wojtekmarcin.memobox.repository;
 
 import io.github.wojtekmarcin.memobox.entities.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public interface UserRepository {
     List<User> findAll();
 
