@@ -11,7 +11,7 @@
     <h1 th:text="Users">Users</h1>
     <fieldset>
         <legend>Options</legend>
-        <button><a th:href="@{'/user/view/addUser'}">Create new user</a></button>
+        <button><a th:href="@{'/user/addUser'}">Create new user</a></button>
     </fieldset>
 <!--TODO
     <fieldset>
@@ -42,8 +42,8 @@
                 <td><p th:text="${user.password}"></p></td>
                 <td><p th:text="${user.memoBoxId}"></p></td>
                 <td><p th:text="${user.wordsSetId}"></p></td>
-                <td><a th:href="@{'/user/edit/' + ${user.userId}}">Edit</a></td>
-                <td><a th:href="@{'/user/delete/' + ${user.userId}}">Delete</a></td>
+                <td><a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a></td>
+                <td><a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a></td>
             </tr>
             </tbody>
         </table>

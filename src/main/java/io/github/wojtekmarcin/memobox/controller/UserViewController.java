@@ -12,9 +12,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserViewController {
-    public static final String USER_ADD = "user/add";
-    public static final String USER_VIEW = "user/view";
-    public static final String USER_EDIT = "user/edit";
+    public static final String USER_ADD_PAGE = "user/add";
+    public static final String USER_VIEW_PAGE = "user/view";
+    public static final String USER_EDIT_PAGE = "user/edit";
+    public static final String REDIRECT_USER_VIEW_PAGE = "redirect:/user/view";
 
     private final UserRepository repository;
 
@@ -25,56 +26,50 @@ public class UserViewController {
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
-        return USER_VIEW;
+        return USER_VIEW_PAGE;
     }
 
-    @GetMapping("/view/addUser")
-    String getUserViewPage(Model model) {
+    @GetMapping("/addUser")
+    String initAddUserForm(Model model) {
         model.addAttribute("userToAdd", new User());
-        return USER_ADD;
+        return USER_ADD_PAGE;
     }
 
-    @PostMapping("/view/addUser")
-    String addUserEntity(@Valid @ModelAttribute("userToAdd") User user, Model model, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("message", "User has not been added");
-            return USER_ADD;
+    @PostMapping("/addUser")
+    String proccessAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return USER_ADD_PAGE;
         }
         repository.save(user);
-        model.addAttribute("message", "User has been added");
-        return USER_ADD;
+        return USER_ADD_PAGE;
     }
 
+
     @GetMapping("/editUser/{id}")
-    String getEditUserPage(@PathVariable long id, Model model) {
-        User userByUserId = repository.findUserByUserId(id);
-        User userFormSource = new User();
-        userFormSource.setLogin(userByUserId.getLogin());
-        userFormSource.setPassword(userByUserId.getPassword());
-        model.addAttribute("userFormSource", userFormSource);
-        return USER_EDIT;
+    String initEditUserForm(@PathVariable long id, Model model) {
+        model.addAttribute("userFormSource", repository.findUserByUserId(id));
+        return USER_EDIT_PAGE;
     }
 
     //TODO
     @PostMapping("/editUser/{id}")
-    String editUserEntity(@PathVariable("id") long id, @ModelAttribute("userToAdd") User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("message", "User has not been edited");
-            return USER_EDIT;
+    String proccessEditUserEntityForm(@PathVariable("id") long id,
+                                      @ModelAttribute("userFormSource") @Valid User toUpdate,
+                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return USER_EDIT_PAGE;
+        } else {
+            User userFromRepository = repository.findUserByUserId(id);
+            userFromRepository.setLogin(toUpdate.getLogin());
+            userFromRepository.setLogin(toUpdate.getPassword());
+            repository.save(userFromRepository);
+            return REDIRECT_USER_VIEW_PAGE;
         }
-        //repository.update
-        model.addAttribute("message", "User has been edited");
-        return USER_EDIT;
     }
 
-    @GetMapping("/delete/{id}")
-    String deleteUserEntity(@PathVariable("id") long id, BindingResult result, Model model) {
-        if(result.hasErrors()){
-            model.addAttribute("message", "User has not been deleted");
-            return USER_VIEW;
-        }
+    @GetMapping("/deleteUser/{id}")
+    String initDeleteUserEntity(@PathVariable("id") long id) {
         repository.deleteUserByUserId(id);
-        model.addAttribute("message", "User has been deleted");
-        return USER_VIEW;
+        return REDIRECT_USER_VIEW_PAGE;
     }
 }
