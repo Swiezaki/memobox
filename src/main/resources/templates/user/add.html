@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>UserAdd</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <style>
+        .Bd {
+            border: solid 1px black;
+        }
+    </style>
 </head>
 <body>
 <main>
@@ -14,7 +19,7 @@
             <input th:type="text" th:field="*{login}"/>
             <div class="alert alert-warning" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
             <label>Password</label>
-            <input th:type="text" th:field="*{password}">
+            <input th:type="text" th:field="*{password}" class="Bd">
             <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
