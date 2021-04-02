@@ -19,4 +19,20 @@ public class Audit {
     void preUpdate() {
         preMerge = LocalDateTime.now();
     }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getPreMerge() {
+        return preMerge;
+    }
+
+    public void setPreMerge(LocalDateTime preMerge) {
+        this.preMerge = preMerge;
+    }
 }

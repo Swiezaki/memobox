@@ -12,6 +12,7 @@
     <fieldset>
         <legend>Options</legend>
         <button><a th:href="@{'/user/addUser'}">Create new user</a></button>
+        <button><a th:href="@{'/'}">Back</a></button>
     </fieldset>
 <!--TODO
     <fieldset>
@@ -26,22 +27,24 @@
         <table>
             <thead>
             <tr>
-                <th>Login</th>
                 <th>UserId</th>
+                <th>Login</th>
                 <th>Password</th>
-                <th>memoBoxId</th>
-                <th>wordsSetId</th>
+                <th>MemoBoxId</th>
+                <th>WordsSetId</th>
+                <th>CreateDate</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody th:each="user,userStat : ${users}">
             <tr>
-                <td><p th:text="${user.login}"></p></td>
                 <td><p th:text="${user.userId}"></p></td>
+                <td><p th:text="${user.login}"></p></td>
                 <td><p th:text="${user.password}"></p></td>
                 <td><p th:text="${user.memoBoxId}"></p></td>
                 <td><p th:text="${user.wordsSetId}"></p></td>
+                <td><p th:text="${user.audit.getCreatedOn()}"></p></td>
                 <td><a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a></td>
                 <td><a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a></td>
             </tr>

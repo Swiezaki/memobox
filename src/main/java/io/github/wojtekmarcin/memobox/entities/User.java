@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String login;
     @NotNull
+    @Size(min = 5)
     private String password;
 
     @OneToMany(mappedBy = "userId")
@@ -70,6 +72,14 @@ public class User implements Serializable {
 
     public void setWordsSetId(List<WordsSet> wordsSetId) {
         this.wordsSetId = wordsSetId;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 
     public void updateFrom(final User source) {

@@ -10,11 +10,12 @@
     <fieldset>
         <legend>Add user</legend>
         <form method="post" th:action="@{/user/addUser}" th:object="${userToAdd}">
-            <p th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
             <label>Login</label>
-            <input th:type="text" th:field="${userToAdd.login}"/>
+            <input th:type="text" th:field="*{login}"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
             <label>Password</label>
-            <input th:type="text" th:field="${userToAdd.password}">
+            <input th:type="text" th:field="*{password}">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
             <button><a th:href="@{'/user/view'}">Back</a></button>
