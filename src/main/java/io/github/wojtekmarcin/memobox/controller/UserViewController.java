@@ -2,12 +2,14 @@ package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/user")
@@ -24,7 +26,7 @@ public class UserViewController {
     }
 
     @GetMapping("/view")
-    String getAllUserViewPage(Model model) {
+    String getAllUserViewPage(Model model, @DateTimeFormat(pattern = "yyy-MM-dd'T'HH:MM")LocalDateTime createDate) {
         model.addAttribute("users", repository.findAll());
         return USER_VIEW_PAGE;
     }
@@ -36,12 +38,12 @@ public class UserViewController {
     }
 
     @PostMapping("/addUser")
-    String proccessAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
+    String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return USER_ADD_PAGE;
         }
         repository.save(user);
-        return USER_ADD_PAGE;
+        return REDIRECT_USER_VIEW_PAGE;
     }
 
 
@@ -53,19 +55,24 @@ public class UserViewController {
 
     //TODO
     @PostMapping("/editUser/{id}")
-    String proccessEditUserEntityForm(@PathVariable("id") long id,
-                                      @ModelAttribute("userFormSource") @Valid User toUpdate,
-                                      BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return USER_EDIT_PAGE;
-        } else {
-            User userFromRepository = repository.findUserByUserId(id);
-            userFromRepository.setLogin(toUpdate.getLogin());
-            userFromRepository.setLogin(toUpdate.getPassword());
-            repository.save(userFromRepository);
+    String processEditUserEntityForm(@PathVariable("id") long id,
+                                     @ModelAttribute("userFormSource")
+                                     @Valid User toUpdate,
+                                     BindingResult bindingResult) {
+        User userByUserId = repository.findUserByUserId(id);
+
+        if (userByUserId.equals(toUpdate)) {
+            userByUserId.setLogin(toUpdate.getLogin());
+            userByUserId.setPassword(toUpdate.getPassword());
+            userByUserId.setMemoBoxId(toUpdate.getMemoBoxId());
+            userByUserId.setWordsSetId(toUpdate.getWordsSetId());
+            repository.save(userByUserId);
             return REDIRECT_USER_VIEW_PAGE;
+        } else {
+            return USER_EDIT_PAGE;
         }
     }
+
 
     @GetMapping("/deleteUser/{id}")
     String initDeleteUserEntity(@PathVariable("id") long id) {
