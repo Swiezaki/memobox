@@ -4,6 +4,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Embeddable
 public class Audit {
@@ -34,5 +35,10 @@ public class Audit {
 
     public void setPreMerge(LocalDateTime preMerge) {
         this.preMerge = preMerge;
+    }
+
+    public String viewCreatedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return createdOn.format(formatter);
     }
 }

@@ -26,7 +26,7 @@ public class UserViewController {
     }
 
     @GetMapping("/view")
-    String getAllUserViewPage(Model model, @DateTimeFormat(pattern = "yyy-MM-dd'T'HH:MM")LocalDateTime createDate) {
+    String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
         return USER_VIEW_PAGE;
     }
