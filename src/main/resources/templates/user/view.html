@@ -44,7 +44,7 @@
                 <td><p th:text="${user.password}"></p></td>
                 <td><p th:text="${user.memoBoxId}"></p></td>
                 <td><p th:text="${user.wordsSetId}"></p></td>
-                <td><p th:text="${user.audit.getCreatedOn()}"></p></td>
+                <td><p th:text="${user.audit.viewCreatedDate()}"></p></td>
                 <td><a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a></td>
                 <td><a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a></td>
             </tr>

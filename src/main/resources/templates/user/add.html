@@ -5,8 +5,8 @@
     <title>UserAdd</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
     <style>
-        .Bd {
-            border: solid 1px black;
+        .Bdc\(red\) {
+            color: red;
         }
     </style>
 </head>
@@ -17,10 +17,10 @@
         <form method="post" th:action="@{/user/addUser}" th:object="${userToAdd}">
             <label>Login</label>
             <input th:type="text" th:field="*{login}"/>
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
             <label>Password</label>
-            <input th:type="text" th:field="*{password}" class="Bd">
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <input th:type="text" th:field="*{password}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
             <button><a th:href="@{'/user/view'}">Back</a></button>
