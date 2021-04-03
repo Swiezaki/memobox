@@ -3,7 +3,7 @@ package io.github.wojtekmarcin.memobox.entities;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
@@ -15,11 +15,11 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-    @NotNull
+    @NotEmpty(message = "Field cannot be empty")
     @Column(unique = true)
     private String login;
-    @NotNull
-    @Size(min = 5)
+    @NotEmpty(message = "Field cannot be empty")
+    @Size(min = 5, message = "Password should be longer")
     private String password;
 
     @OneToMany(mappedBy = "userId")
