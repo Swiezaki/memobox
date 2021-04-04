@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -32,11 +31,17 @@ public class UserViewController {
     }
 
     @GetMapping("/search")
-    String searchEntityByKey(Model model,
-                             @Param("keyword") String keyword) {
-        List<User> usersList = repository.findAllByKeyword(keyword);
-        model.addAttribute("users", usersList);
+    String initSearchingEntityByKey(Model model,
+                                    @Param("keyword") String keyword,
+                                    @Param("filterType") Integer filterType) {
         model.addAttribute("keyword", keyword);
+        model.addAttribute("filterType", filterType);
+        switch (filterType) {
+            case 1:
+                model.addAttribute("users", repository.findUserByLogin(keyword));
+            case 2:
+                model.addAttribute("users", repository.findUserByPassword(keyword));
+        }
         return USER_VIEW_PAGE;
     }
 

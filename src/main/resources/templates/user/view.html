@@ -20,6 +20,9 @@
         <legend>Search</legend>
         <form method="get" th:action="@{/user/search}">
             <input type="text" name="keyword" th:value="${keyword}"/>
+            <p>Filter by:
+                <label><input type="radio" name="filterType" th:value="${1}" class="custom-control-input" checked/> login</label>
+                <label><input type="radio" name="filterType" th:value="${2}" class="custom-control-input"/> password</label></p>
             <button type="submit">Search</button>
             <button type="button"><a th:href="@{'/user/view'}">Clear</a></button>
         </form>
