@@ -2,12 +2,14 @@ package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -26,6 +28,15 @@ public class UserViewController {
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
+        return USER_VIEW_PAGE;
+    }
+
+    @GetMapping("/search")
+    String searchEntityByKey(Model model,
+                             @Param("keyword") String keyword) {
+        List<User> usersList = repository.findAllByKeyword(keyword);
+        model.addAttribute("users", usersList);
+        model.addAttribute("keyword", keyword);
         return USER_VIEW_PAGE;
     }
 
@@ -70,7 +81,6 @@ public class UserViewController {
             return USER_EDIT_PAGE;
         }
     }
-
 
     @GetMapping("/deleteUser/{id}")
     String initDeleteUserEntity(@PathVariable("id") long id) {
