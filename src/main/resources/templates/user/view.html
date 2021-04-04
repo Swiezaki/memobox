@@ -11,17 +11,22 @@
     <h1 th:text="Users">Users</h1>
     <fieldset>
         <legend>Options</legend>
-        <button><a th:href="@{'/user/addUser'}">Create new user</a></button>
-        <button><a th:href="@{'/'}">Back</a></button>
+        <form>
+            <button><a th:href="@{'/user/addUser'}">Create new user</a></button>
+            <button><a th:href="@{'/'}">Back</a></button>
+        </form>
     </fieldset>
-<!--TODO
     <fieldset>
-        <legend>Find user</legend>
-        <label>Login</label>
-        <input th:id="login" th:type="text" th:value="Login">
-        <label>UserId</label>
-        <input th:id="password" th:type="text" th:value="UserId">
-    </fieldset>-->
+        <legend>Search</legend>
+        <form method="get" th:action="@{/user/search}">
+            <input type="text" name="keyword" th:value="${keyword}"/>
+            <p>Filter by:
+                <label><input type="radio" name="filterType" th:value="${1}" class="custom-control-input" checked/> login</label>
+                <label><input type="radio" name="filterType" th:value="${2}" class="custom-control-input"/> password</label></pgit
+            <button type="submit">Search</button>
+            <button type="button"><a th:href="@{'/user/view'}">Clear</a></button>
+        </form>
+    </fieldset>
     <fieldset>
         <legend>All users</legend>
         <table>

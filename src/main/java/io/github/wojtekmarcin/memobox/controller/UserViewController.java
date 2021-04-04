@@ -2,14 +2,13 @@ package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/user")
@@ -28,6 +27,21 @@ public class UserViewController {
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
+        return USER_VIEW_PAGE;
+    }
+
+    @GetMapping("/search")
+    String initSearchingEntityByKey(Model model,
+                                    @Param("keyword") String keyword,
+                                    @Param("filterType") Integer filterType) {
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("filterType", filterType);
+        switch (filterType) {
+            case 1:
+                model.addAttribute("users", repository.findUserByLogin(keyword));
+            case 2:
+                model.addAttribute("users", repository.findUserByPassword(keyword));
+        }
         return USER_VIEW_PAGE;
     }
 
@@ -72,7 +86,6 @@ public class UserViewController {
             return USER_EDIT_PAGE;
         }
     }
-
 
     @GetMapping("/deleteUser/{id}")
     String initDeleteUserEntity(@PathVariable("id") long id) {
