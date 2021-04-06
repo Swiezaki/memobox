@@ -15,12 +15,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/word")
 public class WordViewController {
-    public static final String WORD_ADD_PAGE = "word/add";
-    public static final String WORD_VIEW_PAGE = "word/view";
-    public static final String REDIRECT_WORD_VIEW_PAGE = "redirect:/word/view";
+    public static final String PAGE_WORD_ADD = "word/add";
+    public static final String PAGE_WORD_VIEW = "word/view";
+    public static final String REDIRECT_PAGE_WORD_VIEW = "redirect:/word/view";
 
     private final WordRepository repository;
-
+    
     public WordViewController(WordRepository repository) {
         this.repository = repository;
     }
@@ -34,16 +34,16 @@ public class WordViewController {
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
-        return WORD_ADD_PAGE;
+        return PAGE_WORD_ADD;
     }
 
     @PostMapping("/addWord")
     private String processAddingWordEntity(@ModelAttribute("wordToAdd") @Valid Word word, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return WORD_ADD_PAGE;
+            return PAGE_WORD_ADD;
         } else {
             repository.save(word);
-            return REDIRECT_WORD_VIEW_PAGE;
+            return REDIRECT_PAGE_WORD_VIEW;
         }
     }
 }

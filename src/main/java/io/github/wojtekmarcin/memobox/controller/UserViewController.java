@@ -15,10 +15,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserViewController {
-    public static final String USER_ADD_PAGE = "user/add";
-    public static final String USER_VIEW_PAGE = "user/view";
+    public static final String PAGE_USER_ADD = "user/add";
+    public static final String PAGE_USER_VIEW = "user/view";
     public static final String USER_EDIT_PAGE = "user/edit";
-    public static final String REDIRECT_USER_VIEW_PAGE = "redirect:/user/view";
+    public static final String REDIRECT_PAGE_USER_VIEW = "redirect:/user/view";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
@@ -31,7 +31,7 @@ public class UserViewController {
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
         model.addAttribute("users", repository.findAll());
-        return USER_VIEW_PAGE;
+        return PAGE_USER_VIEW;
     }
 
     @GetMapping("/search")
@@ -50,22 +50,22 @@ public class UserViewController {
         }
 
         LOGGER.info("users ={}", model.getAttribute("users"));
-        return USER_VIEW_PAGE;
+        return PAGE_USER_VIEW;
     }
 
     @GetMapping("/addUser")
     String initAddUserForm(Model model) {
         model.addAttribute("userToAdd", new User());
-        return USER_ADD_PAGE;
+        return PAGE_USER_ADD;
     }
 
     @PostMapping("/addUser")
     String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return USER_ADD_PAGE;
+            return PAGE_USER_ADD;
         }
         repository.save(user);
-        return REDIRECT_USER_VIEW_PAGE;
+        return REDIRECT_PAGE_USER_VIEW;
     }
 
 
@@ -89,7 +89,7 @@ public class UserViewController {
             userByUserId.setMemoBoxId(toUpdate.getMemoBoxId());
             userByUserId.setWordsSetId(toUpdate.getWordsSetId());
             repository.save(userByUserId);
-            return REDIRECT_USER_VIEW_PAGE;
+            return REDIRECT_PAGE_USER_VIEW;
         } else {
             return USER_EDIT_PAGE;
         }
@@ -98,6 +98,6 @@ public class UserViewController {
     @GetMapping("/deleteUser/{id}")
     String initDeleteUserEntity(@PathVariable("id") long id) {
         repository.deleteUserByUserId(id);
-        return REDIRECT_USER_VIEW_PAGE;
+        return REDIRECT_PAGE_USER_VIEW;
     }
 }
