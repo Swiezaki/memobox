@@ -79,4 +79,12 @@ public class Word {
     public void setWordsSetWordId(WordsSet wordsSetWordId) {
         this.wordsSetWordId = wordsSetWordId;
     }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
+    }
 }
