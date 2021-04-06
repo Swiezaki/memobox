@@ -9,10 +9,10 @@ public class Word {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
     private String word;
+    private Integer wordTypeId;
     private String wordTranslation;
     private Integer wordTranslationId;
     private Integer wordLanguageId;
-    private Integer wordTypeId;
 
     @OneToOne(mappedBy = "wordId")
     private WordsSet wordsSetWordId;
