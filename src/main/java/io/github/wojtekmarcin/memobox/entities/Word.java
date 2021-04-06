@@ -1,6 +1,8 @@
 package io.github.wojtekmarcin.memobox.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Words")
@@ -8,11 +10,13 @@ public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
+    @Min(value = 1, message = "Word should be longer")
+    @Pattern(regexp = "[a-zA-Z]",message = "Only letters")
     private String word;
+    private Integer wordTypeId;
     private String wordTranslation;
     private Integer wordTranslationId;
     private Integer wordLanguageId;
-    private Integer wordTypeId;
 
     @OneToOne(mappedBy = "wordId")
     private WordsSet wordsSetWordId;
@@ -78,5 +82,13 @@ public class Word {
 
     public void setWordsSetWordId(WordsSet wordsSetWordId) {
         this.wordsSetWordId = wordsSetWordId;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }
