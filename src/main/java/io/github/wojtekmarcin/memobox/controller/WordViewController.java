@@ -5,10 +5,7 @@ import io.github.wojtekmarcin.memobox.repository.WordRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,7 +17,7 @@ public class WordViewController {
     public static final String REDIRECT_PAGE_WORD_VIEW = "redirect:/word/view";
 
     private final WordRepository repository;
-    
+
     public WordViewController(WordRepository repository) {
         this.repository = repository;
     }
@@ -45,5 +42,11 @@ public class WordViewController {
             repository.save(word);
             return REDIRECT_PAGE_WORD_VIEW;
         }
+    }
+
+    @GetMapping("/deleteWord/{id}")
+    String initDeleteUserEntity(@PathVariable("id") long id) {
+        repository.deleteWordByWordId(id);
+        return REDIRECT_PAGE_WORD_VIEW;
     }
 }

@@ -35,9 +35,9 @@
                 <td><p th:text="${word.wordTranslation}"></p></td>
                 <td><p th:text="${word.wordTypeId}"></p></td>
                 <td><p th:text="${word.wordLanguageId}"></p></td>
-                <td><p th:text="${word.}"></p></td>
-                <td><a th:href="@{'/user/editUser/' + ${word.wordId}}">Edit</a></td>
-                <td><a th:href="@{'/user/deleteUser/' + ${word.wordId}}">Delete</a></td>
+                <td><p th:text="${word.audit.viewCreatedDate()}"></p></td>
+                <td><a th:href="@{'/word/editWord/' + ${word.wordId}}">Edit</a></td>
+                <td><a th:href="@{'/word/deleteWord/' + ${word.wordId}}">Delete</a></td>
             </tr>
             </tbody>
         </table>
