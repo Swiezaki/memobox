@@ -2,6 +2,8 @@ package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ public class UserViewController {
     public static final String USER_VIEW_PAGE = "user/view";
     public static final String USER_EDIT_PAGE = "user/edit";
     public static final String REDIRECT_USER_VIEW_PAGE = "redirect:/user/view";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserRepository repository;
 
@@ -36,12 +40,16 @@ public class UserViewController {
                                     @Param("filterType") Integer filterType) {
         model.addAttribute("keyword", keyword);
         model.addAttribute("filterType", filterType);
-        switch (filterType) {
-            case 1:
-                model.addAttribute("users", repository.findUserByLogin(keyword));
-            case 2:
-                model.addAttribute("users", repository.findUserByPassword(keyword));
+
+        LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
+
+        if (filterType == 1) {
+            model.addAttribute("users", repository.findUserByLogin(keyword));
+        } else {
+            model.addAttribute("users", repository.findUserByPassword(keyword));
         }
+
+        LOGGER.info("users ={}", model.getAttribute("users"));
         return USER_VIEW_PAGE;
     }
 
