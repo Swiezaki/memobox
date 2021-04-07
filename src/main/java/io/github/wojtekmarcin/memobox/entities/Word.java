@@ -1,5 +1,7 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -7,14 +9,21 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name = "Words")
 public class Word {
+    public static final String PATTERN_ONLY_LETTERS = "[a-zA-Z]+";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
-    @Min(value = 1, message = "Word should be longer")
-    @Pattern(regexp = "[a-zA-Z]",message = "Only letters")
+
+    @Length(min = 2, message = "Word should be longer")
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String word;
-    private Integer wordTypeId;
+
+    @Length(min = 2, message = "Word should be longer")
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String wordTranslation;
+
+    private Integer wordTypeId;
     private Integer wordTranslationId;
     private Integer wordLanguageId;
 
