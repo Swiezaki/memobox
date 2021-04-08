@@ -82,17 +82,22 @@ public class UserViewController {
                                      @Valid User toUpdate,
                                      BindingResult bindingResult) {
         User userByUserId = repository.findUserByUserId(id);
+        LOGGER.info("user input ={}", userByUserId);
+        LOGGER.info("toUpdate input ={}", toUpdate);
 
-        if (userByUserId.equals(toUpdate)) {
+//        if (userByUserId.getUserId() == (toUpdate.getUserId())) {
             userByUserId.setLogin(toUpdate.getLogin());
             userByUserId.setPassword(toUpdate.getPassword());
             userByUserId.setMemoBoxId(toUpdate.getMemoBoxId());
             userByUserId.setWordsSetId(toUpdate.getWordsSetId());
+
+            LOGGER.info("users output={}", userByUserId);
+
             repository.save(userByUserId);
             return REDIRECT_PAGE_USER_VIEW;
-        } else {
-            return USER_EDIT_PAGE;
-        }
+//        } else {
+//            return USER_EDIT_PAGE;
+//        }
     }
 
     @GetMapping("/deleteUser/{id}")
