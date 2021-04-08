@@ -68,7 +68,6 @@ public class UserViewController {
         return REDIRECT_PAGE_USER_VIEW;
     }
 
-
     @GetMapping("/editUser/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("userFormSource", repository.findUserByUserId(id));
@@ -76,7 +75,8 @@ public class UserViewController {
     }
 
     //TODO
-    /*Brak walidacji*/
+    /*- Brak walidacji
+    * - pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy*/
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
