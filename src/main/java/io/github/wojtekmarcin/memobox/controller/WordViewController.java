@@ -35,7 +35,7 @@ public class WordViewController {
     }
 
     @PostMapping("/addWord")
-    private String processAddingWordEntity(@ModelAttribute("wordToAdd") @Valid Word word, BindingResult bindingResult) {
+    private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_ADD;
         } else {
@@ -45,8 +45,28 @@ public class WordViewController {
     }
 
     @GetMapping("/deleteWord/{id}")
-    String initDeleteUserEntity(@PathVariable("id") long id) {
+    String initDeleteUserEntityForm(@PathVariable("id") long id) {
         repository.deleteWordByWordId(id);
         return REDIRECT_PAGE_WORD_VIEW;
+    }
+
+    @GetMapping("/editWord/{id}")
+    String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
+        model.addAttribute("wordFromSource", repository.findWordByWordId(id));
+        return PAGE_WORD_VIEW;
+    }
+
+    @PostMapping("/editWord/{id}")
+    String processEditWordEntitieForm(@PathVariable("id") long id, @ModelAttribute("wordFromSource") @Valid Word wordToUpdate, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return PAGE_WORD_VIEW;
+        } else {
+            Word wordFromRepository = repository.findWordByWordId(id);
+            wordFromRepository.setWord(wordToUpdate.getWord());
+            wordFromRepository.setWordTranslation(wordToUpdate.getWordTranslation());
+            wordFromRepository.setWordLanguageId(wordToUpdate.getWordLanguageId());
+            wordFromRepository.setWordTypeId(wordToUpdate.getWordTypeId());
+            return REDIRECT_PAGE_WORD_VIEW;
+        }
     }
 }

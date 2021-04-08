@@ -11,7 +11,7 @@ public interface WordRepository {
 
     boolean existsById(Long id);
 
-    List<Word> findByWordId(Long id);
+    Word findWordByWordId(Long id);
 
     Word save(Word entity);
 
