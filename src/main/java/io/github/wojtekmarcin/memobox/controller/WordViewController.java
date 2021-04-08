@@ -2,6 +2,8 @@ package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,10 @@ import javax.validation.Valid;
 public class WordViewController {
     public static final String PAGE_WORD_ADD = "word/add";
     public static final String PAGE_WORD_VIEW = "word/view";
+    public static final String PAGE_WORD_EDIT = "word/edit";
     public static final String REDIRECT_PAGE_WORD_VIEW = "redirect:/word/view";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final WordRepository repository;
 
@@ -53,7 +58,7 @@ public class WordViewController {
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordFromSource", repository.findWordByWordId(id));
-        return PAGE_WORD_VIEW;
+        return PAGE_WORD_EDIT;
     }
 
     @PostMapping("/editWord/{id}")
@@ -62,10 +67,15 @@ public class WordViewController {
             return PAGE_WORD_VIEW;
         } else {
             Word wordFromRepository = repository.findWordByWordId(id);
+            LOGGER.info("word from repo input ={}, word to update={}", wordFromRepository, wordToUpdate);
+
             wordFromRepository.setWord(wordToUpdate.getWord());
             wordFromRepository.setWordTranslation(wordToUpdate.getWordTranslation());
             wordFromRepository.setWordLanguageId(wordToUpdate.getWordLanguageId());
             wordFromRepository.setWordTypeId(wordToUpdate.getWordTypeId());
+            repository.save(wordFromRepository);
+            LOGGER.info("users output={}", wordFromRepository);
+
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }

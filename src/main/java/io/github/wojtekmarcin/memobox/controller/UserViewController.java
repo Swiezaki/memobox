@@ -94,7 +94,6 @@ public class UserViewController {
             repository.save(userFromRepository);
             LOGGER.info("users output={}", userFromRepository);
 
-
             return REDIRECT_PAGE_USER_VIEW;
         }
     }
