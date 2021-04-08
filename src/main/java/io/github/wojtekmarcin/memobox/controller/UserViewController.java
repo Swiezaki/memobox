@@ -76,6 +76,7 @@ public class UserViewController {
     }
 
     //TODO
+    /*Brak walidacji*/
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")

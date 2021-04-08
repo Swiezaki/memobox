@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>WordEdit</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <style>
+        .Bdc\(red\) {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <main>
@@ -12,13 +17,21 @@
         <!--/*@thymesVar id="wordFromSource" type="io.github.wojtekmarcin.memobox.entities.Word"*/-->
         <form method="post" th:action="@{'/word/editWord/' + ${wordFromSource.getWordId()}}" th:object="${wordFromSource}">
             <label>Word</label>
-            <input th:type="text" th:field="${wordFromSource.word}"/>
+            <input th:type="text" th:field="*{word}"/>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
+
             <label>Translation</label>
-            <input th:type="text" th:field="${wordFromSource.wordTranslation}">
+            <input th:type="text" th:field="*{wordTranslation}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
+
             <label>Word type</label>
-            <input th:type="text" th:field="${wordFromSource.wordTypeId}">
+            <input th:type="text" th:field="*{wordTypeId}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTypeId')}" th:errors="*{wordTypeId}"></p>
+
             <label>Language</label>
-            <input th:type="text" th:field="${wordFromSource.wordLanguageId}">
+            <input th:type="text" th:field="*{wordLanguageId}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
+
             <button type="submit">Edit</button>
             <button type="reset">Clear</button>
             <button><a th:href="@{'/word/view'}">Back</a></button>
