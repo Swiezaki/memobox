@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WordEdit</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+    <fieldset>
+        <legend th:text="|Edit word ${wordFromSource.wordId}|"></legend>
+        <!--/*@thymesVar id="wordFromSource" type="io.github.wojtekmarcin.memobox.entities.Word"*/-->
+        <form method="post" th:action="@{'/word/editWord/' + ${wordFromSource.getWordId()}}" th:object="${wordFromSource}">
+            <label>Word</label>
+            <input th:type="text" th:field="${wordFromSource.word}"/>
+            <label>Translation</label>
+            <input th:type="text" th:field="${wordFromSource.wordTranslation}">
+            <label>Word type</label>
+            <input th:type="text" th:field="${wordFromSource.wordTypeId}">
+            <label>Language</label>
+            <input th:type="text" th:field="${wordFromSource.wordLanguageId}">
+            <button type="submit">Edit</button>
+            <button type="reset">Clear</button>
+            <button><a th:href="@{'/word/view'}">Back</a></button>
+        </form>
+    </fieldset>
+</main>
+</body>
+</html>

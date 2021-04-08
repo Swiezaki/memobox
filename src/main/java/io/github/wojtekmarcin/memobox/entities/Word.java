@@ -1,20 +1,29 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Words")
 public class Word {
+    public static final String PATTERN_ONLY_LETTERS = "[a-zA-Z]+";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
-    @Min(value = 1, message = "Word should be longer")
-    @Pattern(regexp = "[a-zA-Z]",message = "Only letters")
+
+    @Length(min = 2, message = "Word should be longer")
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String word;
-    private Integer wordTypeId;
+
+    @Length(min = 2, message = "Word should be longer")
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String wordTranslation;
+
+    private Integer wordTypeId;
     private Integer wordTranslationId;
     private Integer wordLanguageId;
 
@@ -90,5 +99,33 @@ public class Word {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word1 = (Word) o;
+        return wordId == word1.wordId && Objects.equals(word, word1.word) && Objects.equals(wordTranslation, word1.wordTranslation) && Objects.equals(wordTypeId, word1.wordTypeId) && Objects.equals(wordTranslationId, word1.wordTranslationId) && Objects.equals(wordLanguageId, word1.wordLanguageId) && Objects.equals(wordsSetWordId, word1.wordsSetWordId) && Objects.equals(audit, word1.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wordId, word, wordTranslation, wordTypeId, wordTranslationId, wordLanguageId, wordsSetWordId, audit);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Word{");
+        sb.append("wordId=").append(wordId);
+        sb.append(", word='").append(word).append('\'');
+        sb.append(", wordTranslation='").append(wordTranslation).append('\'');
+        sb.append(", wordTypeId=").append(wordTypeId);
+        sb.append(", wordTranslationId=").append(wordTranslationId);
+        sb.append(", wordLanguageId=").append(wordLanguageId);
+        sb.append(", wordsSetWordId=").append(wordsSetWordId);
+        sb.append(", audit=").append(audit);
+        sb.append('}');
+        return sb.toString();
     }
 }

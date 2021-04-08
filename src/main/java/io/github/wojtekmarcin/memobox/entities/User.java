@@ -15,9 +15,11 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+
     @NotEmpty(message = "Field cannot be empty")
     @Column(unique = true)
     private String login;
+
     @NotEmpty(message = "Field cannot be empty")
     @Size(min = 5, message = "Password should be longer")
     private String password;

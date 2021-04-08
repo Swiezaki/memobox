@@ -17,7 +17,7 @@ import javax.validation.Valid;
 public class UserViewController {
     public static final String PAGE_USER_ADD = "user/add";
     public static final String PAGE_USER_VIEW = "user/view";
-    public static final String USER_EDIT_PAGE = "user/edit";
+    public static final String PAGE_USER_EDIT = "user/edit";
     public static final String REDIRECT_PAGE_USER_VIEW = "redirect:/user/view";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -72,26 +72,29 @@ public class UserViewController {
     @GetMapping("/editUser/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("userFormSource", repository.findUserByUserId(id));
-        return USER_EDIT_PAGE;
+        return PAGE_USER_EDIT;
     }
 
     //TODO
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
-                                     @Valid User toUpdate,
+                                     @Valid User userToUpdate,
                                      BindingResult bindingResult) {
-        User userByUserId = repository.findUserByUserId(id);
-
-        if (userByUserId.equals(toUpdate)) {
-            userByUserId.setLogin(toUpdate.getLogin());
-            userByUserId.setPassword(toUpdate.getPassword());
-            userByUserId.setMemoBoxId(toUpdate.getMemoBoxId());
-            userByUserId.setWordsSetId(toUpdate.getWordsSetId());
-            repository.save(userByUserId);
-            return REDIRECT_PAGE_USER_VIEW;
+        if (bindingResult.hasErrors()) {
+            return PAGE_USER_EDIT;
         } else {
-            return USER_EDIT_PAGE;
+            User userFromRepository = repository.findUserByUserId(id);
+            LOGGER.info("user from repo input ={}, user to update={}", userFromRepository, userToUpdate);
+
+            userFromRepository.setLogin(userToUpdate.getLogin());
+            userFromRepository.setPassword(userToUpdate.getPassword());
+            userFromRepository.setMemoBoxId(userToUpdate.getMemoBoxId());
+            userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
+            repository.save(userFromRepository);
+            LOGGER.info("users output={}", userFromRepository);
+
+            return REDIRECT_PAGE_USER_VIEW;
         }
     }
 

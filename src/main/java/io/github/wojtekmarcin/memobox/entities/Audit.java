@@ -41,4 +41,9 @@ public class Audit {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return createdOn.format(formatter);
     }
+
+    public String viewUpdateDate(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return preMerge.format(formatter);
+    }
 }
