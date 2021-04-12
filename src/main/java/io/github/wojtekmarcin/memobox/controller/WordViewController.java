@@ -61,10 +61,17 @@ public class WordViewController {
         return PAGE_WORD_EDIT;
     }
 
+    /*TODO
+        Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
+        submit wywala błąd*/
     @PostMapping("/editWord/{id}")
-    String processEditWordEntitieForm(@PathVariable("id") long id, @ModelAttribute("wordFromSource") @Valid Word wordToUpdate, BindingResult bindingResult) {
+    String processEditWordEntitieForm(@PathVariable("id") long id,
+                                      @ModelAttribute("wordFromSource")
+                                      @Valid Word wordToUpdate,
+                                      Model model,
+                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return PAGE_WORD_VIEW;
+            return PAGE_WORD_EDIT;
         } else {
             Word wordFromRepository = repository.findWordByWordId(id);
             LOGGER.info("word from repo input ={}, word to update={}", wordFromRepository, wordToUpdate);

@@ -59,6 +59,10 @@ public class UserViewController {
         return PAGE_USER_ADD;
     }
 
+    /*TODO
+     *  1. Brak walidacji na duplikujące się loginy
+     * 2. Dodać komunikat o poprawnym dodaniu użytkownika*/
+
     @PostMapping("/addUser")
     String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -68,14 +72,16 @@ public class UserViewController {
         return REDIRECT_PAGE_USER_VIEW;
     }
 
-
     @GetMapping("/editUser/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("userFormSource", repository.findUserByUserId(id));
         return PAGE_USER_EDIT;
     }
 
-    //TODO
+    /*-TODO
+     *    1. Brak walidacji pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy
+     *  2. Dodać komunikat o poprawnej edycji użytkownika*/
+
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
