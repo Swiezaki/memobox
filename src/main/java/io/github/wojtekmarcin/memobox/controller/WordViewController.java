@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +39,8 @@ public class WordViewController {
     }
 
     /*TODO
-     *  1. Nie dodaje się WordSet
-     * 2. Po błędnej walidacji kasuje się zawartość pola select
-     * 3. Zrobić ModelAtributte*/
+     *  -Nie dodaje się WordSet
+     * -Zrobić ModelAtributte*/
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
@@ -51,8 +51,9 @@ public class WordViewController {
 
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
-                                               BindingResult bindingResult) {
+                                               BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
+            model.put("wordSets", wordsSetRepository.findAll());
             return PAGE_WORD_ADD;
         } else {
             wordRepository.save(word);
@@ -67,7 +68,7 @@ public class WordViewController {
     }
 
     /*TODO
-        1. Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
+       -Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
         submit wywala błąd*/
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
@@ -79,8 +80,10 @@ public class WordViewController {
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
                                       @Valid Word wordToUpdate,
-                                      BindingResult bindingResult) {
+                                      BindingResult bindingResult,
+                                      ModelMap model) {
         if (bindingResult.hasErrors()) {
+            model.put("wordFromSource", wordRepository.findWordByWordId(id));
             return PAGE_WORD_EDIT;
         } else {
             Word wordFromRepository = wordRepository.findWordByWordId(id);
