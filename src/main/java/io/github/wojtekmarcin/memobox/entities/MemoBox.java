@@ -22,7 +22,7 @@ public class MemoBox {
             inverseJoinColumns = @JoinColumn(name = "wordSetId"))
     private List<WordsSet> wordSetId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "wordId")
     private Word wordId;
 

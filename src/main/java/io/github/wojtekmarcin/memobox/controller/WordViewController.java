@@ -36,7 +36,9 @@ public class WordViewController {
         model.addAttribute("words", wordRepository.findAll());
         return "word/view";
     }
-    /*TODO*/
+
+    /*TODO
+     *  1. Nie dodaje się WordSet*/
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
@@ -46,7 +48,8 @@ public class WordViewController {
     }
 
     @PostMapping("/addWord")
-    private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word, BindingResult bindingResult) {
+    private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
+                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_ADD;
         } else {

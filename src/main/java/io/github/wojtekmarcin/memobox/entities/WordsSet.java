@@ -13,11 +13,11 @@ public class WordsSet {
     private boolean visibleFlagId;
     private boolean editionFlagId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User userId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "wordsSetWordId")
     private Word wordId;
 
