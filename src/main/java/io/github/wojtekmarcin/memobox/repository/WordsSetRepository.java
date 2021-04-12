@@ -13,4 +13,6 @@ public interface WordsSetRepository {
     MemoBox findMemoBoxByWordSetId(Long id);
 
     void deleteByWordSetId(Long id);
+
+    WordsSet save(WordsSet entity);
 }

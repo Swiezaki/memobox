@@ -1,7 +1,9 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.entities.Word;
+import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
+import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,32 +12,36 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/word")
 public class WordViewController {
     public static final String PAGE_WORD_ADD = "word/add";
-    public static final String PAGE_WORD_VIEW = "word/view";
     public static final String PAGE_WORD_EDIT = "word/edit";
     public static final String REDIRECT_PAGE_WORD_VIEW = "redirect:/word/view";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    private final WordRepository repository;
+    private final WordRepository wordRepository;
+    private final WordsSetRepository wordsSetRepository;
 
-    public WordViewController(WordRepository repository) {
-        this.repository = repository;
+    public WordViewController(WordRepository repository, WordsSetRepository wordsSetRepository) {
+        this.wordRepository = repository;
+        this.wordsSetRepository = wordsSetRepository;
     }
 
     @GetMapping("/view")
     String showWordView(Model model) {
-        model.addAttribute("words", repository.findAll());
+        model.addAttribute("words", wordRepository.findAll());
         return "word/view";
     }
-
+    /*TODO*/
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
+        List<WordsSet> wordsSetsFromRepo = wordsSetRepository.findAll();
+        model.addAttribute("wordSets", wordsSetsFromRepo);
         return PAGE_WORD_ADD;
     }
 
@@ -44,20 +50,20 @@ public class WordViewController {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_ADD;
         } else {
-            repository.save(word);
+            wordRepository.save(word);
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
 
     @GetMapping("/deleteWord/{id}")
     String initDeleteUserEntityForm(@PathVariable("id") long id) {
-        repository.deleteWordByWordId(id);
+        wordRepository.deleteWordByWordId(id);
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("wordFromSource", repository.findWordByWordId(id));
+        model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
         return PAGE_WORD_EDIT;
     }
 
@@ -73,14 +79,15 @@ public class WordViewController {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_EDIT;
         } else {
-            Word wordFromRepository = repository.findWordByWordId(id);
+            Word wordFromRepository = wordRepository.findWordByWordId(id);
             LOGGER.info("word from repo input ={}, word to update={}", wordFromRepository, wordToUpdate);
 
             wordFromRepository.setWord(wordToUpdate.getWord());
             wordFromRepository.setWordTranslation(wordToUpdate.getWordTranslation());
             wordFromRepository.setWordLanguageId(wordToUpdate.getWordLanguageId());
             wordFromRepository.setWordTypeId(wordToUpdate.getWordTypeId());
-            repository.save(wordFromRepository);
+            wordFromRepository.setWordsSetWordId(wordToUpdate.getWordsSetWordId());
+            wordRepository.save(wordFromRepository);
             LOGGER.info("users output={}", wordFromRepository);
 
             return REDIRECT_PAGE_WORD_VIEW;
