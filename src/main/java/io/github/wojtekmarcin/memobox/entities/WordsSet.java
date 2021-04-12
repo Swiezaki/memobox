@@ -3,6 +3,7 @@ package io.github.wojtekmarcin.memobox.entities;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 @Table(name = "WordsSets")
 public class WordsSet {
@@ -13,11 +14,11 @@ public class WordsSet {
     private boolean visibleFlagId;
     private boolean editionFlagId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User userId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "wordsSetWordId")
     private Word wordId;
 

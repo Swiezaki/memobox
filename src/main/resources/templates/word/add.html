@@ -18,15 +18,28 @@
             <label>Word</label>
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
+
             <label>Translation</label>
             <input th:type="text" th:field="*{wordTranslation}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
+
             <label>Word type</label>
             <input th:type="text" th:field="*{wordTypeId}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTypeId')}" th:errors="*{wordTypeId}"></p>
+
             <label>Language</label>
             <input th:type="text" th:field="*{wordLanguageId}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
+
+            <label>Wordset</label>
+            <select th:field="*{wordsSetWordId}">
+                <option value=""> ---</option>
+                <option th:each="wordset : ${wordSets} "
+                        th:value ="${wordset.getWordSetId}"
+                        th:utext="${wordset.getSetName}">
+                </option>
+            </select>
+
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
             <button><a th:href="@{'/word/view'}">Back</a></button>
