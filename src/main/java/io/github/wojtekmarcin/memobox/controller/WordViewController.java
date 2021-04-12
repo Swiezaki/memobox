@@ -38,7 +38,9 @@ public class WordViewController {
     }
 
     /*TODO
-     *  1. Nie dodaje się WordSet*/
+     *  1. Nie dodaje się WordSet
+     * 2. Po błędnej walidacji kasuje się zawartość pola select
+     * 3. Zrobić ModelAtributte*/
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
@@ -64,20 +66,19 @@ public class WordViewController {
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
+    /*TODO
+        1. Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
+        submit wywala błąd*/
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
         return PAGE_WORD_EDIT;
     }
 
-    /*TODO
-        Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
-        submit wywala błąd*/
     @PostMapping("/editWord/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
                                       @Valid Word wordToUpdate,
-                                      Model model,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_EDIT;

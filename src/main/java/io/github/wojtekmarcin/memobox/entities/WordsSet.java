@@ -3,6 +3,7 @@ package io.github.wojtekmarcin.memobox.entities;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 @Table(name = "WordsSets")
 public class WordsSet {
