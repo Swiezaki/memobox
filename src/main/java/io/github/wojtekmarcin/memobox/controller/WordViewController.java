@@ -61,9 +61,9 @@ public class WordViewController {
         return PAGE_WORD_EDIT;
     }
 
-    //TODO
-    /*Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
-    * submit wywala błąd*/
+    /*TODO
+        Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
+        submit wywala błąd*/
     @PostMapping("/editWord/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
