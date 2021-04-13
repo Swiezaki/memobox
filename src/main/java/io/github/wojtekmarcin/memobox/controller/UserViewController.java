@@ -83,15 +83,15 @@ public class UserViewController {
     }
 
     /*-TODO
-     *    1. Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
-     *  2. Dodać komunikat o poprawnej edycji użytkownika*/
+     *    1. Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)*/
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
                                      @Valid User userToUpdate,
                                      BindingResult bindingResult,
-                                     ModelMap model) {
+                                     ModelMap model,
+                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.put("userFromSource", repository.findUserByUserId(id));
             return PAGE_USER_EDIT;
@@ -103,9 +103,10 @@ public class UserViewController {
             userFromRepository.setPassword(userToUpdate.getPassword());
             userFromRepository.setMemoBoxId(userToUpdate.getMemoBoxId());
             userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
+
             repository.save(userFromRepository);
             LOGGER.info("users output={}", userFromRepository);
-
+            redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", userFromRepository.getUserId()));
             return REDIRECT_PAGE_USER_VIEW;
         }
     }
