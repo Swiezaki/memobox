@@ -1,5 +1,6 @@
 package io.github.wojtekmarcin.memobox.controller;
 
+import com.sun.xml.bind.v2.TODO;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import org.slf4j.Logger;
@@ -35,6 +36,12 @@ public class UserViewController {
         model.addAttribute("users", userRepository.findAll());
         return PAGE_USER_VIEW;
     }
+
+/*    TODO
+        - komunikat o braku odnalezionych rekordów
+        - dodanie możliwości rozszerzania listy parametrów wyszukiwania
+        - filtrowanie
+    */
 
     @GetMapping("/search")
     String initSearchingEntityByKey(Model model,
@@ -85,8 +92,9 @@ public class UserViewController {
         return PAGE_USER_EDIT;
     }
 
-    /*-TODO
-     *    1. Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)*/
+    /*TODO
+        - Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
+        */
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
