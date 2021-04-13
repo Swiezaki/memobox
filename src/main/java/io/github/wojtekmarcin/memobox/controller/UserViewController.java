@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -52,6 +54,8 @@ public class UserViewController {
         LOGGER.info("users ={}", model.getAttribute("users"));
         return PAGE_USER_VIEW;
     }
+    /*TODO
+     *  1. Brak walidacji na duplikujące się loginy */
 
     @GetMapping("/addUser")
     String initAddUserForm(Model model) {
@@ -59,16 +63,16 @@ public class UserViewController {
         return PAGE_USER_ADD;
     }
 
-    /*TODO
-     *  1. Brak walidacji na duplikujące się loginy
-     * 2. Dodać komunikat o poprawnym dodaniu użytkownika*/
-
     @PostMapping("/addUser")
-    String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
+    String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             return PAGE_USER_ADD;
         }
         repository.save(user);
+        redirectAttributes.addFlashAttribute("message", String.format("User %s created.", user.getUserId()));
         return REDIRECT_PAGE_USER_VIEW;
     }
 
@@ -79,15 +83,17 @@ public class UserViewController {
     }
 
     /*-TODO
-     *    1. Brak walidacji pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy
+     *    1. Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
      *  2. Dodać komunikat o poprawnej edycji użytkownika*/
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
                                      @Valid User userToUpdate,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     ModelMap model) {
         if (bindingResult.hasErrors()) {
+            model.put("userFromSource", repository.findUserByUserId(id));
             return PAGE_USER_EDIT;
         } else {
             User userFromRepository = repository.findUserByUserId(id);

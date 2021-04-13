@@ -14,7 +14,9 @@
 <main>
     <fieldset>
         <legend>Add user</legend>
+        <div th:text="${message}"/>
         <form method="post" th:action="@{/user/addUser}" th:object="${userToAdd}">
+
             <label>Login</label>
             <input th:type="text" th:field="*{login}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
@@ -22,6 +24,7 @@
             <label>Password</label>
             <input th:type="text" th:field="*{password}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
 
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
