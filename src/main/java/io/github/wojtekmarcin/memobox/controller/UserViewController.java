@@ -50,9 +50,8 @@ public class UserViewController {
 
         LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
 
-        
-
-/*        switch (filterType) {
+        /*FIXME*/
+        switch (filterType) {
             case 1: {
                 if (userRepository.findUserByLogin(keyword).isEmpty()) {
                     model.addAttribute("notFoundMessage1", String.format("Login not found"));
@@ -69,7 +68,7 @@ public class UserViewController {
                 }
                 break;
             }
-        }*/
+        }
 
         LOGGER.info("users ={} filtered by filterType ={}", model.getAttribute("users"), filterType);
         return PAGE_USER_VIEW;
@@ -136,8 +135,10 @@ public class UserViewController {
     }
 
     @GetMapping("/deleteUser/{id}")
-    String initDeleteUserEntity(@PathVariable("id") long id) {
+    String initDeleteUserEntity(@PathVariable("id") long id,
+                                RedirectAttributes redirectAttributes) {
         userRepository.deleteUserByUserId(id);
+        redirectAttributes.addFlashAttribute("message", String.format("User %s deleted", id));
         return REDIRECT_PAGE_USER_VIEW;
     }
 }
