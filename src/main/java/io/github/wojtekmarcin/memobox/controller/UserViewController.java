@@ -24,15 +24,15 @@ public class UserViewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
-    public UserViewController(UserRepository repository) {
-        this.repository = repository;
+    public UserViewController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
-        model.addAttribute("users", repository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return PAGE_USER_VIEW;
     }
 
@@ -46,16 +46,14 @@ public class UserViewController {
         LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
 
         if (filterType == 1) {
-            model.addAttribute("users", repository.findUserByLogin(keyword));
+            model.addAttribute("users", userRepository.findUserByLogin(keyword));
         } else {
-            model.addAttribute("users", repository.findUserByPassword(keyword));
+            model.addAttribute("users", userRepository.findUserByPassword(keyword));
         }
 
         LOGGER.info("users ={}", model.getAttribute("users"));
         return PAGE_USER_VIEW;
     }
-    /*TODO
-     *  1. Brak walidacji na duplikujące się loginy */
 
     @GetMapping("/addUser")
     String initAddUserForm(Model model) {
@@ -71,14 +69,19 @@ public class UserViewController {
         if (bindingResult.hasErrors()) {
             return PAGE_USER_ADD;
         }
-        repository.save(user);
+        if (!userRepository.findUserByLogin(user.getLogin()).isEmpty()){
+            bindingResult.rejectValue("login","login.userToAdd","Login already exist.");
+            return PAGE_USER_ADD;
+        }
+
+        userRepository.save(user);
         redirectAttributes.addFlashAttribute("message", String.format("User %s created.", user.getUserId()));
         return REDIRECT_PAGE_USER_VIEW;
     }
 
     @GetMapping("/editUser/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
-        model.addAttribute("userFormSource", repository.findUserByUserId(id));
+        model.addAttribute("userFormSource", userRepository.findUserByUserId(id));
         return PAGE_USER_EDIT;
     }
 
@@ -93,17 +96,19 @@ public class UserViewController {
                                      ModelMap model,
                                      RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            model.put("userFromSource", repository.findUserByUserId(id));
+            model.put("userFromSource", userRepository.findUserByUserId(id));
             return PAGE_USER_EDIT;
         } else {
-            User userFromRepository = repository.findUserByUserId(id);
+            User userFromRepository = userRepository.findUserByUserId(id);
+            LOGGER.info("user from repo input ={}, user to update={}", userFromRepository, userToUpdate);
 
             userFromRepository.setLogin(userToUpdate.getLogin());
             userFromRepository.setPassword(userToUpdate.getPassword());
             userFromRepository.setMemoBoxId(userToUpdate.getMemoBoxId());
             userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
 
-            repository.save(userFromRepository);
+            userRepository.save(userFromRepository);
+            LOGGER.info("users output={}", userFromRepository);
             redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", userFromRepository.getUserId()));
             return REDIRECT_PAGE_USER_VIEW;
         }
@@ -111,7 +116,7 @@ public class UserViewController {
 
     @GetMapping("/deleteUser/{id}")
     String initDeleteUserEntity(@PathVariable("id") long id) {
-        repository.deleteUserByUserId(id);
+        userRepository.deleteUserByUserId(id);
         return REDIRECT_PAGE_USER_VIEW;
     }
 }
