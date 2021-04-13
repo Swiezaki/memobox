@@ -97,7 +97,6 @@ public class UserViewController {
             return PAGE_USER_EDIT;
         } else {
             User userFromRepository = repository.findUserByUserId(id);
-            LOGGER.info("user from repo input ={}, user to update={}", userFromRepository, userToUpdate);
 
             userFromRepository.setLogin(userToUpdate.getLogin());
             userFromRepository.setPassword(userToUpdate.getPassword());
@@ -105,7 +104,6 @@ public class UserViewController {
             userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
 
             repository.save(userFromRepository);
-            LOGGER.info("users output={}", userFromRepository);
             redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", userFromRepository.getUserId()));
             return REDIRECT_PAGE_USER_VIEW;
         }
