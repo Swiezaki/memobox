@@ -9,7 +9,7 @@
 <main>
     <!--/*@thymesVar id="user" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
     <h1 th:text="Users">Users</h1>
-    <div th:text="${message}"/>
+    <p th:text="${message}"/>
     <fieldset>
         <legend>Options</legend>
         <form>
@@ -19,6 +19,8 @@
     </fieldset>
     <fieldset>
         <legend>Search</legend>
+        <p th:text="${notFoundMessage1}"/>
+        <p th:text="${notFoundMessage2}"/>
         <form method="get" th:action="@{/user/search}">
             <input type="text" name="keyword" th:value="${keyword}"/>
             <p>Filter by:

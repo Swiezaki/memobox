@@ -1,6 +1,5 @@
 package io.github.wojtekmarcin.memobox.controller;
 
-import com.sun.xml.bind.v2.TODO;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import org.slf4j.Logger;
@@ -38,7 +37,6 @@ public class UserViewController {
     }
 
 /*    TODO
-        - komunikat o braku odnalezionych rekordów
         - dodanie możliwości rozszerzania listy parametrów wyszukiwania
         - filtrowanie
     */
@@ -52,16 +50,26 @@ public class UserViewController {
 
         LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
 
-        switch(filterType){
-            case 1:{
-                model.addAttribute("users", userRepository.findUserByLogin(keyword));
+        switch (filterType) {
+            case 1: {
+                if (userRepository.findUserByLogin(keyword).isEmpty()) {
+                    model.addAttribute("notFoundMessage1", String.format("Login not found"));
+                } else {
+                    model.addAttribute("users", userRepository.findUserByLogin(keyword));
+                }
+                break;
             }
-            case 2:{
-                model.addAttribute("users", userRepository.findUserByPassword(keyword));
+            case 2: {
+                if (userRepository.findUserByPassword(keyword).isEmpty()) {
+                    model.addAttribute("notFoundMessage2", String.format("Password not found"));
+                } else {
+                    model.addAttribute("users", userRepository.findUserByPassword(keyword));
+                }
+                break;
             }
         }
 
-        LOGGER.info("users ={}", model.getAttribute("users"));
+        LOGGER.info("users ={} filtered by filterType ={}", model.getAttribute("users"), filterType);
         return PAGE_USER_VIEW;
     }
 
@@ -79,8 +87,8 @@ public class UserViewController {
         if (bindingResult.hasErrors()) {
             return PAGE_USER_ADD;
         }
-        if (!userRepository.findUserByLogin(user.getLogin()).isEmpty()){
-            bindingResult.rejectValue("login","login.userToAdd","Login already exist.");
+        if (!userRepository.findUserByLogin(user.getLogin()).isEmpty()) {
+            bindingResult.rejectValue("login", "login.userToAdd", "Login already exist.");
             return PAGE_USER_ADD;
         }
 
