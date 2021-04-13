@@ -52,10 +52,13 @@ public class UserViewController {
 
         LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
 
-        if (filterType == 1) {
-            model.addAttribute("users", userRepository.findUserByLogin(keyword));
-        } else {
-            model.addAttribute("users", userRepository.findUserByPassword(keyword));
+        switch(filterType){
+            case 1:{
+                model.addAttribute("users", userRepository.findUserByLogin(keyword));
+            }
+            case 2:{
+                model.addAttribute("users", userRepository.findUserByPassword(keyword));
+            }
         }
 
         LOGGER.info("users ={}", model.getAttribute("users"));
