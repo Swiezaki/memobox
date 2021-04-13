@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -22,17 +24,22 @@ public class UserViewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
-    public UserViewController(UserRepository repository) {
-        this.repository = repository;
+    public UserViewController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {
-        model.addAttribute("users", repository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return PAGE_USER_VIEW;
     }
+
+/*    TODO
+        - dodanie możliwości rozszerzania listy parametrów wyszukiwania
+        - filtrowanie wyników
+    */
 
     @GetMapping("/search")
     String initSearchingEntityByKey(Model model,
@@ -43,13 +50,27 @@ public class UserViewController {
 
         LOGGER.info("keyword ={}, filterType={}", keyword, filterType);
 
-        if (filterType == 1) {
-            model.addAttribute("users", repository.findUserByLogin(keyword));
-        } else {
-            model.addAttribute("users", repository.findUserByPassword(keyword));
+        /*FIXME*/
+        switch (filterType) {
+            case 1: {
+                if (userRepository.findUserByLogin(keyword).isEmpty()) {
+                    model.addAttribute("notFoundMessage1", String.format("Login not found"));
+                } else {
+                    model.addAttribute("users", userRepository.findUserByLogin(keyword));
+                }
+                break;
+            }
+            case 2: {
+                if (userRepository.findUserByPassword(keyword).isEmpty()) {
+                    model.addAttribute("notFoundMessage2", String.format("Password not found"));
+                } else {
+                    model.addAttribute("users", userRepository.findUserByPassword(keyword));
+                }
+                break;
+            }
         }
 
-        LOGGER.info("users ={}", model.getAttribute("users"));
+        LOGGER.info("users ={} filtered by filterType ={}", model.getAttribute("users"), filterType);
         return PAGE_USER_VIEW;
     }
 
@@ -59,54 +80,65 @@ public class UserViewController {
         return PAGE_USER_ADD;
     }
 
-    /*TODO
-     *  1. Brak walidacji na duplikujące się loginy
-     * 2. Dodać komunikat o poprawnym dodaniu użytkownika*/
-
     @PostMapping("/addUser")
-    String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user, BindingResult bindingResult) {
+    String processAddUserEntityForm(@ModelAttribute("userToAdd") @Valid User user,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             return PAGE_USER_ADD;
         }
-        repository.save(user);
+        if (!userRepository.findUserByLogin(user.getLogin()).isEmpty()) {
+            bindingResult.rejectValue("login", "login.userToAdd", "Login already exist.");
+            return PAGE_USER_ADD;
+        }
+
+        userRepository.save(user);
+        redirectAttributes.addFlashAttribute("message", String.format("User %s created.", user.getUserId()));
         return REDIRECT_PAGE_USER_VIEW;
     }
 
     @GetMapping("/editUser/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
-        model.addAttribute("userFormSource", repository.findUserByUserId(id));
+        model.addAttribute("userFormSource", userRepository.findUserByUserId(id));
         return PAGE_USER_EDIT;
     }
 
-    /*-TODO
-     *    1. Brak walidacji pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy
-     *  2. Dodać komunikat o poprawnej edycji użytkownika*/
+    /*TODO
+        - Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
+        */
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
                                      @Valid User userToUpdate,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     ModelMap model,
+                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            model.put("userFromSource", userRepository.findUserByUserId(id));
             return PAGE_USER_EDIT;
         } else {
-            User userFromRepository = repository.findUserByUserId(id);
+            User userFromRepository = userRepository.findUserByUserId(id);
             LOGGER.info("user from repo input ={}, user to update={}", userFromRepository, userToUpdate);
 
             userFromRepository.setLogin(userToUpdate.getLogin());
             userFromRepository.setPassword(userToUpdate.getPassword());
             userFromRepository.setMemoBoxId(userToUpdate.getMemoBoxId());
             userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
-            repository.save(userFromRepository);
-            LOGGER.info("users output={}", userFromRepository);
 
+            userRepository.save(userFromRepository);
+            LOGGER.info("users output={}", userFromRepository);
+            redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", userFromRepository.getUserId()));
             return REDIRECT_PAGE_USER_VIEW;
         }
     }
 
     @GetMapping("/deleteUser/{id}")
-    String initDeleteUserEntity(@PathVariable("id") long id) {
-        repository.deleteUserByUserId(id);
+    String initDeleteUserEntity(@PathVariable("id") long id,
+                                RedirectAttributes redirectAttributes) {
+        userRepository.deleteUserByUserId(id);
+        redirectAttributes.addFlashAttribute("message", String.format("User %s deleted", id));
         return REDIRECT_PAGE_USER_VIEW;
     }
 }
