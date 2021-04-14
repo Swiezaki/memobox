@@ -33,7 +33,7 @@ public class WordViewController {
     }
 
     @ModelAttribute("wordSets")
-    public List<WordsSet> getWordSets(){
+    public List<WordsSet> getWordSets() {
         return wordsSetRepository.findAll();
     }
 
@@ -82,24 +82,17 @@ public class WordViewController {
     @PostMapping("/editWord/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
-                                      @Valid Word wordToUpdate,
-                                      BindingResult bindingResult,
-                                      ModelMap model) {
+                                      @Valid Word word,
+                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.put("wordFromSource", wordRepository.findWordByWordId(id));
             return PAGE_WORD_EDIT;
         } else {
-            Word wordFromRepository = wordRepository.findWordByWordId(id);
-            LOGGER.info("word from repo input ={}, word to update={}", wordFromRepository, wordToUpdate);
+            LOGGER.info("word from repo input ={}", word);
 
-            wordFromRepository.setWord(wordToUpdate.getWord());
-            wordFromRepository.setWordTranslation(wordToUpdate.getWordTranslation());
-            wordFromRepository.setWordLanguageId(wordToUpdate.getWordLanguageId());
-            wordFromRepository.setWordTypeId(wordToUpdate.getWordTypeId());
-            wordFromRepository.setWordsSetWordId(wordToUpdate.getWordsSetWordId());
-            wordRepository.save(wordFromRepository);
-            LOGGER.info("users output={}", wordFromRepository);
+            word.setWordId(id);
+            wordRepository.save(word);
 
+            LOGGER.info("users output={}", word);
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
