@@ -21,6 +21,9 @@ public class Audit {
         preMerge = LocalDateTime.now();
     }
 
+    public Audit() {
+    }
+
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }

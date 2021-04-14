@@ -1,5 +1,6 @@
 package io.github.wojtekmarcin.memobox.controller;
 
+import io.github.wojtekmarcin.memobox.entities.Audit;
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
@@ -69,10 +70,6 @@ public class WordViewController {
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
-    /*TODO
-       -Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
-        submit wywala błąd
-        */
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
@@ -87,7 +84,7 @@ public class WordViewController {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_EDIT;
         } else {
-            LOGGER.info("word from repo input ={}", word);
+            LOGGER.info("word input ={}", word);
 
             word.setWordId(id);
             wordRepository.save(word);
