@@ -54,7 +54,7 @@ public class WordViewController {
 
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
-                                               BindingResult bindingResult, ModelMap model) {
+                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORD_ADD;
         } else {
