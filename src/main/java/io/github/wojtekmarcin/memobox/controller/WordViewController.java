@@ -1,5 +1,6 @@
 package io.github.wojtekmarcin.memobox.controller;
 
+import io.github.wojtekmarcin.memobox.entities.Audit;
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
@@ -33,7 +34,7 @@ public class WordViewController {
     }
 
     @ModelAttribute("wordSets")
-    public List<WordsSet> getWordSets(){
+    public List<WordsSet> getWordSets() {
         return wordsSetRepository.findAll();
     }
 
@@ -69,10 +70,6 @@ public class WordViewController {
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
-    /*TODO
-       -Jeżeli pierwszy warunek if zostanie spełniony to numer ID słowa zmienia się na 0 czyli numer ID wordToUpdate i za drugim kliknięciem
-        submit wywala błąd
-        */
     @GetMapping("/editWord/{id}")
     String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
@@ -82,24 +79,17 @@ public class WordViewController {
     @PostMapping("/editWord/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
-                                      @Valid Word wordToUpdate,
-                                      BindingResult bindingResult,
-                                      ModelMap model) {
+                                      @Valid Word word,
+                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.put("wordFromSource", wordRepository.findWordByWordId(id));
             return PAGE_WORD_EDIT;
         } else {
-            Word wordFromRepository = wordRepository.findWordByWordId(id);
-            LOGGER.info("word from repo input ={}, word to update={}", wordFromRepository, wordToUpdate);
+            LOGGER.info("word input ={}", word);
 
-            wordFromRepository.setWord(wordToUpdate.getWord());
-            wordFromRepository.setWordTranslation(wordToUpdate.getWordTranslation());
-            wordFromRepository.setWordLanguageId(wordToUpdate.getWordLanguageId());
-            wordFromRepository.setWordTypeId(wordToUpdate.getWordTypeId());
-            wordFromRepository.setWordsSetWordId(wordToUpdate.getWordsSetWordId());
-            wordRepository.save(wordFromRepository);
-            LOGGER.info("users output={}", wordFromRepository);
+            word.setWordId(id);
+            wordRepository.save(word);
 
+            LOGGER.info("users output={}", word);
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
