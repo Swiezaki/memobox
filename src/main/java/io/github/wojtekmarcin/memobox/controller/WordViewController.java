@@ -32,6 +32,11 @@ public class WordViewController {
         this.wordsSetRepository = wordsSetRepository;
     }
 
+    @ModelAttribute("wordSets")
+    public List<WordsSet> getWordSets(){
+        return wordsSetRepository.findAll();
+    }
+
     @GetMapping("/view")
     String showWordView(Model model) {
         model.addAttribute("words", wordRepository.findAll());
@@ -40,13 +45,10 @@ public class WordViewController {
 
     /*TODO
         -Nie dodaje się WordSet
-        -Zrobić ModelAtributte
       */
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
-        List<WordsSet> wordsSetsFromRepo = wordsSetRepository.findAll();
-        model.addAttribute("wordSets", wordsSetsFromRepo);
         return PAGE_WORD_ADD;
     }
 
@@ -54,7 +56,6 @@ public class WordViewController {
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
                                                BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
-            model.put("wordSets", wordsSetRepository.findAll());
             return PAGE_WORD_ADD;
         } else {
             wordRepository.save(word);
