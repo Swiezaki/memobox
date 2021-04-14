@@ -15,7 +15,8 @@
     <fieldset>
         <legend th:text="|Edit word ${wordFromSource.wordId}|"></legend>
         <!--/*@thymesVar id="wordFromSource" type="io.github.wojtekmarcin.memobox.entities.Word"*/-->
-        <form method="post" th:action="@{'/word/editWord/' + ${wordFromSource.getWordId()}}" th:object="${wordFromSource}">
+        <form method="post" th:action="@{'/word/editWord/' + ${wordFromSource.getWordId()}}"
+              th:object="${wordFromSource}">
             <label>Word</label>
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
@@ -32,9 +33,16 @@
             <input th:type="text" th:field="*{wordLanguageId}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
 
-            <label>Word Set</label>
-            <input th:type="text" th:field="*{wordsSetWordId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordsSetWordId')}" th:errors="*{wordsSetWordId}"></p>
+            <label>Wordset</label>
+            <select th:field="*{wordsSetWordId}">
+                <option value="">
+                    <p th:text="${wordFromSource.wordsSetWordId != null } ? ${wordFromSource.wordsSetWordId} : EMPTY "></p>
+                </option>
+                <option th:each="wordset : ${wordSets} "
+                        th:value="${wordset.getWordSetId}"
+                        th:utext="${wordset.getSetName}">
+                </option>
+            </select>
 
             <button type="submit">Edit</button>
             <button type="reset">Clear</button>

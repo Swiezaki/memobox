@@ -106,7 +106,7 @@ public class UserViewController {
 
     /*TODO
         - Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
-        */
+        - refactor z uwzględnieniem wyłaczeń niektórych pól w zapisie*/
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,

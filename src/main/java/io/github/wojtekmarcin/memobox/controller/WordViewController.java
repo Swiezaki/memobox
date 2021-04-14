@@ -76,6 +76,10 @@ public class WordViewController {
         return PAGE_WORD_EDIT;
     }
 
+    /*TODO
+    *   - przy edytowaniu encji nadpisuje się na null wartość audit.createdOn()
+    * */
+
     @PostMapping("/editWord/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
