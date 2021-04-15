@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -39,6 +38,7 @@ public class UserViewController {
 /*    TODO
         - dodanie możliwości rozszerzania listy parametrów wyszukiwania
         - filtrowanie wyników
+        - refaktor switch case
     */
 
     @GetMapping("/search")
@@ -105,8 +105,9 @@ public class UserViewController {
     }
 
     /*TODO
-        -
-        */
+     *   - walidację autentyczności na loginie
+     *   - po błędnej walidacji numer klienta edytowanego zmienia się na 0
+     * */
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
