@@ -105,31 +105,25 @@ public class UserViewController {
     }
 
     /*TODO
-        - Brak walidacji (np. pola memoboxID oraz WordsetId to tablice, trzeba stworzyć implementację createUser która będzie tworzyć dwie listy)
+        -
         */
 
     @PostMapping("/editUser/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("userFormSource")
-                                     @Valid User userToUpdate,
+                                     @Valid User user,
                                      BindingResult bindingResult,
-                                     ModelMap model,
                                      RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            model.put("userFromSource", userRepository.findUserByUserId(id));
             return PAGE_USER_EDIT;
         } else {
-            User userFromRepository = userRepository.findUserByUserId(id);
-            LOGGER.info("user from repo input ={}, user to update={}", userFromRepository, userToUpdate);
+            LOGGER.info("user input ={} ", user);
 
-            userFromRepository.setLogin(userToUpdate.getLogin());
-            userFromRepository.setPassword(userToUpdate.getPassword());
-            userFromRepository.setMemoBoxId(userToUpdate.getMemoBoxId());
-            userFromRepository.setWordsSetId(userToUpdate.getWordsSetId());
+            user.setUserId(id);
+            userRepository.save(user);
 
-            userRepository.save(userFromRepository);
-            LOGGER.info("users output={}", userFromRepository);
-            redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", userFromRepository.getUserId()));
+            LOGGER.info("user output ={} ", user);
+            redirectAttributes.addFlashAttribute("message", String.format("User %s edited.", user.getUserId()));
             return REDIRECT_PAGE_USER_VIEW;
         }
     }

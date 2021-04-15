@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>UserEdit</title>
   <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+  <style>
+    .Bdc\(red\) {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 <main>
@@ -12,13 +17,21 @@
     <!--/*@thymesVar id="userFormSource" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
     <form method="post" th:action="@{'/user/editUser/' + ${userFormSource.userId}}" th:object="${userFormSource}">
       <label>Login</label>
-      <input th:type="text" th:field="${userFormSource.login}"/>
+      <input th:type="text" th:field="*{login}"/>
+      <p class="Bdc(red)" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+
       <label>Password</label>
-      <input th:type="text" th:field="${userFormSource.password}">
+      <input th:type="text" th:field="*{password}">
+      <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
       <label>WordSetId</label>
-      <input th:type="text" th:field="${userFormSource.wordsSetId}">
+      <input th:type="text" th:field="*{wordsSetId}">
+      <p class="Bdc(red)" th:if="${#fields.hasErrors('wordsSetId')}" th:errors="*{wordsSetId}"></p>
+
       <label>MemoBoxId</label>
-      <input th:type="text" th:field="${userFormSource.memoBoxId}">
+      <input th:type="text" th:field="*{memoBoxId}">
+      <p class="Bdc(red)" th:if="${#fields.hasErrors('memoBoxId')}" th:errors="*{memoBoxId}"></p>
+
       <button type="submit">Edit</button>
       <button type="reset">Clear</button>
       <button><a th:href="@{'/user/view'}">Back</a></button>
