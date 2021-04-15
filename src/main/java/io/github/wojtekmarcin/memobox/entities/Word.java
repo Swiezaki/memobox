@@ -27,8 +27,8 @@ public class Word {
     private Integer wordTranslationId;
     private Integer wordLanguageId;
 
-    @OneToOne(mappedBy = "wordId")
-    private WordsSet wordsSetWordId;
+    @OneToOne
+    private WordsSet wordSet;
 
     @Embedded
     private Audit audit = new Audit();
@@ -85,12 +85,12 @@ public class Word {
         this.wordTypeId = word_type_id;
     }
 
-    public WordsSet getWordsSetWordId() {
-        return wordsSetWordId;
+    public WordsSet getWordSet() {
+        return wordSet;
     }
 
-    public void setWordsSetWordId(WordsSet wordsSetWordId) {
-        this.wordsSetWordId = wordsSetWordId;
+    public void setWordSet(WordsSet wordSet) {
+        this.wordSet = wordSet;
     }
 
     public Audit getAudit() {
@@ -106,12 +106,12 @@ public class Word {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Word word1 = (Word) o;
-        return wordId == word1.wordId && Objects.equals(word, word1.word) && Objects.equals(wordTranslation, word1.wordTranslation) && Objects.equals(wordTypeId, word1.wordTypeId) && Objects.equals(wordTranslationId, word1.wordTranslationId) && Objects.equals(wordLanguageId, word1.wordLanguageId) && Objects.equals(wordsSetWordId, word1.wordsSetWordId) && Objects.equals(audit, word1.audit);
+        return wordId == word1.wordId && Objects.equals(word, word1.word) && Objects.equals(wordTranslation, word1.wordTranslation) && Objects.equals(wordTypeId, word1.wordTypeId) && Objects.equals(wordTranslationId, word1.wordTranslationId) && Objects.equals(wordLanguageId, word1.wordLanguageId) && Objects.equals(wordSet, word1.wordSet) && Objects.equals(audit, word1.audit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordId, word, wordTranslation, wordTypeId, wordTranslationId, wordLanguageId, wordsSetWordId, audit);
+        return Objects.hash(wordId, word, wordTranslation, wordTypeId, wordTranslationId, wordLanguageId, wordSet, audit);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Word {
         sb.append(", wordTypeId=").append(wordTypeId);
         sb.append(", wordTranslationId=").append(wordTranslationId);
         sb.append(", wordLanguageId=").append(wordLanguageId);
-        sb.append(", wordsSetWordId=").append(wordsSetWordId);
+        sb.append(", wordSet=").append(wordSet);
         sb.append(", audit=").append(audit);
         sb.append('}');
         return sb.toString();

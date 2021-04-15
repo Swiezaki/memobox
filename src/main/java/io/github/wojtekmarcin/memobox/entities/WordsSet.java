@@ -18,10 +18,6 @@ public class WordsSet {
     @JoinColumn(name = "userId")
     private User userId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "wordsSetWordId")
-    private Word wordId;
-
     @ManyToMany(mappedBy = "wordSetId")
     private List<MemoBox> memoBoxSetId;
 
@@ -71,19 +67,25 @@ public class WordsSet {
         this.userId = userId;
     }
 
-    public Word getWordId() {
-        return wordId;
-    }
-
-    public void setWordId(Word wordId) {
-        this.wordId = wordId;
-    }
-
     public List<MemoBox> getMemoBoxSetId() {
         return memoBoxSetId;
     }
 
     public void setMemoBoxSetId(List<MemoBox> memoBoxSetId) {
         this.memoBoxSetId = memoBoxSetId;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("WordsSet{");
+        sb.append("wordSetId=").append(wordSetId);
+        sb.append(", setName='").append(setName).append('\'');
+        sb.append(", visibleFlagId=").append(visibleFlagId);
+        sb.append(", editionFlagId=").append(editionFlagId);
+        sb.append(", userId=").append(userId);
+        sb.append(", memoBoxSetId=").append(memoBoxSetId);
+        sb.append(", audit=").append(audit);
+        sb.append('}');
+        return sb.toString();
     }
 }
