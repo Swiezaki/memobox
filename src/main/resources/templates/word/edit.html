@@ -33,8 +33,8 @@
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
 
             <label>Word Set</label>
-            <input th:type="text" th:field="*{wordsSetWordId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordsSetWordId')}" th:errors="*{wordsSetWordId}"></p>
+            <input th:type="text" th:field="*{wordSet}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordSet')}" th:errors="*{wordSet}"></p>
 
             <button type="submit">Edit</button>
             <button type="reset">Clear</button>

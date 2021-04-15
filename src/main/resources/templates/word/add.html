@@ -32,7 +32,7 @@
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
 
             <label>Wordset</label>
-            <select th:field="*{wordsSetWordId}">
+            <select th:field="*{wordSet}">
                 <option value=""> ---</option>
                 <option th:each="wordset : ${wordSets} "
                         th:value ="${wordset.getWordSetId}"
