@@ -11,10 +11,6 @@ public class MemoBox {
     private long memoBoxId;
     private Integer wordSlot;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User userId;
-
     @ManyToMany
     @JoinTable(
             name = "memoBoxesWordsSets",
@@ -48,13 +44,6 @@ public class MemoBox {
         this.wordSlot = wordSlot;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
 
     public List<WordsSet> getWordSetId() {
         return wordSetId;

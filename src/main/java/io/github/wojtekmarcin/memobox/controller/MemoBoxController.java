@@ -36,7 +36,7 @@ public class MemoBoxController {
     @PostMapping("/add")
     ResponseEntity<?> createMemobox(@RequestBody MemoBox toUpdate) {
         repository.save(toUpdate);
-        return ResponseEntity.created(URI.create("/memobox/add/" + toUpdate.getUserId())).build();
+        return ResponseEntity.created(URI.create("/memobox/add/" + toUpdate.getMemoBoxId())).build();
     }
 
     @PutMapping("/edit/{id}")

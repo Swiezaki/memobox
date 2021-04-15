@@ -38,8 +38,7 @@
                 <th>UserId</th>
                 <th>Login</th>
                 <th>Password</th>
-                <th>MemoBoxId</th>
-                <th>WordsSetId</th>
+                <th>Memoboxes</th>
 <!--                <th>CreateDate</th>-->
                 <th>Edit</th>
                 <th>Delete</th>
@@ -50,8 +49,7 @@
                 <td><p th:text="${user.userId}"></p></td>
                 <td><p th:text="${user.login}"></p></td>
                 <td><p th:text="${user.password}"></p></td>
-                <td><p th:text="${user.memoBoxId}"></p></td>
-                <td><p th:text="${user.wordsSetId}"></p></td>
+                <td><p th:text="${user.memoBoxes}"></p></td>
 <!--                <td><p th:text="${user.audit.viewCreatedDate()}"></p></td>-->
                 <td><a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a></td>
                 <td><a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a></td>
