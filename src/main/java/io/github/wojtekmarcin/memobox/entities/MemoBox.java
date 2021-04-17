@@ -52,4 +52,20 @@ public class MemoBox {
     public void setWordSetId(List<WordsSet> wordSetId) {
         this.wordSetId = wordSetId;
     }
+
+    public Word getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(Word wordId) {
+        this.wordId = wordId;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
+    }
 }
