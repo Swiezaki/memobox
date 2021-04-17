@@ -1,5 +1,8 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,16 +14,13 @@ public class MemoBox {
     private long memoBoxId;
     private Integer wordSlot;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "memobox_wordset",
             joinColumns = @JoinColumn(name = "memoBoxes"),
             inverseJoinColumns = @JoinColumn(name = "wordSetId"))
     private List<WordsSet> wordSetId;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "wordId")
-    private Word wordId;
 
     @Embedded
     private Audit audit = new Audit();
@@ -51,14 +51,6 @@ public class MemoBox {
 
     public void setWordSetId(List<WordsSet> wordSetId) {
         this.wordSetId = wordSetId;
-    }
-
-    public Word getWordId() {
-        return wordId;
-    }
-
-    public void setWordId(Word wordId) {
-        this.wordId = wordId;
     }
 
     public Audit getAudit() {
