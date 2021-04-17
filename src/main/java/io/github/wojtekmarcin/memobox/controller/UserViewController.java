@@ -23,6 +23,7 @@ public class UserViewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+
     private final UserRepository userRepository;
 
     public UserViewController(UserRepository userRepository) {

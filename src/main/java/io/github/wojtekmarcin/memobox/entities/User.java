@@ -28,7 +28,8 @@ public class User implements Serializable {
     @JoinColumn(name = "memoBoxId")
     private List<MemoBox> memoBoxes;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name ="wordSetId")
     private List<WordsSet> wordsSetId;
 
     @Embedded

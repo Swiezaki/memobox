@@ -36,7 +36,9 @@
                 <td><p th:text="${word.wordTranslation}"></p></td>
                 <td><p th:text="${word.wordTypeId}"></p></td>
                 <td><p th:text="${word.wordLanguageId}"></p></td>
-                <td><p th:text="${word.wordSet.getSetName()}"></p></td>
+                <td th:text="${word.wordSet} ?: 'UNKNOWN'" />
+<!--                <td th:text="${word.wordSet.getSetName()} ?: 'UNKNOWN'" />-->
+<!--                <td><p th:text="${word.wordSet.getSetName()}"></p></td>-->
 <!--                <td><p th:text="${word.audit.getCreatedOn()}"></p></td>-->
                 <td><a th:href="@{'/word/editWord/' + ${word.wordId}}">Edit</a></td>
                 <td><a th:href="@{'/word/deleteWord/' + ${word.wordId}}">Delete</a></td>
