@@ -24,10 +24,12 @@ public class User implements Serializable {
     @Size(min = 5, message = "Password should be longer")
     private String password;
 
-    @OneToMany(mappedBy = "userId")
-    private List<MemoBox> memoBoxId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "memoBoxId")
+    private List<MemoBox> memoBoxes;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name ="wordSetId")
     private List<WordsSet> wordsSetId;
 
     @Embedded
@@ -60,14 +62,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<MemoBox> getMemoBoxId() {
-        return memoBoxId;
-    }
-
-    public void setMemoBoxId(List<MemoBox> memoBoxId) {
-        this.memoBoxId = memoBoxId;
-    }
-
     public List<WordsSet> getWordsSetId() {
         return wordsSetId;
     }
@@ -82,6 +76,14 @@ public class User implements Serializable {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    public List<MemoBox> getMemoBoxes() {
+        return memoBoxes;
+    }
+
+    public void setMemoBoxes(List<MemoBox> memoBoxes) {
+        this.memoBoxes = memoBoxes;
     }
 
     public void updateFrom(final User source) {
@@ -112,7 +114,7 @@ public class User implements Serializable {
         sb.append("userId=").append(userId);
         sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
-        sb.append(", memoBoxId=").append(memoBoxId);
+        sb.append(", memoBoxes=").append(memoBoxes);
         sb.append(", wordsSetId=").append(wordsSetId);
         sb.append(", audit=").append(audit);
         sb.append('}');

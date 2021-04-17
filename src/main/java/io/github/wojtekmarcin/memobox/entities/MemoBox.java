@@ -11,14 +11,10 @@ public class MemoBox {
     private long memoBoxId;
     private Integer wordSlot;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User userId;
-
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "memoBoxesWordsSets",
-            joinColumns = @JoinColumn(name = "memoBoxSetId"),
+            name = "memobox_wordset",
+            joinColumns = @JoinColumn(name = "memoBoxes"),
             inverseJoinColumns = @JoinColumn(name = "wordSetId"))
     private List<WordsSet> wordSetId;
 
@@ -48,13 +44,6 @@ public class MemoBox {
         this.wordSlot = wordSlot;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
 
     public List<WordsSet> getWordSetId() {
         return wordSetId;
@@ -62,13 +51,5 @@ public class MemoBox {
 
     public void setWordSetId(List<WordsSet> wordSetId) {
         this.wordSetId = wordSetId;
-    }
-
-    public Word getWordId() {
-        return wordId;
-    }
-
-    public void setWordId(Word wordId) {
-        this.wordId = wordId;
     }
 }

@@ -14,12 +14,8 @@ public class WordsSet {
     private boolean visibleFlagId;
     private boolean editionFlagId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User userId;
-
     @ManyToMany(mappedBy = "wordSetId")
-    private List<MemoBox> memoBoxSetId;
+    private List<MemoBox> memoBoxes;
 
     @Embedded
     private Audit audit = new Audit();
@@ -59,33 +55,19 @@ public class WordsSet {
         this.editionFlagId = editionFlagId;
     }
 
-    public User getUserId() {
-        return userId;
+    public List<MemoBox> getMemoBoxes() {
+        return memoBoxes;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setMemoBoxes(List<MemoBox> memoBoxes) {
+        this.memoBoxes = memoBoxes;
     }
 
-    public List<MemoBox> getMemoBoxSetId() {
-        return memoBoxSetId;
+    public Audit getAudit() {
+        return audit;
     }
 
-    public void setMemoBoxSetId(List<MemoBox> memoBoxSetId) {
-        this.memoBoxSetId = memoBoxSetId;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("WordsSet{");
-        sb.append("wordSetId=").append(wordSetId);
-        sb.append(", setName='").append(setName).append('\'');
-        sb.append(", visibleFlagId=").append(visibleFlagId);
-        sb.append(", editionFlagId=").append(editionFlagId);
-        sb.append(", userId=").append(userId);
-        sb.append(", memoBoxSetId=").append(memoBoxSetId);
-        sb.append(", audit=").append(audit);
-        sb.append('}');
-        return sb.toString();
+    public void setAudit(Audit audit) {
+        this.audit = audit;
     }
 }

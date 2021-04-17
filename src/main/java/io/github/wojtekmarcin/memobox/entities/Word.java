@@ -27,7 +27,8 @@ public class Word {
     private Integer wordTranslationId;
     private Integer wordLanguageId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wordSetId")
     private WordsSet wordSet;
 
     @Embedded

@@ -27,10 +27,9 @@
             <input th:type="text" th:field="*{password}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
-
             <button type="submit">Create</button>
             <button type="reset">Clear</button>
-            <button><a th:href="@{'/user/view'}">Back</a></button>
+                <button><a th:href="@{'/user/view'}">Back</a></button>
         </form>
     </fieldset>
 </main>

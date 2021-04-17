@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>UserEdit</title>
-  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
-  <style>
-    .Bdc\(red\) {
-      color: red;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>UserEdit</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <style>
+        .Bdc\(red\) {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <main>
-  <fieldset>
-    <legend th:text="|Edit user ${userFormSource.userId}|"> </legend>
-    <!--/*@thymesVar id="userFormSource" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
-    <form method="post" th:action="@{'/user/editUser/' + ${userFormSource.userId}}" th:object="${userFormSource}">
-      <label>Login</label>
-      <input th:type="text" th:field="*{login}"/>
-      <p class="Bdc(red)" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
+    <fieldset>
+        <legend th:text="|Edit user ${userFormSource.userId}|"></legend>
+        <!--/*@thymesVar id="userFormSource" type="io.github.wojtekmarcin.memobox.entities.User"*/-->
+        <form method="post" th:action="@{'/user/editUser/' + ${userFormSource.userId}}" th:object="${userFormSource}">
+            <label>Login</label>
+            <input th:type="text" th:field="*{login}"/>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></p>
 
-      <label>Password</label>
-      <input th:type="text" th:field="*{password}">
-      <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            <label>Password</label>
+            <input th:type="text" th:field="*{password}">
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
-      <label>WordSetId</label>
-      <input th:type="text" th:field="*{wordsSetId}">
-      <p class="Bdc(red)" th:if="${#fields.hasErrors('wordsSetId')}" th:errors="*{wordsSetId}"></p>
+            <!--   TODO
+                    Wyświetlanie listy wordSetów użytkownika-->
+            <label>Wordsets</label>
+            <input th:type="text" th:field="*{wordsSetId}">
 
-      <label>MemoBoxId</label>
-      <input th:type="text" th:field="*{memoBoxId}">
-      <p class="Bdc(red)" th:if="${#fields.hasErrors('memoBoxId')}" th:errors="*{memoBoxId}"></p>
+            <!--TODO
+                  Dodać opcję edycji memoboxes-->
+<!--            <label>Memoboxes</label>-->
+<!--            <input th:type="text" th:field="*{memoBoxes}">-->
 
-      <button type="submit">Edit</button>
-      <button type="reset">Clear</button>
-      <button><a th:href="@{'/user/view'}">Back</a></button>
-    </form>
-  </fieldset>
+            <fieldset>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Memoboxes</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="user,userStat : ${userFormSource}">
+                    <tr>
+                        <td><p th:text="*{memoBoxes}"></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <button type="submit">Edit</button>
+            <button type="reset">Clear</button>
+            <button><a th:href="@{'/user/view'}">Back</a></button>
+        </form>
+    </fieldset>
 </main>
 </body>
 </html>
