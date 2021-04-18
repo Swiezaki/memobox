@@ -32,10 +32,10 @@ public class WordSetViewController {
         this.userRepository = userRepository;
     }
 
-    @ModelAttribute("user")
-    public User findUser(@PathVariable("userId") Long userId){
-        return userRepository.findUserByUserId(userId);
-    }
+//    @ModelAttribute("user")
+//    public User findUser(@PathVariable("userId") Long userId){
+//        return userRepository.findUserByUserId(userId);
+//    }
 
     @GetMapping("/view")
     String showWordView(Model model) {
@@ -77,7 +77,7 @@ public class WordSetViewController {
         return PAGE_WORDSET_EDIT;
     }
 
-    @PostMapping("/editWord/{id}")
+    @PostMapping("/editWordSet/{id}")
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordSetFromSource")
                                       @Valid WordsSet wordsSet,
