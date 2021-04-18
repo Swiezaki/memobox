@@ -1,7 +1,9 @@
 package io.github.wojtekmarcin.memobox.controller;
 
+import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
+import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +24,17 @@ public class WordSetViewController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    private WordsSetRepository wordSetRepository;
+    private final WordsSetRepository wordSetRepository;
+    private final UserRepository userRepository;
 
-    public WordSetViewController(WordsSetRepository wordsSetRepository) {
+    public WordSetViewController(WordsSetRepository wordsSetRepository, UserRepository userRepository) {
         this.wordSetRepository = wordsSetRepository;
+        this.userRepository = userRepository;
+    }
+
+    @ModelAttribute("user")
+    public User findUser(@PathVariable("userId") Long userId){
+        return userRepository.findUserByUserId(userId);
     }
 
     @GetMapping("/view")
@@ -35,14 +44,18 @@ public class WordSetViewController {
     }
 
     @GetMapping("/addWordSet")
-    private String initAddWordForm(Model model) {
-        model.addAttribute("wordsetToAdd", new WordsSet());
+    private String initAddWordForm(Model model, User user) {
+        WordsSet wordsSet = new WordsSet();
+        user.getWordsSetId().add(wordsSet);
+        model.addAttribute("wordsetToAdd", wordsSet);
         return PAGE_WORDSET_ADD;
     }
 
     @PostMapping("/addWordSet")
-    private String processAddingWordEntityForm(@ModelAttribute("wordsetToAdd") @Valid WordsSet wordsSet,
-                                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    private String processAddingWordEntityForm(@ModelAttribute("wordsetToAdd")
+                                               @Valid WordsSet wordsSet,
+                                               BindingResult bindingResult,
+                                               RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORDSET_ADD;
         } else {

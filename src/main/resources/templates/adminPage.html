@@ -3,14 +3,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
 </head>
 <body>
 <main>
-    <h1>Memobox!</h1>
-    <button><a th:href="@{'/userPage'}">User</a></button>
-    <button><a th:href="@{'/adminPage'}">Admin</a></button>
+    <fieldset>
+        <legend>Admin panel</legend>
+        <button><a th:href="@{'/user/view'}">Users</a></button>
+    </fieldset>
 </main>
 </body>
 </html>

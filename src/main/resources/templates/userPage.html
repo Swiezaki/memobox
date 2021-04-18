@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+    <h1>Memobox!</h1>
+
+    <fieldset>
+        <legend>User panel</legend>
+        <button><a th:href="@{'/word/view'}">Words</a></button>
+        <button><a th:href="@{'/memobox/view'}">Memobox</a></button>
+        <button><a th:href="@{'/wordset/view'}">Wordset</a></button>
+    </fieldset>
+    <fieldset>
+        <img src="https://www.wykop.pl/cdn/c3201142/comment_1612536861opi9PSZM3cumGvdCoGh16w.jpg">
+    </fieldset>
+</main>
+</body>
+</html>
