@@ -44,9 +44,6 @@ public class WordViewController {
         return "word/view";
     }
 
-    /*TODO
-        -Nie dodaje się WordSet
-      */
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
