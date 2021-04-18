@@ -5,15 +5,16 @@ import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+@Controller
+@RequestMapping("/wordset")
 public class WordSetViewController {
     public static final String PAGE_WORDSET_ADD = "wordset/add";
     public static final String PAGE_WORDSET_EDIT = "wordset/edit";
@@ -30,7 +31,7 @@ public class WordSetViewController {
     @GetMapping("/view")
     String showWordView(Model model) {
         model.addAttribute("wordsets", wordSetRepository.findAll());
-        return "word/view";
+        return "wordset/view";
     }
 
     @GetMapping("/addWordSet")
@@ -41,11 +42,12 @@ public class WordSetViewController {
 
     @PostMapping("/addWordSet")
     private String processAddingWordEntityForm(@ModelAttribute("wordsetToAdd") @Valid WordsSet wordsSet,
-                                               BindingResult bindingResult) {
+                                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORDSET_ADD;
         } else {
             wordSetRepository.save(wordsSet);
+            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName()));
             return REDIRECT_PAGE_WORDSET_VIEW;
         }
     }

@@ -50,6 +50,10 @@ public class WordViewController {
         return PAGE_WORD_ADD;
     }
 
+    /*TODO
+    *   - dodać warunek z message po dodaniu word
+    * */
+
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
                                                BindingResult bindingResult) {

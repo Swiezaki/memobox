@@ -13,7 +13,7 @@ public class WordsSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordSetId;
-    private String setName;
+    private String wordSetName;
     private boolean visibleFlagId;
     private boolean editionFlagId;
 
@@ -35,12 +35,12 @@ public class WordsSet {
         this.wordSetId = wordSetId;
     }
 
-    public String getSetName() {
-        return setName;
+    public String getWordSetName() {
+        return wordSetName;
     }
 
-    public void setSetName(String setName) {
-        this.setName = setName;
+    public void setWordSetName(String setName) {
+        this.wordSetName = setName;
     }
 
     public boolean isVisibleFlagId() {
