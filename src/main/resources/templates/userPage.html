@@ -8,9 +8,12 @@
 </head>
 <body>
 <main>
-    <h1>Memobox!</h1>
-    <button><a th:href="@{'/userPage'}">User</a></button>
-    <button><a th:href="@{'/adminPage'}">Admin</a></button>
+    <fieldset>
+        <legend>User panel</legend>
+        <button><a th:href="@{'/word/view'}">Words</a></button>
+        <button><a th:href="@{'/memobox/view'}">Memobox</a></button>
+        <button><a th:href="@{'/wordset/view'}">Wordset</a></button>
+    </fieldset>
 </main>
 </body>
 </html>

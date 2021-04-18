@@ -44,14 +44,15 @@ public class WordViewController {
         return "word/view";
     }
 
-    /*TODO
-        -Nie dodaje się WordSet
-      */
     @GetMapping("/addWord")
     private String initAddWordForm(Model model) {
         model.addAttribute("wordToAdd", new Word());
         return PAGE_WORD_ADD;
     }
+
+    /*TODO
+    *   - dodać warunek z message po dodaniu word
+    * */
 
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,

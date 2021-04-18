@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WordSetAdd</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <style>
+        .Bdc\(red\) {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <fieldset>
+        <legend>Add wordset</legend>
+        <!--        TODO
+                      -stylizacja wiadomości-->
+        <div th:text="${message}"/>
+        <form method="post" th:action="@{/wordset/addWordSet}" th:object="${wordsetToAdd}">
+
+            <label>Name</label>
+            <input th:type="text" th:field="*{wordSetName}"/>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordSetName')}" th:errors="*{wordSetName}"></p>
+
+            <button type="submit">Create</button>
+            <button type="reset">Clear</button>
+            <button><a th:href="@{'/wordset/view'}">Back</a></button>
+        </form>
+
+        <label>UserId</label>
+        <input th:type="text" th:object="${userId}"/>
+
+    </fieldset>
+</main>
+</body>
+</html>

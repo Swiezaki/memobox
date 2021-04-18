@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WordsetView</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+</head>
+<body>
+<main>
+    <h1 th:text="Wordsets">Wordsets</h1>
+    <p th:text="${message}"/>
+    <fieldset>
+        <legend>Options</legend>
+        <form>
+            <button><a th:href="@{'/wordset/addWordSet'}">Create new wordset</a></button>
+            <button><a th:href="@{'/'}">Back</a></button>
+        </form>
+    </fieldset>
+    <fieldset>
+    <legend>All wordsets</legend>
+    <table>
+        <thead>
+        <tr>
+            <th>WordsetId</th>
+            <th>Name</th>
+<!--            <th>CreateDate</th>-->
+        </tr>
+        </thead>
+        <tbody th:each="wordset,wordsetStat : ${wordsets}">
+        <tr>
+            <td><p th:text="${wordset.wordSetId}"></p></td>
+            <td><p th:text="${wordset.wordSetName}"></p></td>
+<!--            <td><p th:text="${wordset.audit.viewCreatedDate()}"></p></td>-->
+            <td><a th:href="@{'/wordset/editWordSet/' + ${wordset.getWordSetId()}}">Edit</a></td>
+            <td><a th:href="@{'/wordSet/deleteWordSet/' + ${wordset.getWordSetId()}}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    </fieldset>
+</main>
+</body>
+</html>
