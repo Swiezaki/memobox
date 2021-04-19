@@ -16,8 +16,7 @@
         <legend>Registration</legend>
         <!--        TODO
                       -stylizacja wiadomości-->
-        <div th:text="${message}"/>
-        <form method="post" th:action="@{/register/createUser}" th:object="${userToAdd}">
+        <form method="post" th:action="@{/register}" th:object="${userToAdd}">
 
             <label>Login</label>
             <input th:type="text" th:field="*{username}"/>

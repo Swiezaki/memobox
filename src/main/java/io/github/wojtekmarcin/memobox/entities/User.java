@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;

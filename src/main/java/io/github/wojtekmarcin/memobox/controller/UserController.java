@@ -54,18 +54,18 @@ public class UserController {
         /*FIXME*/
         switch (filterType) {
             case 1: {
-                if (userRepository.findUserByLogin(keyword).isEmpty()) {
+                if (userRepository.findAllUsersByUsername(keyword).isEmpty()) {
                     model.addAttribute("notFoundMessage1", String.format("Login not found"));
                 } else {
-                    model.addAttribute("users", userRepository.findUserByLogin(keyword));
+                    model.addAttribute("users", userRepository.findAllUsersByUsername(keyword));
                 }
                 break;
             }
             case 2: {
-                if (userRepository.findUserByPassword(keyword).isEmpty()) {
+                if (userRepository.findAllUsersByPassword(keyword).isEmpty()) {
                     model.addAttribute("notFoundMessage2", String.format("Password not found"));
                 } else {
-                    model.addAttribute("users", userRepository.findUserByPassword(keyword));
+                    model.addAttribute("users", userRepository.findAllUsersByPassword(keyword));
                 }
                 break;
             }
