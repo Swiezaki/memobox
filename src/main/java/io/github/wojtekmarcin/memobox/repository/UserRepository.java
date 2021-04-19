@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
 @Transactional
 public interface UserRepository {
     List<User> findAll();
@@ -21,9 +22,11 @@ public interface UserRepository {
 
     Optional<User> findById(Long id);
 
-    @Query("SELECT u FROM User u WHERE u.login LIKE %?1%")
-    List<User> findUserByLogin(String keyword);
+    User findUserByUsername(String username);
+
+    @Query("SELECT u FROM User u WHERE u.username LIKE %?1%")
+    List<User> findAllUsersByUsername(String keyword);
 
     @Query("SELECT u FROM User u WHERE u.password LIKE %?1% ")
-    List<User> findUserByPassword(String keyword);
+    List<User> findAllUsersByPassword(String keyword);
 }

@@ -14,10 +14,10 @@ import java.net.URI;
 
 @Controller
 @RequestMapping("/memobox")
-public class MemoboxViewController {
+public class MemoboxController {
     private final MemoBoxRepository repository;
 
-    public MemoboxViewController(MemoBoxRepository repository) {
+    public MemoboxController(MemoBoxRepository repository) {
         this.repository = repository;
     }
 
