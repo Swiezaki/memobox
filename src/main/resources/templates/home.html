@@ -9,8 +9,15 @@
 <body>
 <main>
     <h1>Memobox!</h1>
-    <button><a th:href="@{'/userPage'}">User</a></button>
-    <button><a th:href="@{'/adminPage'}">Admin</a></button>
+    <fieldset>
+        <legend>User</legend>
+        <button><a th:href="@{'/userPage'}">Sign in</a></button>
+        <button><a th:href="@{'/register'}">Register</a></button>
+    </fieldset>
+    <fieldset>
+        <legend>Admin</legend>
+        <button><a th:href="@{'/adminPage'}">Sign in</a></button>
+    </fieldset>
 </main>
 </body>
 </html>

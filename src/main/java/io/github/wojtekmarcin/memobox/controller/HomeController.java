@@ -22,4 +22,9 @@ public class HomeController {
     String showAdminPage(){
         return "/adminPage";
     }
+
+    @GetMapping("/register")
+    String showRegisterPage(){
+        return "/register";
+    }
 }

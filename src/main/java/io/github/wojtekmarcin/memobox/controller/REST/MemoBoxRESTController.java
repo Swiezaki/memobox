@@ -1,4 +1,4 @@
-package io.github.wojtekmarcin.memobox.controller;
+package io.github.wojtekmarcin.memobox.controller.REST;
 
 import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/memobox")
-public class MemoBoxController {
+public class MemoBoxRESTController {
     MemoBoxRepository repository;
 
-    public MemoBoxController(MemoBoxRepository repository) {
+    public MemoBoxRESTController(MemoBoxRepository repository) {
         this.repository = repository;
     }
 

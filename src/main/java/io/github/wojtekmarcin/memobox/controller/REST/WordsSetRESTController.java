@@ -1,4 +1,4 @@
-package io.github.wojtekmarcin.memobox.controller;
+package io.github.wojtekmarcin.memobox.controller.REST;
 
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/wordSet")
-public class WordsSetController {
+public class WordsSetRESTController {
     private final WordsSetRepository wordsSetRepository;
 
-    public WordsSetController(WordsSetRepository wordsSetRepository) {
+    public WordsSetRESTController(WordsSetRepository wordsSetRepository) {
         this.wordsSetRepository = wordsSetRepository;
     }
 

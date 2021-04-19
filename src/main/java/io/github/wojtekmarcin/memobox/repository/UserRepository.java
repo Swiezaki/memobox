@@ -21,7 +21,7 @@ public interface UserRepository {
 
     Optional<User> findById(Long id);
 
-    @Query("SELECT u FROM User u WHERE u.login LIKE %?1%")
+    @Query("SELECT u FROM User u WHERE u.username LIKE %?1%")
     List<User> findUserByLogin(String keyword);
 
     @Query("SELECT u FROM User u WHERE u.password LIKE %?1% ")
