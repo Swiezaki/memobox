@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,7 +37,7 @@ public class WordController {
     @ModelAttribute("wordSets")
     public List<WordsSet> getWordSets() {
         return wordsSetRepository.findAll();
-    }
+            }
 
     @ModelAttribute("languages")
     public LanguageEnum[] getLanguage() {
@@ -61,19 +62,23 @@ public class WordController {
 
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
-                                               BindingResult bindingResult) {
+                                               BindingResult bindingResult,
+                                               RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             LOGGER.info("Add word method has errors ={}", bindingResult.getAllErrors());
             return PAGE_WORD_ADD;
         } else {
             wordRepository.save(word);
+            redirectAttributes.addFlashAttribute("message", String.format("Word %s added", word.getWord()));
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
 
     @GetMapping("/deleteWord/{id}")
-    String initDeleteUserEntityForm(@PathVariable("id") long id) {
+    String initDeleteUserEntityForm(@PathVariable("id") long id,
+                                    RedirectAttributes redirectAttributes) {
         wordRepository.deleteWordByWordId(id);
+        redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordRepository.findWordByWordId(id)));
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
@@ -88,7 +93,8 @@ public class WordController {
                                       @ModelAttribute("wordFromSource")
                                       @Valid Word word,
                                       BindingResult bindingResult,
-                                      Model model) {
+                                      Model model,
+                                      RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             LOGGER.info("Edit word method has errors ={}", bindingResult.getAllErrors());
             word.setWordId(id);
@@ -99,6 +105,8 @@ public class WordController {
             word.setWordId(id);
             wordRepository.save(word);
             LOGGER.info("users output={}", word);
+
+            redirectAttributes.addFlashAttribute("message", String.format("Word %s edited.", word.getWord()));
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
