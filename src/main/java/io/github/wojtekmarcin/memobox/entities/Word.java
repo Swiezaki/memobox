@@ -1,10 +1,10 @@
 package io.github.wojtekmarcin.memobox.entities;
 
+import io.github.wojtekmarcin.memobox.dictionary.LanguageEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Objects;
 
 @Entity
 @Table(name = "Words")
@@ -18,14 +18,12 @@ public class Word {
     @Length(min = 2, message = "Word should be longer")
     @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String word;
+    private LanguageEnum wordLanguage;
 
     @Length(min = 2, message = "Word should be longer")
     @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
     private String wordTranslation;
-
-    private Integer wordTypeId;
-    private Integer wordTranslationId;
-    private Integer wordLanguageId;
+    private LanguageEnum translationLanguage;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wordSetId")
@@ -41,8 +39,8 @@ public class Word {
         return wordId;
     }
 
-    public void setWordId(long word_id) {
-        this.wordId = word_id;
+    public void setWordId(long wordId) {
+        this.wordId = wordId;
     }
 
     public String getWord() {
@@ -53,37 +51,28 @@ public class Word {
         this.word = word;
     }
 
+    public LanguageEnum getWordLanguage() {
+        return wordLanguage;
+    }
+
+    public void setWordLanguage(LanguageEnum wordLanguage) {
+        this.wordLanguage = wordLanguage;
+    }
+
     public String getWordTranslation() {
         return wordTranslation;
     }
 
-    public void setWordTranslation(String word_translation) {
-        this.wordTranslation = word_translation;
+    public void setWordTranslation(String wordTranslation) {
+        this.wordTranslation = wordTranslation;
     }
 
-
-    public Integer getWordTranslationId() {
-        return wordTranslationId;
+    public LanguageEnum getTranslationLanguage() {
+        return translationLanguage;
     }
 
-    public void setWordTranslationId(Integer word_translation_id) {
-        this.wordTranslationId = word_translation_id;
-    }
-
-    public Integer getWordLanguageId() {
-        return wordLanguageId;
-    }
-
-    public void setWordLanguageId(Integer word_language_id) {
-        this.wordLanguageId = word_language_id;
-    }
-
-    public Integer getWordTypeId() {
-        return wordTypeId;
-    }
-
-    public void setWordTypeId(Integer word_type_id) {
-        this.wordTypeId = word_type_id;
+    public void setTranslationLanguage(LanguageEnum translationLanguage) {
+        this.translationLanguage = translationLanguage;
     }
 
     public WordsSet getWordSet() {
@@ -103,27 +92,13 @@ public class Word {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Word word1 = (Word) o;
-        return wordId == word1.wordId && Objects.equals(word, word1.word) && Objects.equals(wordTranslation, word1.wordTranslation) && Objects.equals(wordTypeId, word1.wordTypeId) && Objects.equals(wordTranslationId, word1.wordTranslationId) && Objects.equals(wordLanguageId, word1.wordLanguageId) && Objects.equals(wordSet, word1.wordSet) && Objects.equals(audit, word1.audit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(wordId, word, wordTranslation, wordTypeId, wordTranslationId, wordLanguageId, wordSet, audit);
-    }
-
-    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Word{");
         sb.append("wordId=").append(wordId);
         sb.append(", word='").append(word).append('\'');
+        sb.append(", wordLanguage=").append(wordLanguage);
         sb.append(", wordTranslation='").append(wordTranslation).append('\'');
-        sb.append(", wordTypeId=").append(wordTypeId);
-        sb.append(", wordTranslationId=").append(wordTranslationId);
-        sb.append(", wordLanguageId=").append(wordLanguageId);
+        sb.append(", translationLanguage=").append(translationLanguage);
         sb.append(", wordSet=").append(wordSet);
         sb.append(", audit=").append(audit);
         sb.append('}');

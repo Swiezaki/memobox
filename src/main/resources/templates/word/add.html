@@ -19,17 +19,27 @@
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
 
+            <label>Language</label>
+            <select th:field="*{wordSet}">
+                <option value=""> ---</option>
+                <option th:each="wordset : ${wordSets} "
+                        th:value ="${wordset.getWordSetId}"
+                        th:utext="${wordset.wordSetName}">
+                </option>
+            </select>
+
             <label>Translation</label>
             <input th:type="text" th:field="*{wordTranslation}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
 
-            <label>Word type</label>
-            <input th:type="text" th:field="*{wordTypeId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTypeId')}" th:errors="*{wordTypeId}"></p>
-
             <label>Language</label>
-            <input th:type="text" th:field="*{wordLanguageId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
+            <select th:field="*{wordSet}">
+                <option value=""> ---</option>
+                <option th:each="wordset : ${wordSets} "
+                        th:value ="${wordset.getWordSetId}"
+                        th:utext="${wordset.wordSetName}">
+                </option>
+            </select>
 
             <label>Wordset</label>
             <select th:field="*{wordSet}">
