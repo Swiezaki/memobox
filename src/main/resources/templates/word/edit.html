@@ -20,15 +20,27 @@
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
 
-            <label>Word language</label>
-            <input th:type="text" th:field="*{wordLanguage}">
+            <label>Language</label>
+            <select th:field="*{wordLanguage}">
+                <option value=""> ---</option>
+                <option th:each="language : ${languages} "
+                        th:value ="${language.name()}"
+                        th:utext="${language.name()}">
+                </option>
+            </select>
 
             <label>Translation</label>
             <input th:type="text" th:field="*{wordTranslation}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
 
-            <label>Translation language</label>
-            <input th:type="text" th:field="*{translationLanguage}">
+            <label>Language</label>
+            <select th:field="*{translationLanguage}">
+                <option value=""> ---</option>
+                <option th:each="language : ${languages} "
+                        th:value ="${language.name()}"
+                        th:utext="${language.name()}">
+                </option>
+            </select>
 
             <label>Word Set</label>
             <input th:type="text" th:field="*{wordSet}">

@@ -24,7 +24,7 @@ public class WordController {
     public static final String PAGE_WORD_EDIT = "word/edit";
     public static final String REDIRECT_PAGE_WORD_VIEW = "redirect:/word/view";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRESTController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WordController.class);
 
     private final WordRepository wordRepository;
     private final WordsSetRepository wordsSetRepository;
@@ -56,10 +56,6 @@ public class WordController {
         return PAGE_WORD_ADD;
     }
 
-    /*TODO
-    *   - dodać warunek z message po dodaniu word
-    * */
-
     @PostMapping("/addWord")
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
                                                BindingResult bindingResult,
@@ -69,7 +65,7 @@ public class WordController {
             return PAGE_WORD_ADD;
         } else {
             wordRepository.save(word);
-            redirectAttributes.addFlashAttribute("message", String.format("Word %s added", word.getWord()));
+            redirectAttributes.addFlashAttribute("message", String.format("Word %s added", word.getWord().toLowerCase()));
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }
@@ -77,8 +73,8 @@ public class WordController {
     @GetMapping("/deleteWord/{id}")
     String initDeleteUserEntityForm(@PathVariable("id") long id,
                                     RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordRepository.findWordByWordId(id).getWord().toLowerCase()));
         wordRepository.deleteWordByWordId(id);
-        redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordRepository.findWordByWordId(id)));
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
@@ -98,15 +94,15 @@ public class WordController {
         if (bindingResult.hasErrors()) {
             LOGGER.info("Edit word method has errors ={}", bindingResult.getAllErrors());
             word.setWordId(id);
-            model.addAttribute("wordFromSource", word);
+            model.addAttribute("WordFromSource", word);
             return PAGE_WORD_EDIT;
         } else {
-            LOGGER.info("word input ={}", word);
+            LOGGER.info("Input ={}", word);
             word.setWordId(id);
             wordRepository.save(word);
-            LOGGER.info("users output={}", word);
+            LOGGER.info("Output={}", word);
 
-            redirectAttributes.addFlashAttribute("message", String.format("Word %s edited.", word.getWord()));
+            redirectAttributes.addFlashAttribute("message", String.format("Word %s edited", word.getWord().toLowerCase()));
             return REDIRECT_PAGE_WORD_VIEW;
         }
     }

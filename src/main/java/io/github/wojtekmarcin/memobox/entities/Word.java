@@ -4,6 +4,7 @@ import io.github.wojtekmarcin.memobox.dictionary.LanguageEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -17,12 +18,17 @@ public class Word {
 
     @Length(min = 2, message = "Word should be longer")
     @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
+    @NotEmpty
     private String word;
+
+    @NotEmpty
     private LanguageEnum wordLanguage;
 
     @Length(min = 2, message = "Word should be longer")
     @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
+    @NotEmpty
     private String wordTranslation;
+    @NotEmpty
     private LanguageEnum translationLanguage;
 
     @OneToOne(fetch = FetchType.LAZY)
