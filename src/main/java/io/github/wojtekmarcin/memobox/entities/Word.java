@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.*;
+
 @Entity
 @Table(name = "Words")
 public class Word {
@@ -16,19 +18,20 @@ public class Word {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wordId;
 
-    @Length(min = 2, message = "Word should be longer")
-    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
-    @NotEmpty
+    @Length(min = 2, message = LENGHT)
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = LETTERS)
+    @NotEmpty(message = EMPTY)
     private String word;
 
-    @NotEmpty
+    @NotEmpty(message = EMPTY)
     private LanguageEnum wordLanguage;
 
-    @Length(min = 2, message = "Word should be longer")
-    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = "Only letters")
-    @NotEmpty
+    @Length(min = 2, message = LENGHT)
+    @Pattern(regexp = PATTERN_ONLY_LETTERS, message = LETTERS)
+    @NotEmpty(message = EMPTY)
     private String wordTranslation;
-    @NotEmpty
+
+    @NotEmpty(message = EMPTY)
     private LanguageEnum translationLanguage;
 
     @OneToOne(fetch = FetchType.LAZY)
