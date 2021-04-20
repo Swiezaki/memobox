@@ -1,13 +1,15 @@
 package io.github.wojtekmarcin.memobox.controller;
 
-import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
 import io.github.wojtekmarcin.memobox.dictionary.LanguageEnum;
+import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,17 +37,17 @@ public class WordController {
     }
 
     @ModelAttribute("wordSets")
-    public List<WordsSet> getWordSets() {
+    private List<WordsSet> getWordSets() {
         return wordsSetRepository.findAll();
-            }
+    }
 
     @ModelAttribute("languages")
-    public LanguageEnum[] getLanguage() {
+    private LanguageEnum[] getLanguage() {
         return LanguageEnum.values();
     }
 
     @GetMapping("/view")
-    String showWordView(Model model) {
+    String showWordView(Model model, User user) {
         model.addAttribute("words", wordRepository.findAll());
         return "word/view";
     }
@@ -71,26 +73,26 @@ public class WordController {
     }
 
     @GetMapping("/deleteWord/{id}")
-    String initDeleteUserEntityForm(@PathVariable("id") long id,
-                                    RedirectAttributes redirectAttributes) {
+    private String initDeleteUserEntityForm(@PathVariable("id") long id,
+                                            RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordRepository.findWordByWordId(id).getWord().toLowerCase()));
         wordRepository.deleteWordByWordId(id);
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
     @GetMapping("/editWord/{id}")
-    String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
+    private String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
         return PAGE_WORD_EDIT;
     }
 
     @PostMapping("/editWord/{id}")
-    String processEditWordEntitieForm(@PathVariable("id") long id,
-                                      @ModelAttribute("wordFromSource")
-                                      @Valid Word word,
-                                      BindingResult bindingResult,
-                                      Model model,
-                                      RedirectAttributes redirectAttributes) {
+    private String processEditWordEntitieForm(@PathVariable("id") long id,
+                                              @ModelAttribute("wordFromSource")
+                                              @Valid Word word,
+                                              BindingResult bindingResult,
+                                              Model model,
+                                              RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             LOGGER.info("Edit word method has errors ={}", bindingResult.getAllErrors());
             word.setWordId(id);
