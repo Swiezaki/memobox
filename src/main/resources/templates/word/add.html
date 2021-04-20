@@ -21,6 +21,7 @@
 
             <label>Language</label>
             <select th:field="*{wordLanguage}">
+                <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguage')}" th:errors="*{wordLanguage}"></p>
                 <option value=""> ---</option>
                 <option th:each="language : ${languages} "
                         th:value ="${language.name()}"
@@ -29,8 +30,8 @@
             </select>
 
             <label>Translation</label>
-            <input th:type="text" th:field="*{wordTranslation}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
+            <input th:type="text" th:field="*{wordTranslation}">
 
             <label>Language</label>
             <select th:field="*{translationLanguage}">
@@ -40,6 +41,7 @@
                         th:utext="${language.name()}">
                 </option>
             </select>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('translationLanguage')}" th:errors="*{translationLanguage}"></p>
 
             <label>Wordset</label>
             <select th:field="*{wordSet}">

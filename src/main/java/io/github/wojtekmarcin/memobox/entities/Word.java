@@ -4,8 +4,7 @@ import io.github.wojtekmarcin.memobox.dictionary.LanguageEnum;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.*;
 
@@ -23,7 +22,7 @@ public class Word {
     @NotEmpty(message = EMPTY)
     private String word;
 
-    @NotEmpty(message = EMPTY)
+    @NotNull(message = EMPTY)
     private LanguageEnum wordLanguage;
 
     @Length(min = 2, message = LENGHT)
@@ -31,7 +30,7 @@ public class Word {
     @NotEmpty(message = EMPTY)
     private String wordTranslation;
 
-    @NotEmpty(message = EMPTY)
+    @NotNull(message = EMPTY)
     private LanguageEnum translationLanguage;
 
     @OneToOne(fetch = FetchType.LAZY)
