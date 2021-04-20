@@ -63,6 +63,7 @@ public class WordController {
     private String processAddingWordEntityForm(@ModelAttribute("wordToAdd") @Valid Word word,
                                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            LOGGER.info("Add word method has errors ={}", bindingResult.getAllErrors());
             return PAGE_WORD_ADD;
         } else {
             wordRepository.save(word);
@@ -86,15 +87,17 @@ public class WordController {
     String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordFromSource")
                                       @Valid Word word,
-                                      BindingResult bindingResult) {
+                                      BindingResult bindingResult,
+                                      Model model) {
         if (bindingResult.hasErrors()) {
+            LOGGER.info("Edit word method has errors ={}", bindingResult.getAllErrors());
+            word.setWordId(id);
+            model.addAttribute("wordFromSource", word);
             return PAGE_WORD_EDIT;
         } else {
             LOGGER.info("word input ={}", word);
-
             word.setWordId(id);
             wordRepository.save(word);
-
             LOGGER.info("users output={}", word);
             return REDIRECT_PAGE_WORD_VIEW;
         }
