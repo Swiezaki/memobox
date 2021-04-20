@@ -20,21 +20,18 @@
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
 
+            <label>Word language</label>
+            <input th:type="text" th:field="*{wordLanguage}">
+
             <label>Translation</label>
             <input th:type="text" th:field="*{wordTranslation}">
             <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
 
-            <label>Word type</label>
-            <input th:type="text" th:field="*{wordTypeId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTypeId')}" th:errors="*{wordTypeId}"></p>
-
-            <label>Language</label>
-            <input th:type="text" th:field="*{wordLanguageId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
+            <label>Translation language</label>
+            <input th:type="text" th:field="*{translationLanguage}">
 
             <label>Word Set</label>
             <input th:type="text" th:field="*{wordSet}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordSet')}" th:errors="*{wordSet}"></p>
 
             <button type="submit">Edit</button>
             <button type="reset">Clear</button>

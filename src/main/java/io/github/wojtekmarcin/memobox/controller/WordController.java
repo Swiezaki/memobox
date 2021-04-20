@@ -1,6 +1,7 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
+import io.github.wojtekmarcin.memobox.dictionary.LanguageEnum;
 import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
@@ -35,6 +36,11 @@ public class WordController {
     @ModelAttribute("wordSets")
     public List<WordsSet> getWordSets() {
         return wordsSetRepository.findAll();
+    }
+
+    @ModelAttribute("languages")
+    public LanguageEnum[] getLanguage() {
+        return LanguageEnum.values();
     }
 
     @GetMapping("/view")
