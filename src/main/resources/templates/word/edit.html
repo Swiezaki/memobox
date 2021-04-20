@@ -45,9 +45,6 @@
             </select>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('translationLanguage')}" th:errors="*{translationLanguage}"></p>
 
-            <label>Word Set</label>
-            <input th:type="text" th:field="*{wordSet}">
-
             <label>Wordset</label>
             <select th:field="*{wordSet}">
                 <option value=""> ---</option>
