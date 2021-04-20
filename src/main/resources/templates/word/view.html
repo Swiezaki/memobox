@@ -21,9 +21,9 @@
             <thead>
             <tr>
                 <th>Word</th>
+                <th>Word language</th>
                 <th>Translation</th>
-                <th>Word type</th>
-                <th>Language</th>
+                <th>Translation language</th>
                 <th>Words Set</th>
 <!--                <th>CreateDate</th>-->
                 <th>Edit</th>
@@ -33,9 +33,9 @@
             <tbody th:each="word,wordStat : ${words}">
             <tr>
                 <td><p th:text="${word.word}"></p></td>
+                <td><p th:text="${word.wordLanguage}"></p></td>
                 <td><p th:text="${word.wordTranslation}"></p></td>
-                <td><p th:text="${word.wordTypeId}"></p></td>
-                <td><p th:text="${word.wordLanguageId}"></p></td>
+                <td><p th:text="${word.translationLanguage}"></p></td>
                 <td th:text="${word.wordSet} ?: 'UNKNOWN'" />
 <!--                <td th:text="${word.wordSet.getSetName()} ?: 'UNKNOWN'" />-->
 <!--                <td><p th:text="${word.wordSet.getSetName()}"></p></td>-->
