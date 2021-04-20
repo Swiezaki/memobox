@@ -5,6 +5,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Memoboxes")
@@ -13,6 +14,9 @@ public class MemoBox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBoxId;
     private Integer wordSlot;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -59,5 +63,18 @@ public class MemoBox {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MemoBox memoBox = (MemoBox) o;
+        return memoBoxId == memoBox.memoBoxId && Objects.equals(wordSlot, memoBox.wordSlot) && Objects.equals(user, memoBox.user) && Objects.equals(wordSetId, memoBox.wordSetId) && Objects.equals(audit, memoBox.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memoBoxId, wordSlot, user, wordSetId, audit);
     }
 }

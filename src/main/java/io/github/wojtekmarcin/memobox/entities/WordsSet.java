@@ -5,6 +5,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -16,6 +17,9 @@ public class WordsSet {
     private String wordSetName;
     private boolean visibleFlagId;
     private boolean editionFlagId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToMany(mappedBy = "wordSetId")
@@ -73,5 +77,18 @@ public class WordsSet {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordsSet wordsSet = (WordsSet) o;
+        return wordSetId == wordsSet.wordSetId && visibleFlagId == wordsSet.visibleFlagId && editionFlagId == wordsSet.editionFlagId && Objects.equals(wordSetName, wordsSet.wordSetName) && Objects.equals(user, wordsSet.user) && Objects.equals(memoBoxes, wordsSet.memoBoxes) && Objects.equals(audit, wordsSet.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wordSetId, wordSetName, visibleFlagId, editionFlagId, user, memoBoxes, audit);
     }
 }
