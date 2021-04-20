@@ -19,17 +19,29 @@
             <input th:type="text" th:field="*{word}"/>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('word')}" th:errors="*{word}"></p>
 
-            <label>Translation</label>
-            <input th:type="text" th:field="*{wordTranslation}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
+            <label>Language</label>
+            <select th:field="*{wordLanguage}">
+                <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguage')}" th:errors="*{wordLanguage}"></p>
+                <option value=""> ---</option>
+                <option th:each="language : ${languages} "
+                        th:value ="${language.name()}"
+                        th:utext="${language.name()}">
+                </option>
+            </select>
 
-            <label>Word type</label>
-            <input th:type="text" th:field="*{wordTypeId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTypeId')}" th:errors="*{wordTypeId}"></p>
+            <label>Translation</label>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordTranslation')}" th:errors="*{wordTranslation}"></p>
+            <input th:type="text" th:field="*{wordTranslation}">
 
             <label>Language</label>
-            <input th:type="text" th:field="*{wordLanguageId}">
-            <p class="Bdc(red)" th:if="${#fields.hasErrors('wordLanguageId')}" th:errors="*{wordLanguageId}"></p>
+            <select th:field="*{translationLanguage}">
+                <option value=""> ---</option>
+                <option th:each="language : ${languages} "
+                        th:value ="${language.name()}"
+                        th:utext="${language.name()}">
+                </option>
+            </select>
+            <p class="Bdc(red)" th:if="${#fields.hasErrors('translationLanguage')}" th:errors="*{translationLanguage}"></p>
 
             <label>Wordset</label>
             <select th:field="*{wordSet}">
