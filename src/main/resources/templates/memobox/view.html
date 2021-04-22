@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>MemoboxView</title>
-  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+    <meta charset="UTF-8">
+    <title>Memoboxes View</title>
+    <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
 </head>
 <body>
 <main>
-  <h1>Memobox</h1>
-    <fieldset th:each="memobox,memoboxStat : ${memoboxes}">
-      <legend th:text="|Memobox ${memobox}|"></legend>
-      <table>
-        <thead>
-        <tr>
-          <th>memoBoxId</th>
-          <th>wordSlot</th>
-          <th>memoBoxesWordsSets</th>
-          <th>wordId</th>
-        </tr>
-        </thead>
-        <tbody>
-<!--        <tr>-->
-<!--          <td><p th:text="${}"></p></td>-->
-<!--          <td><p th:text="${}"></p></td>-->
-<!--          <td><p th:text="${}"></p></td>-->
-<!--          <td><p th:text="${}"></p></td>-->
-<!--        </tr>-->
-        </tbody>
-      </table>
+    <h1>Memoboxes</h1>
+    <p th:text="${message}"/>
+    <fieldset>
+        <legend>Options</legend>
+        <form>
+            <button><a th:href="@{'/memobox/addMemobox'}">Create new memobox</a></button>
+            <button><a th:href="@{'/userPage'}">Back</a></button>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Memoboxes</legend>
+        <table>
+            <thead>
+            <tr>
+                <th>MemoboxId</th>
+                <th>Memobox name</th>
+                <th>Word slot</th>
+                <th>Wordsets inside</th>
+                <th>User</th>
+                <!--                <th>CreateDate</th>-->
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody th:each="memobox,memoboxStat : ${memoboxes}">
+            <tr>
+                <td><p th:text="${memobox.memoBoxId}"></p></td>
+                <td><p th:text="${memobox.memoboxName}"></p></td>
+                <td><p th:text="${memobox.wordSlot}"></p></td>
+                <td th:text="${memobox.wordSetId} ?: 'UNKNOWN'"/>
+                <!--                <td th:text="${word.wordSet.getSetName()} ?: 'UNKNOWN'" />-->
+                <!--                <td><p th:text="${word.wordSet.getSetName()}"></p></td>-->
+                <!--                <td><p th:text="${word.audit.getCreatedOn()}"></p></td>-->
+                <td><a th:href="@{'/memobox/editMemobox/' + ${memobox.memoBoxId}}">Edit</a></td>
+                <td><a th:href="@{'/memobox/deleteMemobox/' + ${memobox.memoBoxId}}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
     </fieldset>
 </main>
 </body>

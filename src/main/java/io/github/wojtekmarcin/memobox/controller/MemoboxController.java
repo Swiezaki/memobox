@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -21,6 +18,10 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/memobox")
 public class MemoboxController {
+    public static final String REDIRECT_PAGE_MEMOBOX_VIEW = "redirect:/memobox/view";
+    public static final String PAGE_MEMOBOX_ADD = "memobox/add";
+    public static final String PAGE_MEMOBOX_EDIT = "memobox/edit";
+
     private final MemoBoxRepository memoBoxRepository;
     private final UserRepository userRepository;
 
@@ -37,15 +38,16 @@ public class MemoboxController {
     }
 
     @GetMapping("/view")
-    String showMemoboxView(Model model) {
-        model.addAttribute("memoboxes", memoBoxRepository.findAll());
+    String showMemoboxView(@ModelAttribute("authUser") User user,
+                           Model model) {
+        model.addAttribute("memoboxes", memoBoxRepository.findAllByUser(user));
         return "memobox/view";
     }
 
     @GetMapping("/addMemobox")
     private String initAddWordForm(Model model) {
         model.addAttribute("memoboxToAdd", new MemoBox());
-        return "memobox/add";
+        return PAGE_MEMOBOX_ADD;
     }
 
     @PostMapping("/addMemobox")
@@ -55,19 +57,49 @@ public class MemoboxController {
                                                BindingResult bindingResult,
                                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "memobox/add";
+            return PAGE_MEMOBOX_ADD;
         } else {
-
-            LOGGER.info("Before add: user = {}, memoBox ={}", user.getUserId(), memoBox.toString());
-
             user.addMemobox(memoBox);
-
-            LOGGER.info(" memoBox in user ={}", user.getUserId());
-
             userRepository.save(user);
-
-            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", memoBox.getMemoBoxId()));
-            return "redirect:/userPage";
+            redirectAttributes.addFlashAttribute("message", String.format("Memobox %s created.", memoBox.getMemoboxName()));
+            return REDIRECT_PAGE_MEMOBOX_VIEW;
         }
+    }
+
+    @GetMapping("/editMemobox/{id}")
+    String initEditUserForm(@PathVariable long id, Model model) {
+        model.addAttribute("memoboxFormSource", memoBoxRepository.findMemoBoxByMemoBoxId(id));
+        return PAGE_MEMOBOX_EDIT;
+    }
+
+    /*TODO
+    *   - przy wywołaniu akcji Edit nadpisuje wszystkie dane encji i czyści numer klienta i w związku z tym nie widać później memoboxa na liście memoboxów użytkownika
+    * */
+    @PostMapping("/editMemobox/{id}")
+    String processEditUserEntityForm(@PathVariable("id") long id,
+                                     @ModelAttribute("memoboxFormSource")
+                                     @Valid MemoBox memoBox,
+                                     BindingResult bindingResult,
+                                     RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return PAGE_MEMOBOX_EDIT;
+        } else {
+            LOGGER.info("memobox input ={} ", memoBox);
+
+            memoBox.setMemoBoxId(id);
+            memoBoxRepository.save(memoBox);
+
+            LOGGER.info("user output ={} ", memoBox);
+            redirectAttributes.addFlashAttribute("message", String.format("Memobox %s edited.", memoBox.getMemoBoxId()));
+            return REDIRECT_PAGE_MEMOBOX_VIEW;
+        }
+    }
+
+    @GetMapping("/deleteMemobox/{id}")
+    String initDeleteUserEntity(@PathVariable("id") long id,
+                                RedirectAttributes redirectAttributes) {
+        memoBoxRepository.deleteByMemoBoxId(id);
+        redirectAttributes.addFlashAttribute("message", String.format("Memobox %s deleted", id));
+        return REDIRECT_PAGE_MEMOBOX_VIEW;
     }
 }
