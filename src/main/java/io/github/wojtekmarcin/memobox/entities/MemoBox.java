@@ -1,11 +1,9 @@
 package io.github.wojtekmarcin.memobox.entities;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Memoboxes")
@@ -18,13 +16,12 @@ public class MemoBox {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "memobox_wordset",
             joinColumns = @JoinColumn(name = "memoBoxes"),
             inverseJoinColumns = @JoinColumn(name = "wordSetId"))
-    private List<WordsSet> wordSetId;
+    private Set<WordsSet> wordSetId;
 
     @Embedded
     private Audit audit = new Audit();
@@ -48,12 +45,11 @@ public class MemoBox {
         this.wordSlot = wordSlot;
     }
 
-
-    public List<WordsSet> getWordSetId() {
+    public Set<WordsSet> getWordSetId() {
         return wordSetId;
     }
 
-    public void setWordSetId(List<WordsSet> wordSetId) {
+    public void setWordSetId(Set<WordsSet> wordSetId) {
         this.wordSetId = wordSetId;
     }
 
@@ -63,6 +59,14 @@ public class MemoBox {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

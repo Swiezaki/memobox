@@ -1,15 +1,14 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
+import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
+import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,10 +29,12 @@ public class WordSetController {
 
     private final WordsSetRepository wordSetRepository;
     private final UserRepository userRepository;
+    private final MemoBoxRepository memoBoxRepository;
 
-    public WordSetController(WordsSetRepository wordsSetRepository, UserRepository userRepository) {
+    public WordSetController(WordsSetRepository wordsSetRepository, UserRepository userRepository, MemoBoxRepository memoBoxRepository) {
         this.wordSetRepository = wordsSetRepository;
         this.userRepository = userRepository;
+        this.memoBoxRepository = memoBoxRepository;
     }
 
     @ModelAttribute("authUser")
@@ -42,15 +43,17 @@ public class WordSetController {
     }
 
     @GetMapping("/view")
-    private String showWordView(Model model) {
-        model.addAttribute("wordsets", wordSetRepository.findAll());
+    private String showWordView(@ModelAttribute("authUser") User user,
+                                Model model) {
+        model.addAttribute("wordsets", wordSetRepository.findAllByUser(user));
         return "wordset/view";
     }
 
     @GetMapping("/addWordSet")
-    private String initAddWordForm(Model model, @ModelAttribute("authUser") User user) {
+    private String initAddWordForm(Model model,
+                                   @ModelAttribute("authUser") User user) {
         WordsSet wordsSet = new WordsSet();
-        user.getWordsSetId().add(wordsSet);
+        user.addWordSet(wordsSet);
         model.addAttribute("wordsetToAdd", wordsSet);
         return PAGE_WORDSET_ADD;
     }
@@ -64,7 +67,7 @@ public class WordSetController {
             return PAGE_WORDSET_ADD;
         } else {
             wordSetRepository.save(wordsSet);
-            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName()));
+            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName().toLowerCase()));
             return REDIRECT_PAGE_WORDSET_VIEW;
         }
     }

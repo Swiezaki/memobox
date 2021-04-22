@@ -1,6 +1,7 @@
 package io.github.wojtekmarcin.memobox.repository;
 
 import io.github.wojtekmarcin.memobox.entities.MemoBox;
+import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,4 +20,6 @@ public interface WordsSetRepository {
     void deleteByWordSetId(Long id);
 
     WordsSet save(WordsSet entity);
+
+    List<WordsSet> findAllByUser(User user);
 }

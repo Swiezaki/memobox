@@ -4,8 +4,8 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -21,9 +21,8 @@ public class WordsSet {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToMany(mappedBy = "wordSetId")
-    private List<MemoBox> memoBoxes;
+    private Set<MemoBox> memoBoxes;
 
     @Embedded
     private Audit audit = new Audit();
@@ -63,11 +62,11 @@ public class WordsSet {
         this.editionFlagId = editionFlagId;
     }
 
-    public List<MemoBox> getMemoBoxes() {
+    public Set<MemoBox> getMemoBoxes() {
         return memoBoxes;
     }
 
-    public void setMemoBoxes(List<MemoBox> memoBoxes) {
+    public void setMemoBoxes(Set<MemoBox> memoBoxes) {
         this.memoBoxes = memoBoxes;
     }
 
@@ -77,6 +76,14 @@ public class WordsSet {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
