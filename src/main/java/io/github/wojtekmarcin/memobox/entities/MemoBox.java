@@ -1,10 +1,9 @@
 package io.github.wojtekmarcin.memobox.entities;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Memoboxes")
@@ -14,13 +13,15 @@ public class MemoBox {
     private long memoBoxId;
     private Integer wordSlot;
 
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "memobox_wordset",
             joinColumns = @JoinColumn(name = "memoBoxes"),
             inverseJoinColumns = @JoinColumn(name = "wordSetId"))
-    private List<WordsSet> wordSetId;
+    private Set<WordsSet> wordSetId;
 
     @Embedded
     private Audit audit = new Audit();
@@ -44,12 +45,11 @@ public class MemoBox {
         this.wordSlot = wordSlot;
     }
 
-
-    public List<WordsSet> getWordSetId() {
+    public Set<WordsSet> getWordSetId() {
         return wordSetId;
     }
 
-    public void setWordSetId(List<WordsSet> wordSetId) {
+    public void setWordSetId(Set<WordsSet> wordSetId) {
         this.wordSetId = wordSetId;
     }
 
@@ -59,5 +59,26 @@ public class MemoBox {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MemoBox memoBox = (MemoBox) o;
+        return memoBoxId == memoBox.memoBoxId && Objects.equals(wordSlot, memoBox.wordSlot) && Objects.equals(user, memoBox.user) && Objects.equals(wordSetId, memoBox.wordSetId) && Objects.equals(audit, memoBox.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memoBoxId, wordSlot, user, wordSetId, audit);
     }
 }

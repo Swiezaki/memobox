@@ -1,8 +1,10 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
+import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
+import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/wordset")
@@ -26,27 +29,31 @@ public class WordSetController {
 
     private final WordsSetRepository wordSetRepository;
     private final UserRepository userRepository;
+    private final MemoBoxRepository memoBoxRepository;
 
-    public WordSetController(WordsSetRepository wordsSetRepository, UserRepository userRepository) {
+    public WordSetController(WordsSetRepository wordsSetRepository, UserRepository userRepository, MemoBoxRepository memoBoxRepository) {
         this.wordSetRepository = wordsSetRepository;
         this.userRepository = userRepository;
+        this.memoBoxRepository = memoBoxRepository;
     }
 
-//    @ModelAttribute("user")
-//    public User findUser(@PathVariable("userId") Long userId){
-//        return userRepository.findUserByUserId(userId);
-//    }
+    @ModelAttribute("authUser")
+    private User getAuthUser(Principal principal) {
+        return userRepository.findUserByUsername(principal.getName());
+    }
 
     @GetMapping("/view")
-    String showWordView(Model model) {
-        model.addAttribute("wordsets", wordSetRepository.findAll());
+    private String showWordView(@ModelAttribute("authUser") User user,
+                                Model model) {
+        model.addAttribute("wordsets", wordSetRepository.findAllByUser(user));
         return "wordset/view";
     }
 
     @GetMapping("/addWordSet")
-    private String initAddWordForm(Model model, User user) {
+    private String initAddWordForm(Model model,
+                                   @ModelAttribute("authUser") User user) {
         WordsSet wordsSet = new WordsSet();
-        user.getWordsSetId().add(wordsSet);
+        user.addWordSet(wordsSet);
         model.addAttribute("wordsetToAdd", wordsSet);
         return PAGE_WORDSET_ADD;
     }
@@ -60,25 +67,25 @@ public class WordSetController {
             return PAGE_WORDSET_ADD;
         } else {
             wordSetRepository.save(wordsSet);
-            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName()));
+            redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName().toLowerCase()));
             return REDIRECT_PAGE_WORDSET_VIEW;
         }
     }
 
     @GetMapping("/deleteWordSet/{id}")
-    String initDeleteUserEntityForm(@PathVariable("id") long id) {
+    private String initDeleteUserEntityForm(@PathVariable("id") long id) {
         wordSetRepository.deleteByWordSetId(id);
         return REDIRECT_PAGE_WORDSET_VIEW;
     }
 
     @GetMapping("/editWordSet/{id}")
-    String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
+    private String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("wordSetFromSource", wordSetRepository.findMemoBoxByWordSetId(id));
         return PAGE_WORDSET_EDIT;
     }
 
     @PostMapping("/editWordSet/{id}")
-    String processEditWordEntitieForm(@PathVariable("id") long id,
+    private String processEditWordEntitieForm(@PathVariable("id") long id,
                                       @ModelAttribute("wordSetFromSource")
                                       @Valid WordsSet wordsSet,
                                       BindingResult bindingResult) {

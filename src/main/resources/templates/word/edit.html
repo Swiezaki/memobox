@@ -45,8 +45,14 @@
             </select>
             <p class="Bdc(red)" th:if="${#fields.hasErrors('translationLanguage')}" th:errors="*{translationLanguage}"></p>
 
-            <label>Word Set</label>
-            <input th:type="text" th:field="*{wordSet}">
+            <label>Wordset</label>
+            <select th:field="*{wordSet}">
+                <option value=""> ---</option>
+                <option th:each="wordset : ${wordSets} "
+                        th:value ="${wordset.getWordSetId}"
+                        th:utext="${wordset.wordSetName}">
+                </option>
+            </select>
 
             <button type="submit">Edit</button>
             <button type="reset">Clear</button>

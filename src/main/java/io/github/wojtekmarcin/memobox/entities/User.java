@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.*;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
@@ -21,21 +22,21 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-    @NotEmpty(message = "Field cannot be empty")
+    @NotEmpty(message = EMPTY)
     @Column(unique = true)
     private String username;
 
-    @NotEmpty(message = "Field cannot be empty")
-    @Size(min = 5, message = "Password should be longer")
+    @NotEmpty(message = EMPTY)
+    @Size(min = 5, message = LENGHT)
     private String password;
 
     private String role;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "memoBoxId")
     private List<MemoBox> memoBoxes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "wordSetId")
     private List<WordsSet> wordsSetId;
 
@@ -45,41 +46,6 @@ public class User implements UserDetails {
     public User() {
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role));
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
     public void updateFrom(final User source) {
         if (StringUtils.isNotBlank(source.getUsername())) {
             username = source.getUsername();
@@ -87,6 +53,26 @@ public class User implements UserDetails {
         if (StringUtils.isNotBlank(source.getPassword())) {
             password = source.getPassword();
         }
+    }
+
+    public void addWordSet(WordsSet wordsSet) {
+        wordsSetId.add(wordsSet);
+        wordsSet.setUser(this);
+    }
+
+    public void removeWordSet(WordsSet wordsSet) {
+        wordsSetId.remove(wordsSet);
+        wordsSet.setUser(null);
+    }
+
+    public void addMemobox(MemoBox memoBox) {
+        memoBoxes.add(memoBox);
+        memoBox.setUser(this);
+    }
+
+    public void removeMemobox(MemoBox memoBox) {
+        memoBoxes.remove(memoBox);
+        memoBox.setUser(null);
     }
 
     public long getUserId() {
@@ -135,6 +121,41 @@ public class User implements UserDetails {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

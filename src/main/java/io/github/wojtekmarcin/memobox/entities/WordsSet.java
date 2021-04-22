@@ -4,7 +4,8 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -17,9 +18,11 @@ public class WordsSet {
     private boolean visibleFlagId;
     private boolean editionFlagId;
 
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @ManyToMany(mappedBy = "wordSetId")
-    private List<MemoBox> memoBoxes;
+    private Set<MemoBox> memoBoxes;
 
     @Embedded
     private Audit audit = new Audit();
@@ -59,11 +62,11 @@ public class WordsSet {
         this.editionFlagId = editionFlagId;
     }
 
-    public List<MemoBox> getMemoBoxes() {
+    public Set<MemoBox> getMemoBoxes() {
         return memoBoxes;
     }
 
-    public void setMemoBoxes(List<MemoBox> memoBoxes) {
+    public void setMemoBoxes(Set<MemoBox> memoBoxes) {
         this.memoBoxes = memoBoxes;
     }
 
@@ -73,5 +76,26 @@ public class WordsSet {
 
     public void setAudit(Audit audit) {
         this.audit = audit;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordsSet wordsSet = (WordsSet) o;
+        return wordSetId == wordsSet.wordSetId && visibleFlagId == wordsSet.visibleFlagId && editionFlagId == wordsSet.editionFlagId && Objects.equals(wordSetName, wordsSet.wordSetName) && Objects.equals(user, wordsSet.user) && Objects.equals(memoBoxes, wordsSet.memoBoxes) && Objects.equals(audit, wordsSet.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wordSetId, wordSetName, visibleFlagId, editionFlagId, user, memoBoxes, audit);
     }
 }
