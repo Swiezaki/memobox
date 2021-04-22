@@ -8,10 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.*;
 
@@ -32,12 +29,10 @@ public class User implements UserDetails {
 
     private String role;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "memoBoxId")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemoBox> memoBoxes;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "wordSetId")
+    @OneToMany(mappedBy = "wordSetId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WordsSet> wordsSetId;
 
     @Embedded
