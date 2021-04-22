@@ -21,7 +21,7 @@ public class UserController {
     public static final String PAGE_USER_EDIT = "user/edit";
     public static final String REDIRECT_PAGE_USER_VIEW = "redirect:/user/view";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRESTController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 
     private final UserRepository userRepository;

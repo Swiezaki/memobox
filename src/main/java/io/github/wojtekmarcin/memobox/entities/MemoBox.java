@@ -1,7 +1,6 @@
 package io.github.wojtekmarcin.memobox.entities;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,6 +10,7 @@ public class MemoBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memoBoxId;
+    private String memoboxName;
     private Integer wordSlot;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -69,16 +69,37 @@ public class MemoBox {
         this.user = user;
     }
 
+    public String getMemoboxName() {
+        return memoboxName;
+    }
+
+    public void setMemoboxName(String memoboxName) {
+        this.memoboxName = memoboxName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MemoBox memoBox = (MemoBox) o;
-        return memoBoxId == memoBox.memoBoxId && Objects.equals(wordSlot, memoBox.wordSlot) && Objects.equals(user, memoBox.user) && Objects.equals(wordSetId, memoBox.wordSetId) && Objects.equals(audit, memoBox.audit);
+        return memoBoxId == memoBox.memoBoxId && Objects.equals(memoboxName, memoBox.memoboxName) && Objects.equals(wordSlot, memoBox.wordSlot) && Objects.equals(user, memoBox.user) && Objects.equals(wordSetId, memoBox.wordSetId) && Objects.equals(audit, memoBox.audit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memoBoxId, wordSlot, user, wordSetId, audit);
+        return Objects.hash(memoBoxId, memoboxName, wordSlot, user, wordSetId, audit);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MemoBox{");
+        sb.append("memoBoxId=").append(memoBoxId);
+        sb.append(", memoboxName='").append(memoboxName).append('\'');
+        sb.append(", wordSlot=").append(wordSlot);
+        sb.append(", user=").append(user);
+        sb.append(", wordSetId=").append(wordSetId);
+        sb.append(", audit=").append(audit);
+        sb.append('}');
+        return sb.toString();
     }
 }

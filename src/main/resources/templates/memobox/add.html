@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>MemoboxAdd</title>
+  <link rel="stylesheet" href="https://unpkg.com/awsm.css/dist/awsm_theme_mischka.min.css">
+  <style>
+    .Bdc\(red\) {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <fieldset>
+    <legend>Add memobox</legend>
+    <!--        TODO
+                  -stylizacja wiadomości-->
+    <div th:text="${message}"/>
+    <!--/*@thymesVar id="memoboxToAdd" type="io.github.wojtekmarcin.memobox.entities.MemoBox"*/-->
+    <form method="post" th:action="@{/memobox/addMemobox}" th:object="${memoboxToAdd}">
+
+      <label>Name</label>
+      <input th:type="text" th:field="*{memoboxName}"/>
+      <p class="Bdc(red)" th:if="${#fields.hasErrors('memoboxName')}" th:errors="*{memoboxName}"></p>
+
+      <button type="submit">Create</button>
+      <button type="reset">Clear</button>
+      <button><a th:href="@{'/memobox/view'}">Back</a></button>
+    </form>
+  </fieldset>
+</main>
+</body>
+</html>
