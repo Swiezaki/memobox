@@ -46,6 +46,9 @@ public class WordController {
         return LanguageEnum.values();
     }
 
+    /*TODO
+    *  - powinien zwracać optionala
+    * */
     @GetMapping("/view")
     String showWordView(Model model, User user) {
         model.addAttribute("words", wordRepository.findAll());

@@ -94,4 +94,18 @@ public class WordsSet {
     public int hashCode() {
         return Objects.hash(wordSetId, wordSetName, visibleFlagId, editionFlagId, user, memoBoxes, audit);
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("WordsSet{");
+        sb.append("wordSetId=").append(wordSetId);
+        sb.append(", wordSetName='").append(wordSetName).append('\'');
+        sb.append(", visibleFlagId=").append(visibleFlagId);
+        sb.append(", editionFlagId=").append(editionFlagId);
+        sb.append(", user=").append(user);
+        sb.append(", memoBoxes=").append(memoBoxes);
+        sb.append(", audit=").append(audit);
+        sb.append('}');
+        return sb.toString();
+    }
 }

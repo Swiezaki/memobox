@@ -21,7 +21,6 @@
         <table>
             <thead>
             <tr>
-                <th>MemoboxId</th>
                 <th>Memobox name</th>
                 <th>Word slot</th>
                 <th>Wordsets inside</th>
@@ -31,9 +30,13 @@
                 <th>Delete</th>
             </tr>
             </thead>
+
+         <!--   TODO
+                 - dodać iterację po liście wordsetów w obieckie memobox
+                 - widoczność daty utworzenia-->
+
             <tbody th:each="memobox,memoboxStat : ${memoboxes}">
             <tr>
-                <td><p th:text="${memobox.memoBoxId}"></p></td>
                 <td><p th:text="${memobox.memoboxName}"></p></td>
                 <td><p th:text="${memobox.wordSlot}"></p></td>
                 <td th:text="${memobox.wordSetId} ?: 'UNKNOWN'"/>

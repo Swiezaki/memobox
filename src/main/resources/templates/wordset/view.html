@@ -21,16 +21,16 @@
     <table>
         <thead>
         <tr>
-            <th>WordsetId</th>
             <th>Name</th>
-<!--            <th>CreateDate</th>-->
+            <th>CreateDate</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody th:each="wordset,wordsetStat : ${wordsets}">
         <tr>
-            <td><p th:text="${wordset.wordSetId}"></p></td>
             <td><p th:text="${wordset.wordSetName}"></p></td>
-<!--            <td><p th:text="${wordset.audit.viewCreatedDate()}"></p></td>-->
+            <td><p th:text="${wordset.audit.viewCreatedDate()}"></p></td>
             <td><a th:href="@{'/wordset/editWordSet/' + ${wordset.getWordSetId()}}">Edit</a></td>
             <td><a th:href="@{'/wordSet/deleteWordSet/' + ${wordset.getWordSetId()}}">Delete</a></td>
         </tr>

@@ -1,7 +1,6 @@
 package io.github.wojtekmarcin.memobox.controller;
 
 import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
-import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
@@ -50,23 +49,22 @@ public class WordSetController {
     }
 
     @GetMapping("/addWordSet")
-    private String initAddWordForm(Model model,
-                                   @ModelAttribute("authUser") User user) {
-        WordsSet wordsSet = new WordsSet();
-        user.addWordSet(wordsSet);
-        model.addAttribute("wordsetToAdd", wordsSet);
+    private String initAddWordForm(Model model) {
+        model.addAttribute("wordsetToAdd", new WordsSet());
         return PAGE_WORDSET_ADD;
     }
 
     @PostMapping("/addWordSet")
     private String processAddingWordEntityForm(@ModelAttribute("wordsetToAdd")
                                                @Valid WordsSet wordsSet,
+                                               @ModelAttribute("authUser") User user,
                                                BindingResult bindingResult,
                                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return PAGE_WORDSET_ADD;
         } else {
-            wordSetRepository.save(wordsSet);
+            user.addWordSet(wordsSet);
+            userRepository.save(user);
             redirectAttributes.addFlashAttribute("message", String.format("Wordset %s created.", wordsSet.getWordSetName().toLowerCase()));
             return REDIRECT_PAGE_WORDSET_VIEW;
         }
@@ -86,10 +84,13 @@ public class WordSetController {
 
     @PostMapping("/editWordSet/{id}")
     private String processEditWordEntitieForm(@PathVariable("id") long id,
-                                      @ModelAttribute("wordSetFromSource")
-                                      @Valid WordsSet wordsSet,
-                                      BindingResult bindingResult) {
+                                              @ModelAttribute("wordSetFromSource")
+                                              @Valid WordsSet wordsSet,
+                                              BindingResult bindingResult,
+                                              Model model) {
         if (bindingResult.hasErrors()) {
+            wordsSet.setWordSetId(id);
+            model.addAttribute("wordSetFromSource", wordsSet);
             return PAGE_WORDSET_EDIT;
         } else {
             LOGGER.info("word input ={}", wordsSet);
