@@ -15,7 +15,9 @@
   <fieldset>
     <legend>Add memobox</legend>
     <!--        TODO
-                  -stylizacja wiadomości-->
+                  -stylizacja wiadomości
+                  - dodawanie wordsetów
+                   - dodawanie pojedyńczych słów-->
     <div th:text="${message}"/>
     <!--/*@thymesVar id="memoboxToAdd" type="io.github.wojtekmarcin.memobox.entities.MemoBox"*/-->
     <form method="post" th:action="@{/memobox/addMemobox}" th:object="${memoboxToAdd}">
