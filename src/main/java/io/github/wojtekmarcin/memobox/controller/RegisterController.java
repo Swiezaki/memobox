@@ -3,6 +3,7 @@ package io.github.wojtekmarcin.memobox.controller;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import io.github.wojtekmarcin.memobox.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 public class RegisterController {
     public static final String PAGE_REGISTER = "register";
 
     private final UserService userService;
     private final UserRepository userRepository;
-
-    public RegisterController(@Lazy UserService userService,@Lazy UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-    }
-
 
     @GetMapping("/register")
     String initCreateUserForm(Model model) {

@@ -4,6 +4,7 @@ import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/memobox")
 public class MemoboxController {
     public static final String REDIRECT_PAGE_MEMOBOX_VIEW = "redirect:/memobox/view";
@@ -26,11 +28,6 @@ public class MemoboxController {
     private final UserRepository userRepository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemoboxController.class);
-
-    public MemoboxController(MemoBoxRepository repository, UserRepository userRepository) {
-        this.memoBoxRepository = repository;
-        this.userRepository = userRepository;
-    }
 
     @ModelAttribute("authUser")
     private User getAuthUser(Principal principal) {
