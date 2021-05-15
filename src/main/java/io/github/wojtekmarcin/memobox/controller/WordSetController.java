@@ -6,6 +6,7 @@ import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/wordset")
 public class WordSetController {
     public static final String PAGE_WORDSET_ADD = "wordset/add";
@@ -29,12 +31,6 @@ public class WordSetController {
     private final WordsSetRepository wordSetRepository;
     private final UserRepository userRepository;
     private final MemoBoxRepository memoBoxRepository;
-
-    public WordSetController(WordsSetRepository wordsSetRepository, UserRepository userRepository, MemoBoxRepository memoBoxRepository) {
-        this.wordSetRepository = wordsSetRepository;
-        this.userRepository = userRepository;
-        this.memoBoxRepository = memoBoxRepository;
-    }
 
     @ModelAttribute("authUser")
     private User getAuthUser(Principal principal) {

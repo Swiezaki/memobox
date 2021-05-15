@@ -1,8 +1,8 @@
 package io.github.wojtekmarcin.memobox.controller;
 
-import io.github.wojtekmarcin.memobox.controller.REST.UserRESTController;
 import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
     public static final String PAGE_USER_VIEW = "user/view";
@@ -23,12 +24,7 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-
     private final UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/view")
     String getAllUserViewPage(Model model) {

@@ -6,6 +6,7 @@ import io.github.wojtekmarcin.memobox.entities.Word;
 import io.github.wojtekmarcin.memobox.entities.WordsSet;
 import io.github.wojtekmarcin.memobox.repository.WordRepository;
 import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/word")
 public class WordController {
     public static final String PAGE_WORD_ADD = "word/add";
@@ -30,11 +32,6 @@ public class WordController {
 
     private final WordRepository wordRepository;
     private final WordsSetRepository wordsSetRepository;
-
-    public WordController(WordRepository repository, WordsSetRepository wordsSetRepository) {
-        this.wordRepository = repository;
-        this.wordsSetRepository = wordsSetRepository;
-    }
 
     @ModelAttribute("wordSets")
     private List<WordsSet> getWordSets() {
