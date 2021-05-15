@@ -3,7 +3,6 @@ package io.github.wojtekmarcin.memobox.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

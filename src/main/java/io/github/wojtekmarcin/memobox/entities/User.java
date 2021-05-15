@@ -9,9 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.*;
+import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.EMPTY;
+import static io.github.wojtekmarcin.memobox.dictionary.ValidationMessage.LENGHT;
 
 @Entity
 @Data
