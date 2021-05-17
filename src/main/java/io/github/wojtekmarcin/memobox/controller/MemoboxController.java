@@ -67,7 +67,7 @@ public class MemoboxController {
     String initEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("memoboxFormSource", memoBoxRepository
                 .findMemoBoxByMemoBoxId(id)
-                .orElseThrow(() -> new RuntimeException("asd")));
+                .orElseThrow(() -> new RuntimeException("Memobox didn't found")));
         return PAGE_MEMOBOX_EDIT;
     }
 
