@@ -4,6 +4,7 @@ import io.github.wojtekmarcin.memobox.entities.MemoBox;
 import io.github.wojtekmarcin.memobox.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemoBoxRepository {
     List<MemoBox> findAll();
@@ -12,11 +13,11 @@ public interface MemoBoxRepository {
 
     boolean existsById(Long id);
 
-    MemoBox findMemoBoxByMemoBoxId(Long id);
+    Optional<MemoBox> findMemoBoxByMemoBoxId(Long id);
 
     void deleteByMemoBoxId(Long id);
 
-    MemoBox save(MemoBox entity);
+    Optional<MemoBox> save(MemoBox entity);
 
-    MemoBox findMemoBoxByUser(User user);
+    Optional<MemoBox> findMemoBoxByUser(User user);
 }
