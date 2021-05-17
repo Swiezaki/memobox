@@ -17,7 +17,7 @@ public interface MemoBoxRepository {
 
     void deleteByMemoBoxId(Long id);
 
-    Optional<MemoBox> save(MemoBox entity);
+    MemoBox save(MemoBox entity);
 
     Optional<MemoBox> findMemoBoxByUser(User user);
 }
