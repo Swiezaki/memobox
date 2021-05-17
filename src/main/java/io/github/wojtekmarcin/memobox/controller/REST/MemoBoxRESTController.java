@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/memobox")
@@ -26,7 +27,7 @@ public class MemoBoxRESTController {
     }
 
     @GetMapping("/getMemoboxById/{id}")
-    ResponseEntity<MemoBox> readMemoboxById(@RequestBody Long id) {
+    ResponseEntity<Optional<MemoBox>> readMemoboxById(@RequestBody Long id) {
         if (!repository.existsById(id)) {
             ResponseEntity.notFound().build();
         }

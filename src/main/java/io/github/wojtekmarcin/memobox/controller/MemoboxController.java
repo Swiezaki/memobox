@@ -65,13 +65,15 @@ public class MemoboxController {
 
     @GetMapping("/editMemobox/{id}")
     String initEditUserForm(@PathVariable long id, Model model) {
-        model.addAttribute("memoboxFormSource", memoBoxRepository.findMemoBoxByMemoBoxId(id));
+        model.addAttribute("memoboxFormSource", memoBoxRepository
+                .findMemoBoxByMemoBoxId(id)
+                .orElseThrow(() -> new RuntimeException("Memobox didn't found")));
         return PAGE_MEMOBOX_EDIT;
     }
 
     /*TODO
-    *   - przy wywołaniu akcji Edit nadpisuje wszystkie dane encji i czyści numer klienta i w związku z tym nie widać później memoboxa na liście memoboxów użytkownika
-    * */
+     *   - przy wywołaniu akcji Edit nadpisuje wszystkie dane encji i czyści numer klienta i w związku z tym nie widać później memoboxa na liście memoboxów użytkownika
+     * */
     @PostMapping("/editMemobox/{id}")
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("memoboxFormSource")
