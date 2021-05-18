@@ -9,8 +9,6 @@ import io.github.wojtekmarcin.memobox.repository.WordsSetRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,9 +43,6 @@ public class WordController {
         return LanguageEnum.values();
     }
 
-    /*TODO
-    *  - powinien zwracać optionala
-    * */
     @GetMapping("/view")
     String showWordView(Model model, User user) {
         model.addAttribute("words", wordRepository.findAll());
@@ -75,14 +72,18 @@ public class WordController {
     @GetMapping("/deleteWord/{id}")
     private String initDeleteUserEntityForm(@PathVariable("id") long id,
                                             RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordRepository.findWordByWordId(id).getWord().toLowerCase()));
+        Word wordByWordId = wordRepository.findWordByWordId(id)
+                .orElseThrow(()-> new RuntimeException("Cannot find word by id"));
+        redirectAttributes.addFlashAttribute("message", String.format("Word %s deleted", wordByWordId.getWord().toLowerCase()));
         wordRepository.deleteWordByWordId(id);
         return REDIRECT_PAGE_WORD_VIEW;
     }
 
     @GetMapping("/editWord/{id}")
     private String initEditWordEntitieForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("wordFromSource", wordRepository.findWordByWordId(id));
+        Word wordByWordId = wordRepository.findWordByWordId(id)
+                .orElseThrow(()-> new RuntimeException("Cannot find word by id"));
+        model.addAttribute("wordFromSource", wordByWordId);
         return PAGE_WORD_EDIT;
     }
 

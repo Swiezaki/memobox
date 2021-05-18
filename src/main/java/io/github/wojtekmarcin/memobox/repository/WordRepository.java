@@ -4,6 +4,7 @@ import io.github.wojtekmarcin.memobox.entities.Word;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface WordRepository {
@@ -11,7 +12,7 @@ public interface WordRepository {
 
     boolean existsById(Long id);
 
-    Word findWordByWordId(Long id);
+    Optional<Word> findWordByWordId(Long id);
 
     Word save(Word entity);
 
