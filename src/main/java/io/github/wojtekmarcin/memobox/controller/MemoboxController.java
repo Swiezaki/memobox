@@ -5,6 +5,7 @@ import io.github.wojtekmarcin.memobox.entities.User;
 import io.github.wojtekmarcin.memobox.repository.MemoBoxRepository;
 import io.github.wojtekmarcin.memobox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.dom4j.rule.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -78,9 +79,13 @@ public class MemoboxController {
     String processEditUserEntityForm(@PathVariable("id") long id,
                                      @ModelAttribute("memoboxFormSource")
                                      @Valid MemoBox memoBox,
+                                     Model model,
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            LOGGER.info("Edit memobox method has errors ={}", bindingResult.getAllErrors());
+            memoBox.setMemoBoxId(id);
+            model.addAttribute("memoboxFormSource", memoBox);
             return PAGE_MEMOBOX_EDIT;
         } else {
             LOGGER.info("memobox input ={} ", memoBox);

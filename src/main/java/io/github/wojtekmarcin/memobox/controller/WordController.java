@@ -97,7 +97,7 @@ public class WordController {
         if (bindingResult.hasErrors()) {
             LOGGER.info("Edit word method has errors ={}", bindingResult.getAllErrors());
             word.setWordId(id);
-            model.addAttribute("WordFromSource", word);
+            model.addAttribute("wordFromSource", word);
             return PAGE_WORD_EDIT;
         } else {
             LOGGER.info("Input ={}", word);
